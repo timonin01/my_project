@@ -1,0 +1,25 @@
+**Контекст задачи (краткое описание) **
+Делаем билд
+
+**Что было сделано и как? (краткое описание)**
+Сделан билд с помощью нужной команды
+
+**Зачем это было сделано? Чему научился в процессе выполнения задания?**
+> Task :project:student_naidanov_p:compileJava UP-TO-DATE
+> Task :project:student_naidanov_p:processResources UP-TO-DATE
+> Task :project:student_naidanov_p:classes UP-TO-DATE
+> Task :project:student_naidanov_p:jar UP-TO-DATE
+> Task :project:student_naidanov_p:assemble UP-TO-DATE
+> Task :project:student_naidanov_p:compileTestJava UP-TO-DATE
+> Task :project:student_naidanov_p:processTestResources NO-SOURCE
+> Task :project:student_naidanov_p:testClasses UP-TO-DATE
+> Task :project:student_naidanov_p:test UP-TO-DATE
+> Task :project:student_naidanov_p:check UP-TO-DATE
+> Task :project:student_naidanov_p:build UP-TO-DATE
+
+
+**Сколько потратил времени на выполнение задачи?**
+15 мин
+
+**Заметки, идеи, предложения в свободной форме**
+Изучить видос Евгения Бориса про градл

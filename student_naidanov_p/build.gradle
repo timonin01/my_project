@@ -1,0 +1,26 @@
+plugins {
+	id 'checkstyle'
+}
+
+checkstyle {
+	configFile = 'config/checkstyle/checkstyle.xml' as File
+}
+
+dependencies {
+
+	compileOnly('org.projectlombok:lombok:1.18.32')
+	annotationProcessor('org.projectlombok:lombok:1.18.32')
+
+	testCompileOnly('org.projectlombok:lombok:1.18.32')
+	testAnnotationProcessor('org.projectlombok:lombok:1.18.32')
+
+    implementation('com.fasterxml.jackson.core:jackson-core:2.18.2')
+    implementation('org.springframework.boot:spring-boot-starter-web:3.2.5')
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test:3.2.5')
+
+	test {
+		useJUnitPlatform()
+	}
+
+}
