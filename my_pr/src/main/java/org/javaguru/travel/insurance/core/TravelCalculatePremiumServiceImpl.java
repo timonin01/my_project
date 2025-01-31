@@ -20,15 +20,16 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
         response.setPersonFirstName(request.getPersonFirstName());
         response.setPersonLastName(request.getPersonLastName());
 
-        var daysBetween = calculateDays(request);
+        var daysBetween = calculateDaysBetween(request);
         response.setAgreementPrice(new BigDecimal(daysBetween));
 
         return response;
     }
 
-    public long calculateDays(TravelCalculatePremiumRequest request){
+    public long calculateDaysBetween(TravelCalculatePremiumRequest request){
         long diff = request.getAgreementDateFrom().getTime() - request.getAgreementDateTo().getTime();
         var daysBetween = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         return daysBetween;
     }
+
 }
