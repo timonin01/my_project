@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TravelCalculatePremiumServiceImplTest {
 
@@ -17,34 +18,45 @@ class TravelCalculatePremiumServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        request = new TravelCalculatePremiumRequest();
+        request = init();
     }
 
     @Test
     public void shouldTestDateTo() {
-        request.setAgreementDateTo(new Date());
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
         assertEquals(response.getAgreementDateTo(), request.getAgreementDateTo());
     }
 
     @Test
     public void shouldTestFirstName(){
-        request.setPersonFirstName("Andrey");
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
         assertEquals(response.getPersonFirstName(), request.getPersonFirstName());
     }
 
     @Test
     public void shouldTestLastName(){
-        request.setPersonLastName("Timonin");
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
         assertEquals(response.getPersonLastName(), request.getPersonLastName());
     }
 
     @Test
     public void shouldTestDateFrom(){
-        request.setAgreementDateFrom(new Date());
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
         assertEquals(response.getAgreementDateFrom(), request.getAgreementDateFrom());
+    }
+
+    @Test
+    public void shouldTestAgreementPrice(){
+        TravelCalculatePremiumResponse response = service.calculatePremium(request);
+        assertNotNull(response.getAgreementPrice());
+    }
+
+    public TravelCalculatePremiumRequest init(){
+        TravelCalculatePremiumRequest request = new TravelCalculatePremiumRequest();
+        request.setPersonFirstName("Andrey");
+        request.setPersonLastName("Timonin");
+        request.setAgreementDateFrom(new Date());
+        request.setAgreementDateTo(new Date());
+        return request;
     }
 }
