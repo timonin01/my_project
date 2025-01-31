@@ -17,7 +17,7 @@ class TravelCalculatePremiumServiceImplTest {
     private TravelCalculatePremiumRequest request;
 
     @BeforeEach
-    void setUp() {
+     void setUp() {
         request = init();
     }
 
@@ -25,12 +25,14 @@ class TravelCalculatePremiumServiceImplTest {
     public void shouldTestDateTo() {
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
         assertEquals(response.getAgreementDateTo(), request.getAgreementDateTo());
+        assertNotNull(response.getAgreementDateTo(), "Agreement Date To is null");
     }
 
     @Test
     public void shouldTestFirstName(){
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
         assertEquals(response.getPersonFirstName(), request.getPersonFirstName());
+        assertNotNull(response.getPersonFirstName(), "Agreement FirstName To is null");
     }
 
     @Test
