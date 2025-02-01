@@ -10,16 +10,21 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TravelCalculatePremiumServiceImplTest {
 
     private TravelCalculatePremiumServiceImpl service;
     private TravelCalculatePremiumRequest request;
+    private DateTimeService dateTimeService;
 
     @BeforeEach
      void setUp() {
-        service  = new TravelCalculatePremiumServiceImpl(new DateTimeService());
         request = init();
+        dateTimeService= mock(DateTimeService.class);
+        when(dateTimeService.calculateDaysBetween (request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(0L);
+        service  = new TravelCalculatePremiumServiceImpl(dateTimeService);
     }
 
     @Test
