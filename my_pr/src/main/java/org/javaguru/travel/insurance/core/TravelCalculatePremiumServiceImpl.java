@@ -2,12 +2,11 @@ package org.javaguru.travel.insurance.core;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.javaguru.travel.insurance.rest.TravelCalculatePremiumRequest;
-import org.javaguru.travel.insurance.rest.TravelCalculatePremiumResponse;
+import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.TravelCalculatePremiumResponse;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
