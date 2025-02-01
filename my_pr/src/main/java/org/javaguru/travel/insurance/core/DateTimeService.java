@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class DateTimeService {
 
     public long calculateDaysBetween(Date date1, Date date2) {

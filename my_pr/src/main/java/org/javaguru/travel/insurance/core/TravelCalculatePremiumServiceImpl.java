@@ -10,6 +10,11 @@ import java.util.concurrent.TimeUnit;
 @Component
 class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService {
 
+    private DateTimeService dateTimeService;
+    public TravelCalculatePremiumServiceImpl(DateTimeService dateTimeService) {
+        this.dateTimeService = dateTimeService;
+    }
+
     @Override
     public TravelCalculatePremiumResponse calculatePremium(TravelCalculatePremiumRequest request) {
 
@@ -20,16 +25,12 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
         response.setPersonFirstName(request.getPersonFirstName());
         response.setPersonLastName(request.getPersonLastName());
 
-        var daysBetween = calculateDaysBetween(request);
+        var daysBetween = dateTimeService.calculateDaysBetween(request.getAgreementDateTo(),
+                request.getAgreementDateFrom());
         response.setAgreementPrice(new BigDecimal(daysBetween));
 
         return response;
     }
 
-    public long calculateDaysBetween(TravelCalculatePremiumRequest request){
-        long diff = request.getAgreementDateFrom().getTime() - request.getAgreementDateTo().getTime();
-        var daysBetween = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        return daysBetween;
-    }
 
 }
