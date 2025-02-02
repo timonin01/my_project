@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +23,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TravelCalculatePremiumServiceImplTest {
 
-    @Mock private DateTimeService dateTimeService;
     @Mock private TravelCalculatePremiumRequestValidator requestValidator;
+    @Mock private TravelPremiumUnderwriting premiumUnderwriting;
 
     @InjectMocks
     private TravelCalculatePremiumServiceImpl service;
@@ -31,8 +34,8 @@ class TravelCalculatePremiumServiceImplTest {
     @BeforeEach
      void setUp() {
         request = init();
-        when(dateTimeService.calculateDaysBetween (request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(0L);
         when(requestValidator.validate(request)).thenReturn(List.of());
+        when(premiumUnderwriting.calculateDaysBetween(request)).thenReturn(BigDecimal.TEN);
     }
 
     @Test
@@ -69,8 +72,16 @@ class TravelCalculatePremiumServiceImplTest {
         TravelCalculatePremiumRequest request = new TravelCalculatePremiumRequest();
         request.setPersonFirstName("Andrey");
         request.setPersonLastName("Timonin");
-        request.setAgreementDateFrom(new Date());
-        request.setAgreementDateTo(new Date());
+        request.setAgreementDateFrom(createDate("01.01.2025"));
+        request.setAgreementDateTo(createDate("10.01.2025"));
         return request;
+    }
+
+    private Date createDate(String dateStr) {
+        try {
+            return new SimpleDateFormat("dd.MM.yyyy").parse(dateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
