@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.when;
 class TravelCalculatePremiumServiceImplTest {
 
     @Mock private DateTimeService dateTimeService;
+    @Mock private TravelCalculatePremiumRequestValidator requestValidator;
 
     @InjectMocks
     private TravelCalculatePremiumServiceImpl service;
@@ -30,6 +32,7 @@ class TravelCalculatePremiumServiceImplTest {
      void setUp() {
         request = init();
         when(dateTimeService.calculateDaysBetween (request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(0L);
+        when(requestValidator.validate(request)).thenReturn(List.of());
     }
 
     @Test

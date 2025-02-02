@@ -49,7 +49,7 @@ class TravelCalculatePremiumRequestValidator {
     private Optional<ValidationError> validateAgreementDaysBetween(TravelCalculatePremiumRequest request) {
         Date dateFrom = request.getAgreementDateFrom();
         Date dateTo = request.getAgreementDateTo();
-        return (dateFrom != null && dateTo != null
+        return (dateFrom != null && dateTo != null //чтобы не проверять на наличие null
                 && (dateFrom.equals(dateTo) || dateFrom.after(dateTo)))
                 ? Optional.of(new ValidationError("agreementDateTo", "Must be after then agreementDateFrom"))
                 : Optional.empty();
