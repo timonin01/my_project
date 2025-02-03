@@ -53,6 +53,9 @@ subprojects {
 		// Зависимости Lombok для тестов
 		testCompileOnly 'org.projectlombok:lombok:1.18.32'
 		testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+		//работа с JSON
+		implementation('com.fasterxml.jackson.core:jackson-core:2.14.2')
 	}
 
 }
