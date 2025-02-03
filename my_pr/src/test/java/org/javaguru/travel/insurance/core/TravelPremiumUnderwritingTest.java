@@ -4,9 +4,11 @@ import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -17,6 +19,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class TravelPremiumUnderwritingTest {
 
     @Mock DateTimeService dateTimeService;
@@ -28,7 +31,6 @@ class TravelPremiumUnderwritingTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         request = init();
         when(dateTimeService.calculateDaysBetween(request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(0L);
     }

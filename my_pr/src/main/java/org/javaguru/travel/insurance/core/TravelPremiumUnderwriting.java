@@ -12,7 +12,7 @@ import java.util.Date;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class TravelPremiumUnderwriting {
 
-    private DateTimeService dateTimeService;
+    private final DateTimeService dateTimeService;
 
     public BigDecimal calculateDaysBetween(TravelCalculatePremiumRequest request){
         var daysBetween =  dateTimeService.calculateDaysBetween(request.getAgreementDateFrom(),
