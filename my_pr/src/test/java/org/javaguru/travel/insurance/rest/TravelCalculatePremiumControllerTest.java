@@ -39,106 +39,62 @@ public class TravelCalculatePremiumControllerTest {
     @Test
     @DisplayName("Test case 1: firstName does not exist")
     public void firstNameDoesNotExist()throws Exception{
-        MvcResult result =  mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_firstname_does_not_exist.json"))
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        // Получение тела ответа как строки
-        String request = result.getResponse().getContentAsString();
-        // Чтение ожидаемого JSON-файла
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_firstname_does_not_exist.json");
-        assertTrue(areJsonsEqual(request,response));
+        comparingJSON( "TravelCalculatePremiumRequest_firstname_does_not_exist.json",
+                "TravelCalculatePremiumResponse_firstname_does_not_exist.json");
     }
 
     @Test
     @DisplayName("Test case 2: lastName does not exist")
     public void lastNameDoesNotExist()throws Exception{
-        MvcResult result = mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_lastname_does_not_exist.json"))
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String request = result.getResponse().getContentAsString();
-
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_lastname_does_not_exist.json");
-        assertTrue(areJsonsEqual(request,response));
+        comparingJSON( "TravelCalculatePremiumRequest_lastname_does_not_exist.json",
+                "TravelCalculatePremiumResponse_lastname_does_not_exist.json");
     }
 
     @Test
     @DisplayName("Test case 3: agreementDateFrom does not exist")
     public void agreementDateFromDoesNotExist()throws Exception{
-        MvcResult result =  mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_agreementDateFrom_does_not_exist.json"))
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String request = result.getResponse().getContentAsString();
-
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_agreementDateFrom_does_not_exist.json");
-        assertTrue(areJsonsEqual(request,response));
+        comparingJSON( "TravelCalculatePremiumRequest_agreementDateFrom_does_not_exist.json",
+                "TravelCalculatePremiumResponse_agreementDateFrom_does_not_exist.json");
     }
 
     @Test
     @DisplayName("Test case 4: agreementDateTo does not exist")
     public void agreementDateToDoesNotExist()throws Exception{
-        MvcResult result =  mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_agreementDateTo_does_not_exist.json"))
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String request = result.getResponse().getContentAsString();
-
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_agreementDateTo_does_not_exist.json");
-        assertTrue(areJsonsEqual(request,response));
+        comparingJSON( "TravelCalculatePremiumRequest_agreementDateTo_does_not_exist.json",
+                "TravelCalculatePremiumResponse_agreementDateTo_does_not_exist.json");
     }
 
     @Test
     @DisplayName("Test case 5: all fields does not exist")
     public void allFieldsDoesNotExist()throws Exception{
-        MvcResult result =  mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_all_fields_does_not_exist.json"))
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String request = result.getResponse().getContentAsString();
-
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_all_fields_does_not_exist.json");
-        assertTrue(areJsonsEqual(request,response));
+        comparingJSON( "TravelCalculatePremiumRequest_all_fields_does_not_exist.json",
+                "TravelCalculatePremiumResponse_all_fields_does_not_exist.json");
     }
 
     @Test
     @DisplayName("Test case 6: agreementDateTo must be after then agreement agreementDateFrom")
     public void agreementDateToMustBeAfterThenAgreementDateFrom()throws Exception{
-        MvcResult result =  mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_agreementDateFrom_must_be_after_then_agreementDateTo.json"))
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String request = result.getResponse().getContentAsString();
-
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_agreementDateFrom_must_be_after_then_agreementDateTo.json");
-        assertTrue(areJsonsEqual(request,response));
+        comparingJSON( "TravelCalculatePremiumRequest_agreementDateFrom_must_be_after_then_agreementDateTo.json",
+                "TravelCalculatePremiumResponse_agreementDateFrom_must_be_after_then_agreementDateTo.json");
     }
 
     @Test
     @DisplayName("Test case 7: all are okay")
     public void allFieldsAreCorrect()throws Exception{
-        MvcResult result =  mockMvc.perform(post("/insurance/travel/")
-                        .content(jsonFileReader.readJsonFromFile("TravelCalculatePremiumRequest_all_fields_are_okay.json"))
+        comparingJSON( "TravelCalculatePremiumRequest_all_fields_are_okay.json",
+           "TravelCalculatePremiumResponse_all_fields_are_okay.json");
+    }
+
+    public void comparingJSON(String path1,String path2) throws Exception{
+        MvcResult result =mockMvc.perform(post("/insurance/travel/")
+                        .content(jsonFileReader.readJsonFromFile(path1))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String request = result.getResponse().getContentAsString();
 
-        String response = jsonFileReader.readJsonFromFile("TravelCalculatePremiumResponse_all_fields_are_okay.json");
+        String response = jsonFileReader.readJsonFromFile(path2);
         assertTrue(areJsonsEqual(request,response));
     }
 
