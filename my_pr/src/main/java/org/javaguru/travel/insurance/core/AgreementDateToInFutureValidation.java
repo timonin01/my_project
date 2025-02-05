@@ -1,0 +1,25 @@
+package org.javaguru.travel.insurance.core;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.ValidationError;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.Optional;
+
+@Component
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+public class AgreementDateToInFutureValidation {
+
+    private  final DateTimeService dateTimeService;
+
+    public Optional<ValidationError> validateAgreementDateToInFuture(TravelCalculatePremiumRequest request){
+        Date dateTo = request.getAgreementDateTo();
+        Date currentTime = dateTimeService.getCurrentDateTime();
+        return (dateTo != null && dateTo.before(currentTime))
+                ? Optional.of(new ValidationError("agreementDateTo", "Must be in future"))
+                : Optional.empty();
+    }
+}

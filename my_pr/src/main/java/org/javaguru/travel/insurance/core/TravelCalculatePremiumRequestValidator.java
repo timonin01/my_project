@@ -7,75 +7,34 @@ import org.javaguru.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class TravelCalculatePremiumRequestValidator {
 
     private final DateTimeService dateTimeService;
+    private final PersonFirstNameValidation personFirstNamValidation;
+    private final PersonLastNameValidation personLastNameValidation;
+    private final AgreementDateFromValidation agreementDateFromValidation;
+    private final AgreementDateToValidation agreementDateToValidation;
+    private final AgreementDateFromInFutureValidation agreementDateFromInFutureValidation;
+    private final AgreementDateToInFutureValidation agreementDateToInFutureValidation;
+    private final AgreementDateToMustBeAfterThenAgreementDateFrom agreementDateToMustBeAfterThenAgreementDateFrom;
+
+
 
     public List<ValidationError> validate(TravelCalculatePremiumRequest request) {
         List<ValidationError> errors = new ArrayList<>();
-        validatePersonFirstName(request).ifPresent(errors::add);
-        validatePersonLastName(request).ifPresent(errors::add);
-        validateAgreementDateFrom(request).ifPresent(errors::add);
-        validateAgreementDateTo(request).ifPresent(errors::add);
-        validateAgreementDaysBetween(request).ifPresent(errors::add);
-        validateAgreementDateFromInFuture(request).ifPresent(errors::add);
-        validateAgreementDateToInFuture(request).ifPresent(errors::add);
+        personFirstNamValidation.validatePersonFirstName(request).ifPresent(errors::add);
+        personLastNameValidation.validatePersonLastName(request).ifPresent(errors::add);
+        agreementDateFromValidation.validateAgreementDateFrom(request).ifPresent(errors::add);
+        agreementDateToValidation.validateAgreementDateTo(request).ifPresent(errors::add);
+        agreementDateToMustBeAfterThenAgreementDateFrom.validateAgreementDaysBetween(request).ifPresent(errors::add);
+        agreementDateFromInFutureValidation.validateAgreementDateFromInFuture(request).ifPresent(errors::add);
+        agreementDateToInFutureValidation.validateAgreementDateToInFuture(request).ifPresent(errors::add);
         return errors;
     }
 
-    private Optional<ValidationError> validatePersonFirstName(TravelCalculatePremiumRequest request) {
-        return (request.getPersonFirstName() == null || request.getPersonFirstName().isEmpty())
-                ? Optional.of(new ValidationError("personFirstName", "Must not be empty!"))
-                : Optional.empty();
-    }
-
-    private Optional<ValidationError> validatePersonLastName(TravelCalculatePremiumRequest request) {
-        return (request.getPersonLastName() == null || request.getPersonLastName().isEmpty())
-                ? Optional.of(new ValidationError("personLastName", "Must not be empty!"))
-                : Optional.empty();
-    }
-
-    private Optional<ValidationError> validateAgreementDateFrom(TravelCalculatePremiumRequest request) {
-        return (request.getAgreementDateFrom() == null )
-                ? Optional.of(new ValidationError("agreementDateFrom", "Must not be empty!"))
-                : Optional.empty();
-    }
-
-    private Optional<ValidationError> validateAgreementDateTo(TravelCalculatePremiumRequest request) {
-        return (request.getAgreementDateTo() == null )
-                ? Optional.of(new ValidationError("agreementDateTo", "Must not be empty!"))
-                : Optional.empty();
-    }
-
-    private Optional<ValidationError> validateAgreementDaysBetween(TravelCalculatePremiumRequest request) {
-        Date dateFrom = request.getAgreementDateFrom();
-        Date dateTo = request.getAgreementDateTo();
-        return (dateFrom != null && dateTo != null //чтобы не проверять на наличие null
-                && (dateFrom.equals(dateTo) || dateFrom.after(dateTo)))
-                ? Optional.of(new ValidationError("agreementDateTo", "Must be after then agreementDateFrom"))
-                : Optional.empty();
-    }
-
-    private Optional<ValidationError> validateAgreementDateToInFuture(TravelCalculatePremiumRequest request){
-        Date dateTo = request.getAgreementDateTo();
-        Date currentTime = dateTimeService.getCurrentDateTime();
-        return (dateTo != null && dateTo.before(currentTime))
-                ? Optional.of(new ValidationError("agreementDateTo", "Must be in future"))
-                : Optional.empty();
-    }
-
-    private Optional<ValidationError> validateAgreementDateFromInFuture(TravelCalculatePremiumRequest request){
-        Date dateFrom = request.getAgreementDateFrom();
-        Date currentTime = dateTimeService.getCurrentDateTime();
-        return (dateFrom != null && dateFrom.before(currentTime))
-                ? Optional.of(new ValidationError("agreementDateFrom", "Must be in future"))
-                : Optional.empty();
-    }
 
 }
