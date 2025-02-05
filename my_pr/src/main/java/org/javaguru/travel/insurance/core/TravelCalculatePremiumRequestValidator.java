@@ -9,32 +9,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class TravelCalculatePremiumRequestValidator {
 
-    private final DateTimeService dateTimeService;
-    private final PersonFirstNameValidation personFirstNamValidation;
-    private final PersonLastNameValidation personLastNameValidation;
-    private final AgreementDateFromValidation agreementDateFromValidation;
-    private final AgreementDateToValidation agreementDateToValidation;
-    private final AgreementDateFromInFutureValidation agreementDateFromInFutureValidation;
-    private final AgreementDateToInFutureValidation agreementDateToInFutureValidation;
-    private final AgreementDateToMustBeAfterThenAgreementDateFrom agreementDateToMustBeAfterThenAgreementDateFrom;
-
-
+    private final List<TravelRequestValidation> travelValidations;
 
     public List<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        List<ValidationError> errors = new ArrayList<>();
-        personFirstNamValidation.validatePersonFirstName(request).ifPresent(errors::add);
-        personLastNameValidation.validatePersonLastName(request).ifPresent(errors::add);
-        agreementDateFromValidation.validateAgreementDateFrom(request).ifPresent(errors::add);
-        agreementDateToValidation.validateAgreementDateTo(request).ifPresent(errors::add);
-        agreementDateToMustBeAfterThenAgreementDateFrom.validateAgreementDaysBetween(request).ifPresent(errors::add);
-        agreementDateFromInFutureValidation.validateAgreementDateFromInFuture(request).ifPresent(errors::add);
-        agreementDateToInFutureValidation.validateAgreementDateToInFuture(request).ifPresent(errors::add);
-        return errors;
+        return travelValidations.stream()
+                .map(validation -> validation.execute(request))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
 

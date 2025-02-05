@@ -28,7 +28,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("10.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("01.01.2026"));
-        Optional<ValidationError> error = validation.validateAgreementDaysBetween(request);
+        Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
         assertEquals(error.get().getField(), "agreementDateTo");
         assertEquals(error.get().getMessage(), "Must be after then agreementDateFrom");
@@ -40,7 +40,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("01.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("01.01.2026"));
-        Optional<ValidationError> error = validation.validateAgreementDaysBetween(request);
+        Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
         assertEquals(error.get().getField(), "agreementDateTo");
         assertEquals(error.get().getMessage(), "Must be after then agreementDateFrom");
@@ -51,7 +51,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("01.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("10.01.2026"));
-        Optional<ValidationError> error = validation.validateAgreementDaysBetween(request);
+        Optional<ValidationError> error = validation.execute(request);
         assertFalse(error.isPresent());
     }
 

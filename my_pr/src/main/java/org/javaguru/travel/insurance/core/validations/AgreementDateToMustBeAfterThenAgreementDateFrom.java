@@ -8,9 +8,10 @@ import java.util.Date;
 import java.util.Optional;
 
 @Component
-public class AgreementDateToMustBeAfterThenAgreementDateFrom {
+class AgreementDateToMustBeAfterThenAgreementDateFrom implements TravelRequestValidation{
 
-    public Optional<ValidationError> validateAgreementDaysBetween(TravelCalculatePremiumRequest request) {
+    @Override
+    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
         Date dateFrom = request.getAgreementDateFrom();
         Date dateTo = request.getAgreementDateTo();
         return (dateFrom != null && dateTo != null //чтобы не проверять на наличие null

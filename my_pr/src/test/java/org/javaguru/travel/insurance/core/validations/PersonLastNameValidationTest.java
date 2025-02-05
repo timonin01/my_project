@@ -24,7 +24,7 @@ class PersonLastNameValidationTest {
     public void shouldReturnErrorWhenPersonLastNameIsNull(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn(null);
-        Optional<ValidationError> error = validation.validatePersonLastName(request);
+        Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
         assertEquals(error.get().getField(), "personLastName");
         assertEquals(error.get().getMessage(), "Must not be empty!");
@@ -34,7 +34,7 @@ class PersonLastNameValidationTest {
     public void shouldReturnErrorWhenPersonLastNameIsEmpty(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn("");
-        Optional<ValidationError> error = validation.validatePersonLastName(request);
+        Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
         assertEquals(error.get().getField(), "personLastName");
         assertEquals(error.get().getMessage(), "Must not be empty!");
@@ -44,7 +44,7 @@ class PersonLastNameValidationTest {
     public void shouldNotReturnErrorWhenPersonLastNameIsCorrect(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn("Andrey");
-        Optional<ValidationError> error = validation.validatePersonLastName(request);
+        Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isEmpty());
     }
 }
