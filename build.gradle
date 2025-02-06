@@ -61,6 +61,9 @@ subprojects {
 		implementation 'ch.qos.logback:logback-classic:1.5.16'
 		// SLF4J API
 		implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.1.0-alpha1'
+
+		//Google Guava
+		implementation 'com.google.guava:guava:31.1-jre'
 	}
 
 }
