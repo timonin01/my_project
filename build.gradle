@@ -54,8 +54,13 @@ subprojects {
 		testCompileOnly 'org.projectlombok:lombok:1.18.32'
 		testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
 
-		//работа с JSON
+		//работа с JSON Jackson
 		implementation('com.fasterxml.jackson.core:jackson-core:2.14.2')
+
+		// Logback Classic (включает Core)
+		implementation 'ch.qos.logback:logback-classic:1.5.16'
+		// SLF4J API
+		implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.1.0-alpha1'
 	}
 
 }

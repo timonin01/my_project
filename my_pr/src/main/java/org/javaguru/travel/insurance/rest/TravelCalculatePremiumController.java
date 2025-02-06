@@ -15,13 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class TravelCalculatePremiumController {
 
+	private final TravelCalculatePremiumResponseLogger responseLogger;
 	private final TravelCalculatePremiumService calculatePremiumService;
+	private final TravelCalculatePremiumRequestLogger requestLogger;
 
 
 	@PostMapping(path = "/",
 			consumes = "application/json",
 			produces = "application/json")
 	public TravelCalculatePremiumResponse calculatePremium(@RequestBody TravelCalculatePremiumRequest request) {
+		requestLogger.log(request);
+		TravelCalculatePremiumResponse response = calculatePremiumService.calculatePremium(request);
+		responseLogger.log(response);
 		return calculatePremiumService.calculatePremium(request);
 	}
 
