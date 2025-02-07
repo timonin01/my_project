@@ -45,7 +45,9 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE_APPENDER" />
+        <appender-ref ref="REQUEST_RESPONSE_FILE_APPENDER" />
     </root>
+
 
     <logger name="org.my_project.travel.insurance.rest.TravelCalculatePremiumRequestLogger" level="INFO">
         <appender-ref ref="REQUEST_RESPONSE_FILE_APPENDER" />
