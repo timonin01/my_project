@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -109,18 +111,9 @@ public class TravelCalculatePremiumControllerTest {
         String request = result.getResponse().getContentAsString();
 
         String response = jsonFileReader.readJsonFromFile(path2);
-        assertTrue(areJsonsEqual(request,response));
+        //порядок не важен
+        JSONAssert.assertEquals(response, request, JSONCompareMode.NON_EXTENSIBLE);
     }
 
-    public boolean areJsonsEqual(String json1, String json2) {
-        try {
-            // Прочитать JSON-строки в дерево JsonNode
-            JsonNode tree1 = objectMapper.readTree(json1);
-            JsonNode tree2 = objectMapper.readTree(json2);
-            return tree1.equals(tree2);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Ошибка при сравнении JSON", e);
-        }
-    }
 
 }

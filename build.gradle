@@ -64,6 +64,10 @@ subprojects {
 
 		//Google Guava
 		implementation 'com.google.guava:guava:31.1-jre'
+
+		//ModelAssert — это библиотека для тестирования Java-объектов, которая позволяет сравнивать
+		// сложные структуры (например, JSON) без учета порядка элементов.
+		testImplementation('uk.org.webcompere:model-assert:1.0.0')
 	}
 
 }
