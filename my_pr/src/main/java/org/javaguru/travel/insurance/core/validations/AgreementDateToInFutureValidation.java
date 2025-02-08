@@ -18,7 +18,7 @@ import java.util.Optional;
 class AgreementDateToInFutureValidation implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToInFutureValidation.class);
-    private final ErrorCodeUtil errorCodeUtil;
+    private final ValidationErrorFactory validationErrorFactory;
     private  final DateTimeService dateTimeService;
 
     @Override
@@ -27,12 +27,7 @@ class AgreementDateToInFutureValidation implements TravelRequestValidation{
         Date dateTo = request.getAgreementDateTo();
         Date currentTime = dateTimeService.getCurrentDateTime();
         return (dateTo != null && dateTo.before(currentTime))
-                ? Optional.of(buildError("ERROR_CODE_3"))
+                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_3"))
                 : Optional.empty();
-    }
-
-    public ValidationError buildError(String errorCode){
-        String description = errorCodeUtil.getErrorDescription(errorCode);
-        return new ValidationError(errorCode,description);
     }
 }

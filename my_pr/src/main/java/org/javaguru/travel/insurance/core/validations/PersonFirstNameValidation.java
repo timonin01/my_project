@@ -16,18 +16,13 @@ import java.util.Optional;
 class PersonFirstNameValidation implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(PersonFirstNameValidation.class);
-    private final ErrorCodeUtil errorCodeUtil;
+    private final ValidationErrorFactory validationErrorFactory;
 
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
         //logger.info("Validation PersonFirstName");
         return (request.getPersonFirstName() == null || request.getPersonFirstName().isEmpty())
-                ? Optional.of(buildError("ERROR_CODE_7"))
+                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_7"))
                 : Optional.empty();
-    }
-
-    public ValidationError buildError(String errorCode){
-        String description = errorCodeUtil.getErrorDescription(errorCode);
-        return new ValidationError(errorCode,description);
     }
 }

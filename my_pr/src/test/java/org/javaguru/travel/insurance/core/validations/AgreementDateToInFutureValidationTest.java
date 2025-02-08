@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 class AgreementDateToInFutureValidationTest {
 
     @Mock private DateTimeService dateTimeService;
-    @Mock private ErrorCodeUtil errorCodeUtil;
+    @Mock private ValidationErrorFactory validationErrorFactory;
 
     @InjectMocks
     private AgreementDateToInFutureValidation validation;
@@ -39,12 +39,12 @@ class AgreementDateToInFutureValidationTest {
     public void shouldReturnErrorWhenAgreementDateToInPast(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateTo()).thenReturn(createDate("10.01.2023"));
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_3"))
-                .thenReturn("Field agreementDateTo must be in future!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_3"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_3");
-        assertEquals(error.get().getDescription(), "Field agreementDateTo must be in future!");
+        assertSame(error.get(), validationError);
     }
 
     @Test

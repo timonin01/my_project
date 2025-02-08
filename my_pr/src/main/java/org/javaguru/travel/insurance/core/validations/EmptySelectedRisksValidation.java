@@ -13,17 +13,12 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class EmptySelectedRisksValidation implements TravelRequestValidation{
 
-    private final ErrorCodeUtil errorCodeUtil;
+    private final ValidationErrorFactory validationErrorFactory;
 
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
         return (request.getSelectedRisks() == null || request.getSelectedRisks().isEmpty())
-                ? Optional.of(buildError("ERROR_CODE_6"))
+                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_6"))
                 : Optional.empty();
-    }
-
-    public ValidationError buildError(String errorCode){
-        String description = errorCodeUtil.getErrorDescription(errorCode);
-        return new ValidationError(errorCode,description);
     }
 }

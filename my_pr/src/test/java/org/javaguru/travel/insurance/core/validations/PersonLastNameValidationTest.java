@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PersonLastNameValidationTest {
 
-    @Mock private ErrorCodeUtil errorCodeUtil;
+    @Mock private ValidationErrorFactory validationErrorFactory;
 
     @InjectMocks
     private PersonLastNameValidation validation;
@@ -28,24 +28,24 @@ class PersonLastNameValidationTest {
     public void shouldReturnErrorWhenPersonLastNameIsNull(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn(null);
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_8"))
-                .thenReturn("Field personLastName must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_8"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_8");
-        assertEquals(error.get().getDescription(), "Field personLastName must not be empty!");
+        assertSame(error.get(), validationError);
     }
 
     @Test
     public void shouldReturnErrorWhenPersonLastNameIsEmpty(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn("");
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_8"))
-                .thenReturn("Field personLastName must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_8"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_8");
-        assertEquals(error.get().getDescription(), "Field personLastName must not be empty!");
+        assertSame(error.get(), validationError);
     }
 
     @Test

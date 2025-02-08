@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AgreementDateToMustBeAfterThenAgreementDateFromTest {
 
-    @Mock private ErrorCodeUtil errorCodeUtil;
+    @Mock private ValidationErrorFactory validationErrorFactory;
 
     @InjectMocks
     private AgreementDateToMustBeAfterThenAgreementDateFrom validation;
@@ -33,12 +33,12 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("10.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("01.01.2026"));
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_5"))
-                .thenReturn("Field agreementDateFrom must be after then agreementDateFrom");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_5"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_5");
-        assertEquals(error.get().getDescription(), "Field agreementDateFrom must be after then agreementDateFrom");
+        assertSame(error.get(), validationError);
 
     }
 
@@ -47,12 +47,12 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("01.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("01.01.2026"));
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_5"))
-                .thenReturn("Field agreementDateFrom must be after then agreementDateFrom");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_5"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_5");
-        assertEquals(error.get().getDescription(), "Field agreementDateFrom must be after then agreementDateFrom");
+        assertSame(error.get(), validationError);
     }
 
     @Test

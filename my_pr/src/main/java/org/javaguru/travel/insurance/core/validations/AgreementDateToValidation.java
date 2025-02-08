@@ -16,19 +16,14 @@ import java.util.Optional;
 class AgreementDateToValidation implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToValidation.class);
-    private final ErrorCodeUtil errorCodeUtil;
+    private final ValidationErrorFactory validationErrorFactory;
 
 
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
         //logger.info("Validation agreementDateTo");
         return (request.getAgreementDateTo() == null )
-                ? Optional.of(buildError("ERROR_CODE_4"))
+                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_4"))
                 : Optional.empty();
-    }
-
-    public ValidationError buildError(String errorCode){
-        String description = errorCodeUtil.getErrorDescription(errorCode);
-        return new ValidationError(errorCode,description);
     }
 }

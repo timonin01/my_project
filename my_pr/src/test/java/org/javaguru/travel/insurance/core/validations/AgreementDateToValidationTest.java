@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AgreementDateToValidationTest {
 
-    @Mock private ErrorCodeUtil errorCodeUtil;
+    @Mock private ValidationErrorFactory validationErrorFactory;
 
     @InjectMocks
     private AgreementDateToValidation validation;
@@ -31,11 +31,12 @@ class AgreementDateToValidationTest {
     public void shouldReturnErrorWhenAgreementDateToIsNull(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateTo()).thenReturn(null);
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_4"))
-                .thenReturn("Field agreementDateTo must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_4"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_4");
-        assertEquals(error.get().getDescription(), "Field agreementDateTo must not be empty!");
+        assertTrue(error.isPresent());
+        assertSame(error.get(), validationError);
     }
 
     @Test

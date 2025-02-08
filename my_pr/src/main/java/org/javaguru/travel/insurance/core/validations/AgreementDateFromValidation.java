@@ -16,17 +16,12 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class AgreementDateFromValidation implements TravelRequestValidation{
 
-    private final ErrorCodeUtil errorCodeUtil ;
+    private final ValidationErrorFactory validationErrorFactory;
 
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
         return (request.getAgreementDateFrom() == null )
-                ? Optional.of(buildError("ERROR_CODE_2"))
+                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_2"))
                 : Optional.empty();
-    }
-
-    public ValidationError buildError(String errorCode){
-        String description = errorCodeUtil.getErrorDescription(errorCode);
-        return new ValidationError(errorCode,description);
     }
 }

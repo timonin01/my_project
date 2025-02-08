@@ -17,8 +17,7 @@ import java.util.Optional;
 class AgreementDateToMustBeAfterThenAgreementDateFrom implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToMustBeAfterThenAgreementDateFrom.class);
-    private final ErrorCodeUtil errorCodeUtil;
-
+    private final ValidationErrorFactory validationErrorFactory;
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
         //logger.info("Validation that AgreementDateToMustBeAfterThenAgreementDateFrom must " +
@@ -27,12 +26,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFrom implements TravelRequestVa
         Date dateTo = request.getAgreementDateTo();
         return (dateFrom != null && dateTo != null //чтобы не проверять на наличие null
                 && (dateFrom.equals(dateTo) || dateFrom.after(dateTo)))
-                ? Optional.of(buildError("ERROR_CODE_5"))
+                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_5"))
                 : Optional.empty();
-    }
-
-    public ValidationError buildError(String errorCode){
-        String description = errorCodeUtil.getErrorDescription(errorCode);
-        return new ValidationError(errorCode,description);
     }
 }

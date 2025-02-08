@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class EmptySelectedRisksValidationTest {
 
-    @Mock private ErrorCodeUtil errorCodeUtil;
+    @Mock private ValidationErrorFactory validationErrorFactory;
 
     @InjectMocks
     private EmptySelectedRisksValidation validation;
@@ -29,24 +29,24 @@ class EmptySelectedRisksValidationTest {
     public void shouldReturnErrorWhenSelectedRisksIsNull(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         when(request.getSelectedRisks()).thenReturn(null);
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_6"))
-                .thenReturn("Field selectedRisks must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_6"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(),"ERROR_CODE_6");
-        assertEquals(error.get().getDescription(),"Field selectedRisks must not be empty!");
+        assertSame(error.get(), validationError);
     }
 
     @Test
     public void shouldReturnErrorWhenSelectedRisksIsEmpty(){
         TravelCalculatePremiumRequest request  = mock(TravelCalculatePremiumRequest.class);
         when(request.getSelectedRisks()).thenReturn(List.of());
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_6"))
-                .thenReturn("Field selectedRisks must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_6"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(),"ERROR_CODE_6");
-        assertEquals(error.get().getDescription(),"Field selectedRisks must not be empty!");
+        assertSame(error.get(), validationError);
     }
 
     @Test
@@ -57,7 +57,6 @@ class EmptySelectedRisksValidationTest {
                 "TRAVEL_EVACUATION", "TRAVEL_SPORT_ACTIVITIES"));
         Optional<ValidationError> error = validation.execute(request);
         assertFalse(error.isPresent());
-        assertTrue(error.isEmpty());
     }
 
 }

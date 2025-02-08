@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PersonFirstNamValidationTest {
 
-    @Mock private ErrorCodeUtil errorCodeUtil;
+    @Mock private ValidationErrorFactory validationErrorFactory;
 
     @InjectMocks
     private PersonFirstNameValidation validation;
@@ -28,24 +28,24 @@ class PersonFirstNamValidationTest {
     public void shouldReturnErrorWhenPersonFirstNameIsNull(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonFirstName()).thenReturn(null);
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_7"))
-                .thenReturn("Field personFirstName must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_7"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_7");
-        assertEquals(error.get().getDescription(), "Field personFirstName must not be empty!");
+        assertSame(error.get(), validationError);
     }
 
     @Test
     public void shouldReturnErrorWhenPersonFirstNameIsEmpty() {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonFirstName()).thenReturn(null);
-        when(errorCodeUtil.getErrorDescription("ERROR_CODE_7"))
-                .thenReturn("Field personFirstName must not be empty!");
+        ValidationError validationError = mock(ValidationError.class);
+        when(validationErrorFactory.buildError("ERROR_CODE_7"))
+                .thenReturn(validationError);
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getErrorCode(), "ERROR_CODE_7");
-        assertEquals(error.get().getDescription(), "Field personFirstName must not be empty!");
+        assertSame(error.get(), validationError);
     }
 
     @Test
