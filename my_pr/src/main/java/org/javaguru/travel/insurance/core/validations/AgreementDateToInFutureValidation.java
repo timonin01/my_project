@@ -2,8 +2,7 @@ package org.javaguru.travel.insurance.core.validations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.javaguru.travel.insurance.core.DateTimeService;
-import org.javaguru.travel.insurance.core.ErrorCodeUtil;
+import org.javaguru.travel.insurance.core.util.DateTimeUtil;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ class AgreementDateToInFutureValidation implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToInFutureValidation.class);
     private final ValidationErrorFactory validationErrorFactory;
-    private  final DateTimeService dateTimeService;
+    private  final DateTimeUtil dateTimeService;
 
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
