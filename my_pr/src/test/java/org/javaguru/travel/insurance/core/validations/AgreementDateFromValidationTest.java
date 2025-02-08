@@ -1,9 +1,14 @@
 package org.javaguru.travel.insurance.core.validations;
 
+import org.javaguru.travel.insurance.core.ErrorCodeUtil;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,22 +19,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class AgreementDateFromValidationTest {
 
-    private AgreementDateFromValidation validation;
+    @Mock
+    private ErrorCodeUtil errorCodeUtil;
 
-    @BeforeEach
-    public void setUp(){
-        validation = new AgreementDateFromValidation();
-    }
+    @InjectMocks
+    private AgreementDateFromValidation validation;
 
     @Test
     public void shouldReturnErrorWhenAgreementDateFromIsNull(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(null);
+        when(errorCodeUtil.getErrorDescription("ERROR_CODE_2"))
+                .thenReturn("Field agreementDateFrom must not be empty!");
         Optional<ValidationError> error = validation.execute(request);
-        assertEquals(error.get().getField(),"agreementDateFrom");
-        assertEquals(error.get().getMessage(), "Must not be empty!");
+        assertEquals(error.get().getErrorCode(),"ERROR_CODE_2");
+        assertEquals(error.get().getDescription(), "Field agreementDateFrom must not be empty!");
     }
 
     @Test

@@ -1,5 +1,8 @@
 package org.javaguru.travel.insurance.core.validations;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import org.javaguru.travel.insurance.core.ErrorCodeUtil;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.slf4j.Logger;
@@ -10,9 +13,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class AgreementDateToMustBeAfterThenAgreementDateFrom implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToMustBeAfterThenAgreementDateFrom.class);
+    private final ErrorCodeUtil errorCodeUtil;
 
     @Override
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
@@ -22,7 +27,12 @@ class AgreementDateToMustBeAfterThenAgreementDateFrom implements TravelRequestVa
         Date dateTo = request.getAgreementDateTo();
         return (dateFrom != null && dateTo != null //чтобы не проверять на наличие null
                 && (dateFrom.equals(dateTo) || dateFrom.after(dateTo)))
-                ? Optional.of(new ValidationError("agreementDateTo", "Must be after then agreementDateFrom"))
+                ? Optional.of(buildError("ERROR_CODE_5"))
                 : Optional.empty();
+    }
+
+    public ValidationError buildError(String errorCode){
+        String description = errorCodeUtil.getErrorDescription(errorCode);
+        return new ValidationError(errorCode,description);
     }
 }

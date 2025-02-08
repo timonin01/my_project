@@ -1,9 +1,14 @@
 package org.javaguru.travel.insurance.core.validations;
 
+import org.javaguru.travel.insurance.core.ErrorCodeUtil;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -11,33 +16,36 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class PersonLastNameValidationTest {
 
-    private PersonLastNameValidation validation;
+    @Mock private ErrorCodeUtil errorCodeUtil;
 
-    @BeforeEach
-    public void setUp(){
-        validation = new PersonLastNameValidation();
-    }
+    @InjectMocks
+    private PersonLastNameValidation validation;
 
     @Test
     public void shouldReturnErrorWhenPersonLastNameIsNull(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn(null);
+        when(errorCodeUtil.getErrorDescription("ERROR_CODE_8"))
+                .thenReturn("Field personLastName must not be empty!");
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getField(), "personLastName");
-        assertEquals(error.get().getMessage(), "Must not be empty!");
+        assertEquals(error.get().getErrorCode(), "ERROR_CODE_8");
+        assertEquals(error.get().getDescription(), "Field personLastName must not be empty!");
     }
 
     @Test
     public void shouldReturnErrorWhenPersonLastNameIsEmpty(){
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonLastName()).thenReturn("");
+        when(errorCodeUtil.getErrorDescription("ERROR_CODE_8"))
+                .thenReturn("Field personLastName must not be empty!");
         Optional<ValidationError> error = validation.execute(request);
         assertTrue(error.isPresent());
-        assertEquals(error.get().getField(), "personLastName");
-        assertEquals(error.get().getMessage(), "Must not be empty!");
+        assertEquals(error.get().getErrorCode(), "ERROR_CODE_8");
+        assertEquals(error.get().getDescription(), "Field personLastName must not be empty!");
     }
 
     @Test

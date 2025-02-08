@@ -3,6 +3,7 @@ package org.javaguru.travel.insurance.core.validations;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.DateTimeService;
+import org.javaguru.travel.insurance.core.ErrorCodeUtil;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import java.util.Optional;
 class AgreementDateToInFutureValidation implements TravelRequestValidation{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToInFutureValidation.class);
-
+    private final ErrorCodeUtil errorCodeUtil;
     private  final DateTimeService dateTimeService;
 
     @Override
@@ -26,7 +27,12 @@ class AgreementDateToInFutureValidation implements TravelRequestValidation{
         Date dateTo = request.getAgreementDateTo();
         Date currentTime = dateTimeService.getCurrentDateTime();
         return (dateTo != null && dateTo.before(currentTime))
-                ? Optional.of(new ValidationError("agreementDateTo", "Must be in future"))
+                ? Optional.of(buildError("ERROR_CODE_3"))
                 : Optional.empty();
+    }
+
+    public ValidationError buildError(String errorCode){
+        String description = errorCodeUtil.getErrorDescription(errorCode);
+        return new ValidationError(errorCode,description);
     }
 }
