@@ -1,0 +1,12 @@
+{"errors":[
+  {
+    "field": "selectedRisks",
+    "message":"Must not be empty!"
+  }
+],
+  "personFirstName": null,
+  "personLastName": null,
+  "agreementDateFrom": null,
+  "agreementDateTo": null,
+  "agreementPrice": null
+}

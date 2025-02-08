@@ -79,10 +79,24 @@ public class TravelCalculatePremiumControllerTest {
     }
 
     @Test
-    @DisplayName("Test case 7: all are okay")
+    @DisplayName("Test case 7: selected_risks is null")
+    public void selectedRisksIsNull()throws Exception{
+        comparingJSON("TravelCalculatePremiumRequest_selected_risks_is_null.json",
+                "TravelCalculatePremiumResponse_selected_risks_is_null.json");
+    }
+
+    @Test
+    @DisplayName("Test case 8: selected_risks is empty")
+    public void selectedRisksIsEmpty()throws Exception{
+        comparingJSON("TravelCalculatePremiumRequest_selected_risks_is_empty.json",
+                "TravelCalculatePremiumResponse_selected_risks_is_empty.json");
+    }
+
+    @Test
+    @DisplayName("Test case 9: all are okay")
     public void allFieldsAreCorrect()throws Exception{
         comparingJSON( "TravelCalculatePremiumRequest_all_fields_are_okay.json",
-           "TravelCalculatePremiumResponse_all_fields_are_okay.json");
+                "TravelCalculatePremiumResponse_all_fields_are_okay.json");
     }
 
     public void comparingJSON(String path1,String path2) throws Exception{
