@@ -77,8 +77,10 @@ subprojects {
 		implementation('org.springframework.boot:spring-boot-starter-web:3.2.5')
 		testImplementation('org.springframework.boot:spring-boot-starter-test:3.2.5')
 
-		testImplementation 'com.h2database:h2:1.4.200'
-		runtimeOnly 'com.h2database:h2:1.4.200'
+		testImplementation 'com.h2database:h2:2.1.214'
+		runtimeOnly 'com.h2database:h2:2.1.214'
+
+		implementation 'org.hsqldb:hsqldb:2.6.1'
 
 	}
 
