@@ -14,14 +14,14 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AgreementDateToInFutureValidation implements TravelRequestValidation{
+class AgreementDateToInFutureValidation extends TravelRequestValidationImpl{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToInFutureValidation.class);
     private final ValidationErrorFactory validationErrorFactory;
     private  final DateTimeUtil dateTimeService;
 
     @Override
-    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
         //logger.info("Validation agreementDateTo must be in future");
         Date dateTo = request.getAgreementDateTo();
         Date currentTime = dateTimeService.getCurrentDateTime();

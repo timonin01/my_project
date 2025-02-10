@@ -30,7 +30,7 @@ class EmptySelectedRisksValidationTest {
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_6"))
                 .thenReturn(validationError);
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isPresent());
         assertSame(error.get(), validationError);
     }
@@ -42,7 +42,7 @@ class EmptySelectedRisksValidationTest {
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_6"))
                 .thenReturn(validationError);
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isPresent());
         assertSame(error.get(), validationError);
     }
@@ -53,7 +53,7 @@ class EmptySelectedRisksValidationTest {
         when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL", "TRAVEL_CANCELLATION",
                 "TRAVEL_LOSS_BAGGAGE","TRAVEL_THIRD_PARTY_LIABILITY",
                 "TRAVEL_EVACUATION", "TRAVEL_SPORT_ACTIVITIES"));
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertFalse(error.isPresent());
     }
 

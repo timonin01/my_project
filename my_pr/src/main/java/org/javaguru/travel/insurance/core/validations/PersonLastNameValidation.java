@@ -12,13 +12,13 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class PersonLastNameValidation implements TravelRequestValidation{
+class PersonLastNameValidation extends TravelRequestValidationImpl{
 
     private Logger logger = LoggerFactory.getLogger(PersonLastNameValidation.class);
     private final ValidationErrorFactory validationErrorFactory;
 
     @Override
-    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
         //logger.info("Validation PersonLastname");
         return (request.getPersonLastName() == null || request.getPersonLastName().isEmpty())
                 ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_8"))

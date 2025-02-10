@@ -13,12 +13,13 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AgreementDateToMustBeAfterThenAgreementDateFrom implements TravelRequestValidation{
+class AgreementDateToMustBeAfterThenAgreementDateFrom extends TravelRequestValidationImpl{
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToMustBeAfterThenAgreementDateFrom.class);
     private final ValidationErrorFactory validationErrorFactory;
+
     @Override
-    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request) {
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
         //logger.info("Validation that AgreementDateToMustBeAfterThenAgreementDateFrom must " +
         //        "be after then agreementDateFrom");
         Date dateFrom = request.getAgreementDateFrom();

@@ -29,7 +29,7 @@ class PersonFirstNamValidationTest {
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_7"))
                 .thenReturn(validationError);
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isPresent());
         assertSame(error.get(), validationError);
     }
@@ -41,7 +41,7 @@ class PersonFirstNamValidationTest {
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_7"))
                 .thenReturn(validationError);
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isPresent());
         assertSame(error.get(), validationError);
     }
@@ -50,7 +50,7 @@ class PersonFirstNamValidationTest {
     public void shouldNotReturnErrorWhenPersonFirstCorrect() {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         when(request.getPersonFirstName()).thenReturn("Andrey");
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertFalse(error.isPresent());
         assertTrue(error.isEmpty());
     }

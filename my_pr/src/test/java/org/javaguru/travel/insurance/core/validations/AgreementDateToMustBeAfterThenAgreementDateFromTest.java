@@ -34,7 +34,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_5"))
                 .thenReturn(validationError);
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isPresent());
         assertSame(error.get(), validationError);
 
@@ -48,7 +48,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_5"))
                 .thenReturn(validationError);
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isPresent());
         assertSame(error.get(), validationError);
     }
@@ -58,7 +58,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
         TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("01.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("10.01.2026"));
-        Optional<ValidationError> error = validation.execute(request);
+        Optional<ValidationError> error = validation.validate(request);
         assertFalse(error.isPresent());
     }
 
