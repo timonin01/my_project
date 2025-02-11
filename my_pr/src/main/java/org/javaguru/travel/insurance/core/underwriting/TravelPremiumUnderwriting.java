@@ -5,5 +5,5 @@ import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import java.math.BigDecimal;
 
 public interface TravelPremiumUnderwriting {
-    public BigDecimal calculateDaysBetween(TravelCalculatePremiumRequest request);
+    public BigDecimal calculatePremium(TravelCalculatePremiumRequest request);
 }

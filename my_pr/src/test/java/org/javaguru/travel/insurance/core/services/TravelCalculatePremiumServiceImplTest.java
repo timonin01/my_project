@@ -37,7 +37,7 @@ class TravelCalculatePremiumServiceImplTest {
      void setUp() {
         request = init();
         when(requestValidator.validate(request)).thenReturn(List.of());
-        when(premiumUnderwriting.calculateDaysBetween(request)).thenReturn(BigDecimal.TEN);
+        when(premiumUnderwriting.calculatePremium(request)).thenReturn(BigDecimal.TEN);
     }
 
     @Test

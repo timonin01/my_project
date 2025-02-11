@@ -23,7 +23,7 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
     public TravelCalculatePremiumResponse calculatePremium(TravelCalculatePremiumRequest request) {
         List<ValidationError> errors = requestValidator.validate(request);
         return errors.isEmpty()
-                ? buildResponse(request, premiumUnderwriting.calculateDaysBetween(request))
+                ? buildResponse(request, premiumUnderwriting.calculatePremium(request))
                 : buildResponse(errors);
     }
 
