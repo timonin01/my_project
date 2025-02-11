@@ -91,7 +91,13 @@ public class TravelCalculatePremiumControllerTest {
     }
 
     @Test
-    @DisplayName("Test case 9: all are okay")
+    @DisplayName("Test case 9: selected_risks are wrong")
+    public void selectedRisksAreWrong() throws Exception{
+        comparingJSON("rest/TravelCalculatePremiumRequest_selected_risks_is_wrong.json",
+                "rest/TravelCalculatePremiumResponse_selected_risks_is_wrong.json");
+    }
+
+    @DisplayName("Test case 10: all are okay")
     public void allFieldsAreCorrect()throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_all_fields_are_okay.json",
                 "rest/TravelCalculatePremiumResponse_all_fields_are_okay.json");

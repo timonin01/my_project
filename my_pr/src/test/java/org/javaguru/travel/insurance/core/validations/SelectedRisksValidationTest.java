@@ -1,0 +1,60 @@
+package org.javaguru.travel.insurance.core.validations;
+
+import org.javaguru.travel.insurance.core.domain.ClassifierValue;
+import org.javaguru.travel.insurance.core.repositories.ClassifierValueRepository;
+import org.javaguru.travel.insurance.core.util.Placeholder;
+import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.ValidationError;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class SelectedRisksValidationTest {
+
+    @Mock private ClassifierValueRepository classifierValueRepository;
+    @Mock private ValidationErrorFactory errorFactory;
+
+    @InjectMocks
+    private SelectedRisksValidation selectedRisksValidation;
+
+
+    @Test
+    public void shouldNotReturnErrorWhenSelectedRisksAreWrong(){
+        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        when(request.getSelectedRisks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
+        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_1"))
+                .thenReturn(Optional.of(mock(ClassifierValue.class)));
+        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_2"))
+                .thenReturn(Optional.of(mock(ClassifierValue.class)));
+
+        assertEquals(selectedRisksValidation.validateList(request).size(), 0);
+    }
+
+    @Test
+    public void shouldReturnErrorWhenSelectedRisksAreWrong(){
+        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        when(request.getSelectedRisks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
+        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_1"))
+                .thenReturn(Optional.empty());
+        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_2"))
+                .thenReturn(Optional.empty());
+
+        ValidationError error = mock(ValidationError.class);
+        when(errorFactory.buildError(eq("ERROR_CODE_9"), anyList())).thenReturn(error);
+
+        assertEquals(selectedRisksValidation.validateList(request).size(), 2);
+    }
+
+}
