@@ -67,7 +67,7 @@ class TravelCalculatePremiumServiceImplTest {
     @Test
     public void shouldTestAgreementPrice(){
         TravelCalculatePremiumResponse response = service.calculatePremium(request);
-        assertNotNull(response.getAgreementPrice());
+        assertNotNull(response.getAgreementPremium());
     }
 
     public TravelCalculatePremiumRequest init(){
