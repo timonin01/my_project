@@ -42,9 +42,10 @@ public class TravelCalculatePremiumRequestValidatorTest {
     public void shouldReturnErrors() {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         TravelRequestValidation validation1 = mock(TravelRequestValidation.class);
-        when(validation1.validate(request)).thenReturn(Optional.of(new ValidationError()));
+        ValidationError validationError = mock(ValidationError.class);
+        when(validation1.validate(request)).thenReturn(Optional.of(validationError));
         TravelRequestValidation validation2 = mock(TravelRequestValidation.class);
-        when(validation2.validate(request)).thenReturn(Optional.of(new ValidationError()));
+        when(validation2.validate(request)).thenReturn(Optional.of(validationError));
         List<TravelRequestValidation> travelValidations = List.of(
                 validation1, validation2
         );

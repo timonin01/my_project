@@ -1,0 +1,40 @@
+package org.javaguru.travel.insurance.core.underwriting.calculators;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import org.javaguru.travel.insurance.core.underwriting.TravelRiskPremiumCalculator;
+import org.javaguru.travel.insurance.core.util.RiskPremium;
+import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Component
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+public class SelectedRisksPremiumCalculator {
+
+    private final List<TravelRiskPremiumCalculator> riskPremiumCalculators;
+
+    public List<RiskPremium> calculatePremiumForAllRisks(TravelCalculatePremiumRequest request) {
+        List<RiskPremium> riskPremiums = request.getSelectedRisks().stream()
+                .map(riskIc -> {
+                    BigDecimal riskPremium = calculatePremiumForRisk(riskIc, request);
+                    return new RiskPremium(riskIc, riskPremium);
+                })
+                .toList();
+        return riskPremiums;
+    }
+
+    private BigDecimal calculatePremiumForRisk(String riskIc, TravelCalculatePremiumRequest request) {
+        return findRiskPremiumCalculator(riskIc).calculatePremium(request);
+    }
+
+    private TravelRiskPremiumCalculator findRiskPremiumCalculator(String riskIc) {
+        return riskPremiumCalculators.stream()
+                .filter(riskCalculator -> riskCalculator.getRiskIc().equals(riskIc))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Not supported riskIc = " + riskIc));
+    }
+
+}
