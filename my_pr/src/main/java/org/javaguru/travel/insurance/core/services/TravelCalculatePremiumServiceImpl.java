@@ -45,12 +45,4 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
         response.setRisks(premiumCalculationResult.getRiskPremiums());
         return response;
     }
-
-    private List<RiskPremium> buildRisks(TravelCalculatePremiumRequest request) {
-        return request.getSelectedRisks().stream()
-                .map(riskIc -> new RiskPremium(riskIc, BigDecimal.ZERO))
-                .collect(Collectors.toList());
-    }
-
-
 }
