@@ -9,7 +9,7 @@
   "risks": [
     {
       "riskIc": "TRAVEL_MEDICAL",
-      "premium": 0
+      "premium": 4
     },
     {
       "riskIc": "TRAVEL_CANCELLATION",
