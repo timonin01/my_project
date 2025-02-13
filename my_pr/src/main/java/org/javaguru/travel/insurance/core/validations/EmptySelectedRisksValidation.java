@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class EmptySelectedRisksValidation extends TravelRequestValidationImpl{
+public class EmptySelectedRisksValidation extends TravelRequestValidationImpl {
 
     private final ValidationErrorFactory validationErrorFactory;
 

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class PersonFirstNameValidation extends TravelRequestValidationImpl{
+class PersonFirstNameValidation extends TravelRequestValidationImpl {
 
     private Logger logger = LoggerFactory.getLogger(PersonFirstNameValidation.class);
     private final ValidationErrorFactory validationErrorFactory;

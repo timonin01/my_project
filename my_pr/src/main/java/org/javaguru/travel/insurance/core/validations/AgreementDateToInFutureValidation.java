@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AgreementDateToInFutureValidation extends TravelRequestValidationImpl{
+class AgreementDateToInFutureValidation extends TravelRequestValidationImpl {
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToInFutureValidation.class);
     private final ValidationErrorFactory validationErrorFactory;

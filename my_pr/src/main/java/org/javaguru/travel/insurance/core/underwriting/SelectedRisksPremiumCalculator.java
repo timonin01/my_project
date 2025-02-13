@@ -1,8 +1,7 @@
-package org.javaguru.travel.insurance.core.underwriting.calculators;
+package org.javaguru.travel.insurance.core.underwriting;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.javaguru.travel.insurance.core.underwriting.TravelRiskPremiumCalculator;
 import org.javaguru.travel.insurance.core.util.RiskPremium;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class SelectedRisksPremiumCalculator {
+class SelectedRisksPremiumCalculator {
 
     private final List<TravelRiskPremiumCalculator> riskPremiumCalculators;
 

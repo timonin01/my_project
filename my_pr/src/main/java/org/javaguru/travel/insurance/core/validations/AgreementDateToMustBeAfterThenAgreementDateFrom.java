@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AgreementDateToMustBeAfterThenAgreementDateFrom extends TravelRequestValidationImpl{
+class AgreementDateToMustBeAfterThenAgreementDateFrom extends TravelRequestValidationImpl {
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToMustBeAfterThenAgreementDateFrom.class);
     private final ValidationErrorFactory validationErrorFactory;

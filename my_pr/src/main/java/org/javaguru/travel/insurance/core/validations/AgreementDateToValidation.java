@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AgreementDateToValidation extends TravelRequestValidationImpl{
+class AgreementDateToValidation extends TravelRequestValidationImpl {
 
     private Logger logger = LoggerFactory.getLogger(AgreementDateToValidation.class);
     private final ValidationErrorFactory validationErrorFactory;

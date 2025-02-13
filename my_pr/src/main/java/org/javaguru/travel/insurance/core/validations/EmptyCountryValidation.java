@@ -10,14 +10,15 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AgreementDateFromValidation extends TravelRequestValidationImpl {
+public class EmptyCountryValidation extends TravelRequestValidationImpl{
 
-    private final ValidationErrorFactory validationErrorFactory;
+    private final ValidationErrorFactory errorFactory;
 
     @Override
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        return (request.getAgreementDateFrom() == null )
-                ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_2"))
+        return ((request.getCountry() == null || request.getCountry().isBlank()) &&
+                (request.getSelectedRisks() != null && request.getSelectedRisks().contains("TRAVEL_MEDICAL")))
+                ? Optional.of(errorFactory.buildError("ERROR_CODE_10"))
                 : Optional.empty();
     }
 }

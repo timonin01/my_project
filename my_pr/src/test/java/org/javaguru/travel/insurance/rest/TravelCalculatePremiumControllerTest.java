@@ -77,27 +77,34 @@ public class TravelCalculatePremiumControllerTest {
     }
 
     @Test
-    @DisplayName("Test case 7: selected_risks is null")
+    @DisplayName("Test case 7: country is null")
+    public void countryIsNull() throws Exception{
+        comparingJSON("rest/TravelCalculatePremiumRequest_country_does_not_exist.json",
+                "rest/TravelCalculatePremiumResponse_country_does_not_exist.json");
+    }
+
+    @Test
+    @DisplayName("Test case 8: selected_risks is null")
     public void selectedRisksIsNull()throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_selected_risks_is_null.json",
                 "rest/TravelCalculatePremiumResponse_selected_risks_is_null.json");
     }
 
     @Test
-    @DisplayName("Test case 8: selected_risks is empty")
+    @DisplayName("Test case 9: selected_risks is empty")
     public void selectedRisksIsEmpty()throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_selected_risks_is_empty.json",
                 "rest/TravelCalculatePremiumResponse_selected_risks_is_empty.json");
     }
 
     @Test
-    @DisplayName("Test case 9: selected_risks are wrong")
+    @DisplayName("Test case 10: selected_risks are wrong")
     public void selectedRisksAreWrong() throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_selected_risks_is_wrong.json",
                 "rest/TravelCalculatePremiumResponse_selected_risks_is_wrong.json");
     }
 
-    @DisplayName("Test case 10: all are okay")
+    @DisplayName("Test case 11: all are okay")
     public void allFieldsAreCorrect()throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_all_fields_are_okay.json",
                 "rest/TravelCalculatePremiumResponse_all_fields_are_okay.json");
