@@ -1,11 +1,11 @@
-package org.javaguru.travel.insurance.core.underwriting.calculators;
+package org.javaguru.travel.insurance.core.underwriting.calculators.medical;
 
 import org.javaguru.travel.insurance.core.underwriting.TravelRiskPremiumCalculator;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
 
 import java.math.BigDecimal;
 
-public class TravelThirdPartyLiabilityRiskPremiumCalculator implements TravelRiskPremiumCalculator {
+public class TravelEvacuationRiskPremiumCalculator implements TravelRiskPremiumCalculator {
 
     @Override
     public BigDecimal calculatePremium(TravelCalculatePremiumRequest request) {
@@ -13,5 +13,5 @@ public class TravelThirdPartyLiabilityRiskPremiumCalculator implements TravelRis
     }
 
     @Override
-    public String getRiskIc() {return "TRAVEL_THIRD_PARTY_LIABILITY";}
+    public String getRiskIc() { return "TRAVEL_EVACUATION";}
 }
