@@ -1,9 +1,12 @@
 package org.javaguru.travel.insurance.core.underwriting.calculators;
 
+import org.javaguru.travel.insurance.core.domain.AgeCoefficient;
 import org.javaguru.travel.insurance.core.domain.CountryDefaultDayRate;
+import org.javaguru.travel.insurance.core.repositories.AgeCoefficientRepository;
 import org.javaguru.travel.insurance.core.repositories.CountryDefaultDayRateRepository;
 import org.javaguru.travel.insurance.core.util.DateTimeUtil;
 import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,23 +31,54 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TravelMedicalRiskPremiumCalculatorTest {
 
-    @Mock private CountryDefaultDayRateRepository countryDefaultDayRateRepository;
     @Mock private DateTimeUtil dateTimeUtil;
+    @Mock private CountryDefaultDayRateRepository countryDefaultDayRateRepository;
+    @Mock private AgeCoefficientRepository ageCoefficientRepository;
 
     @InjectMocks
     private TravelMedicalRiskPremiumCalculator calculator;
 
-    @Test
-    public void shouldReturnCorrectResponse(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
-        when(request.getCountry()).thenReturn("SPAIN");
-        when(dateTimeUtil.calculateDaysBetween(any(), any())).thenReturn(2L);
-        CountryDefaultDayRate countryDefaultDayRate = mock(CountryDefaultDayRate.class);
-        when(countryDefaultDayRate.getDefaultDayRate()).thenReturn(BigDecimal.TWO);
-        when(countryDefaultDayRateRepository.findByCountryIc("SPAIN")).thenReturn(Optional.of(countryDefaultDayRate));
-        BigDecimal premium = calculator.calculatePremium(request);
-        assertEquals(premium.stripTrailingZeros(),
-                new BigDecimal("4").stripTrailingZeros());
+    private TravelCalculatePremiumRequest request;
+
+    @BeforeEach
+    void setUp() {
+        request = mock(TravelCalculatePremiumRequest.class);
+        when(request.getPersonBirthDate()).thenReturn(new Date());
     }
 
+    @Test
+    void shouldCalculatePremiumCorrectly() {
+        BigDecimal daysCount = BigDecimal.valueOf(10);
+        BigDecimal countryDefaultRate = BigDecimal.valueOf(20);
+        BigDecimal ageCoefficient = BigDecimal.valueOf(1.2);
+
+        LocalDate currentDate = LocalDate.now();
+        when(dateTimeUtil.getCurrentDateTime()).thenReturn(Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        when(dateTimeUtil.calculateDaysBetween(request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(daysCount.longValue());
+        CountryDefaultDayRate countryDefaultDayRate = mock(CountryDefaultDayRate.class);
+        when(countryDefaultDayRate.getDefaultDayRate()).thenReturn(countryDefaultRate);
+        when(countryDefaultDayRateRepository.findByCountryIc(request.getCountry())).thenReturn(Optional.of(countryDefaultDayRate));
+        AgeCoefficient ageCoefficientDomain = mock(AgeCoefficient.class);
+        when(ageCoefficientDomain.getCoefficient()).thenReturn(ageCoefficient);
+        when(ageCoefficientRepository.findCoefficient(calculateAge(request))).thenReturn(Optional.of(ageCoefficientDomain));
+
+        BigDecimal expectedPremium = countryDefaultRate.multiply(daysCount).multiply(ageCoefficient)
+                .setScale(2, RoundingMode.HALF_UP);
+
+        BigDecimal result = calculator.calculatePremium(request);
+
+        assertEquals(expectedPremium, result);
+    }
+
+    private Integer calculateAge(TravelCalculatePremiumRequest request) {
+        LocalDate personBirthDate = toLocalDate(request.getPersonBirthDate());
+        LocalDate currentDate = toLocalDate(dateTimeUtil.getCurrentDateTime());
+        return Period.between(personBirthDate, currentDate).getYears();
+    }
+
+    private LocalDate toLocalDate(Date date) {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
 }
