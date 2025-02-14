@@ -104,7 +104,19 @@ public class TravelCalculatePremiumControllerTest {
                 "rest/TravelCalculatePremiumResponse_selected_risks_is_wrong.json");
     }
 
-    @DisplayName("Test case 11: all are okay")
+    @DisplayName("Test case 11: personBirthdayDate is null")
+    public void personBirthdayDateIsNull() throws Exception{
+        comparingJSON("rest/TravelCalculatePremiumRequest_personBirthdayDate_does_not_exist.json",
+                "rest/TravelCalculatePremiumResponse_personBirthdayDate_does_not_exist.json");
+    }
+
+    @DisplayName("Test case 12: personBirthdayDate in future")
+    public void personBirthdayDateInFuture() throws Exception{
+        comparingJSON("rest/TravelCalculatePremiumRequest_personBirthdayDate_in_future.json",
+                "rest/TravelCalculatePremiumResponse_personBirthdayDate_in_future.json");
+    }
+
+    @DisplayName("Test case 13: all are okay")
     public void allFieldsAreCorrect()throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_all_fields_are_okay.json",
                 "rest/TravelCalculatePremiumResponse_all_fields_are_okay.json");
