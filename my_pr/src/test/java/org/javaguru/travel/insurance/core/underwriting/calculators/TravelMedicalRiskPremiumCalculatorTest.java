@@ -33,11 +33,11 @@ class TravelMedicalRiskPremiumCalculatorTest {
         when(request.getCountry()).thenReturn("SPAIN");
         when(dateTimeUtil.calculateDaysBetween(any(), any())).thenReturn(2L);
         CountryDefaultDayRate countryDefaultDayRate = mock(CountryDefaultDayRate.class);
-        when(countryDefaultDayRate.getDefaultDayRate()).thenReturn(BigDecimal.TEN);
+        when(countryDefaultDayRate.getDefaultDayRate()).thenReturn(BigDecimal.TWO);
         when(countryDefaultDayRateRepository.findByCountryIc("SPAIN")).thenReturn(Optional.of(countryDefaultDayRate));
         BigDecimal premium = calculator.calculatePremium(request);
         assertEquals(premium.stripTrailingZeros(),
-                new BigDecimal("20").stripTrailingZeros());
+                new BigDecimal("4").stripTrailingZeros());
     }
 
 }

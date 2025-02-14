@@ -6,19 +6,19 @@
 "agreementDateFrom": "2026-05-29",
 "agreementDateTo": "2026-05-30",
   "country": "JAPAN",
-"agreementPremium": 1,
+"agreementPremium": 10.00,
   "risks": [
     {
       "riskIc": "TRAVEL_MEDICAL",
-      "premium": 4
+      "premium": 4.00
     },
     {
       "riskIc": "TRAVEL_CANCELLATION",
-      "premium": 0
+      "premium": 0.00
     },
     {
       "riskIc": "TRAVEL_LOSS_BAGGAGE",
-      "premium": 0
+      "premium": 0.00
     }
   ]
 }
