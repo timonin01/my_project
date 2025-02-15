@@ -4,6 +4,7 @@
   "personBirthDate" : null,
   "agreementDateFrom" : null,
   "agreementDateTo" : null,
+  "medicalRiskLimitLevel": null,
   "country" : null,
   "selected_risks":null
 }

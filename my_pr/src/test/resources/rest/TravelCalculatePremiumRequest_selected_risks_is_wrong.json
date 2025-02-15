@@ -4,6 +4,7 @@
   "personBirthDate" : "2006-12-08",
   "agreementDateFrom" : "2026-05-19",
   "agreementDateTo" : "2026-05-29",
+  "medicalRiskLimitLevel": "LEVEL_10000",
   "country" : "JAPAN",
   "selected_risks" : ["NOT_VALID_RISK_IC_1", "NOT_VALID_RISK_IC_2"]
 }

@@ -2,6 +2,7 @@ package org.javaguru.travel.insurance.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,8 @@ public class TravelCalculatePremiumRequest {
 
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date agreementDateTo;
+
+    private String medicalRiskLimitLevel;
 
     private String country;
 

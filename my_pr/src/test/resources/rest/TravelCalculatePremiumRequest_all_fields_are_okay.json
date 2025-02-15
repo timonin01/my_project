@@ -4,6 +4,7 @@
   "personBirthDate" : "2006-12-08",
   "agreementDateFrom" : "2026-05-29",
   "agreementDateTo" : "2026-05-30",
+  "medicalRiskLimitLevel": "LEVEL_10000",
   "country" : "JAPAN",
   "selected_risks" : ["TRAVEL_MEDICAL", "TRAVEL_CANCELLATION", "TRAVEL_LOSS_BAGGAGE"]
 }
