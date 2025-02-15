@@ -33,7 +33,6 @@ class EmptyMedicalRiskLimitLevelValidationTest {
     @BeforeEach
     public void setUp(){
         request = mock(TravelCalculatePremiumRequest.class);
-        validation.setMedicalRiskLimitLevelEnabled(true);
     }
 
     @Test
@@ -42,6 +41,7 @@ class EmptyMedicalRiskLimitLevelValidationTest {
         when(request.getMedicalRiskLimitLevel()).thenReturn(null);
         ValidationError expectedError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_13")).thenReturn(expectedError);
+        ReflectionTestUtils.setField(validation, "medicalRiskLimitLevelEnabled", true);
         Optional<ValidationError> result = validation.validate(request);
         assertTrue(result.isPresent());
         assertEquals(expectedError, result.get());

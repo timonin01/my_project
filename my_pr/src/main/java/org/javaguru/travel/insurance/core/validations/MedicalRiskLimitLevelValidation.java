@@ -24,8 +24,8 @@ public class MedicalRiskLimitLevelValidation extends TravelRequestValidationImpl
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
         return ( medicalRiskLimitLevelEnabled &&
                 containsTravelMedical(request)&&
-                isMedicalRiskLimitLevelIsNullOrBlank(request))&&
-                risksContainsMedicalRiskLimitLevel(request)
+                isMedicalRiskLimitLevelIsNullOrBlank(request)&&
+                !risksContainsMedicalRiskLimitLevel(request))
                 ?Optional.of(validationErrorFactory.buildError("ERROR_CODE_14"))
                 :Optional.empty();
     }
@@ -36,7 +36,7 @@ public class MedicalRiskLimitLevelValidation extends TravelRequestValidationImpl
     }
 
     private boolean isMedicalRiskLimitLevelIsNullOrBlank(TravelCalculatePremiumRequest request) {
-        return request.getMedicalRiskLimitLevel() == null || request.getMedicalRiskLimitLevel().isBlank();
+        return request.getMedicalRiskLimitLevel() != null && !request.getMedicalRiskLimitLevel().isBlank();
     }
 
     private boolean risksContainsMedicalRiskLimitLevel(TravelCalculatePremiumRequest request){

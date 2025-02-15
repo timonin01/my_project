@@ -116,7 +116,13 @@ public class TravelCalculatePremiumControllerTest {
                 "rest/TravelCalculatePremiumResponse_personBirthdayDate_in_future.json");
     }
 
-    @DisplayName("Test case 13: all are okay")
+    @DisplayName("Test case 13: personBirthdayDate in future")
+    public void travelMedicalAllFieldsNotProvided() throws Exception{
+        comparingJSON("rest/TravelCalculatePremiumRequest_travel_medical_allFields_not_provided.json",
+                "rest/TravelCalculatePremiumResponse_travel_medical_allFields_not_provided.json");
+    }
+
+    @DisplayName("Test case 14: all are okay")
     public void allFieldsAreCorrect()throws Exception{
         comparingJSON("rest/TravelCalculatePremiumRequest_all_fields_are_okay.json",
                 "rest/TravelCalculatePremiumResponse_all_fields_are_okay.json");

@@ -16,14 +16,6 @@ public class EmptyMedicalRiskLimitLevelValidation extends TravelRequestValidatio
     @Value( "${medical.risk.limit.level.enabled:false}" )
     private Boolean medicalRiskLimitLevelEnabled;
 
-    public Boolean getMedicalRiskLimitLevelEnabled() {
-        return medicalRiskLimitLevelEnabled;
-    }
-
-    public void setMedicalRiskLimitLevelEnabled(Boolean medicalRiskLimitLevelEnabled) {
-        this.medicalRiskLimitLevelEnabled = medicalRiskLimitLevelEnabled;
-    }
-
     private final ValidationErrorFactory errorFactory;
 
     @Override
