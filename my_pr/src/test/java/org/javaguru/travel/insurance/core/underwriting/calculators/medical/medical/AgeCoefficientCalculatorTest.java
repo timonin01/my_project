@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -42,6 +43,13 @@ class AgeCoefficientCalculatorTest {
     }
 
     @Test
+    public void shouldReturnDefaultValue(){
+        ReflectionTestUtils.setField(calculator, "medicalRiskLimitLevelEnabled", false);
+        BigDecimal result = calculator.calculateAgeCoefficient(request);
+        assertEquals(result,BigDecimal.ONE);
+    }
+
+    @Test
     void shouldFindCoefficientWhenAgeCoefficientExists() {
         LocalDate currentDate = LocalDate.of(2025, 2, 14);
         int age = 18;
@@ -51,7 +59,7 @@ class AgeCoefficientCalculatorTest {
         AgeCoefficient ageCoefficient = mock(AgeCoefficient.class);
         when(ageCoefficient.getCoefficient()).thenReturn(expectedCoefficient);
         when(ageCoefficientRepository.findCoefficient(age)).thenReturn(Optional.of(ageCoefficient));
-
+        ReflectionTestUtils.setField(calculator, "medicalRiskLimitLevelEnabled", true);
         BigDecimal result = calculator.calculateAgeCoefficient(request);
 
         assertEquals(expectedCoefficient, result);
@@ -64,7 +72,7 @@ class AgeCoefficientCalculatorTest {
 
         when(dateTimeUtil.getCurrentDateTime()).thenReturn(Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         when(ageCoefficientRepository.findCoefficient(age)).thenReturn(Optional.empty());
-
+        ReflectionTestUtils.setField(calculator, "medicalRiskLimitLevelEnabled", true);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> calculator.calculateAgeCoefficient(request));
 
         assertEquals("Age coefficient not found for age = " + age, exception.getMessage());
