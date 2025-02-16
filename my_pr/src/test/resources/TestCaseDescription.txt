@@ -1,0 +1,14 @@
+Test case 1: firstName does not exist
+Test case 2: lastName does not exist
+Test case 3: agreementDateFrom does not exist
+Test case 4: agreementDateTo does not exist
+Test case 5: all fields does not exist
+Test case 6: agreementDateTo must be after then agreement agreementDateFrom
+Test case 7: country is null
+Test case 8: selected_risks is null
+Test case 9: selected_risks is empty
+Test case 10: selected_risks are wrong
+Test case 11: personBirthdayDate is null
+Test case 12: personBirthdayDate in future
+Test case 13: allFields not_provided
+Test case 14: all are okay
