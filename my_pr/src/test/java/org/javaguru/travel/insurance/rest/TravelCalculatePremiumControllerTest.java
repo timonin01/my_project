@@ -128,6 +128,14 @@ public class TravelCalculatePremiumControllerTest {
                 "rest/test_case_14/TravelCalculatePremiumResponse_all_fields_are_okay.json");
     }
 
+    @Test
+    @DisplayName("Test case 15: country is empty")
+    public void countryIsEmpty() throws Exception{
+        comparingJSON("rest/test_case_15/TravelCalculatePremiumRequest_country_empty.json",
+                "rest/test_case_15/TravelCalculatePremiumResponse_country_empty.json");
+    }
+
+
     public void comparingJSON(String path1,String path2) throws Exception{
         MvcResult result =mockMvc.perform(post("/insurance/travel/")
                         .content(jsonFileReader.readJsonFromFile(path1))
