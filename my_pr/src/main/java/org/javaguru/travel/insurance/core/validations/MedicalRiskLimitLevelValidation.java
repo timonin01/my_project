@@ -17,31 +17,25 @@ public class MedicalRiskLimitLevelValidation extends TravelRequestValidationImpl
     @Value( "${medical.risk.limit.level.enabled:false}" )
     private Boolean medicalRiskLimitLevelEnabled;
 
-    private final ValidationErrorFactory validationErrorFactory;
     private final ClassifierValueRepository classifierValueRepository;
+    private final ValidationErrorFactory errorFactory;
 
     @Override
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        return ( medicalRiskLimitLevelEnabled &&
-                containsTravelMedical(request)&&
-                isMedicalRiskLimitLevelIsNullOrBlank(request)&&
-                !risksContainsMedicalRiskLimitLevel(request))
-                ?Optional.of(validationErrorFactory.buildError("ERROR_CODE_14"))
-                :Optional.empty();
+        return (isMedicalRiskLimitLevelNotBlank(request))
+                && !existInDatabase(request.getMedicalRiskLimitLevel())
+                ? Optional.of(errorFactory.buildError("ERROR_CODE_14"))
+                : Optional.empty();
     }
 
-    private boolean containsTravelMedical(TravelCalculatePremiumRequest request) {
-        return request.getSelectedRisks() != null
-                && request.getSelectedRisks().contains("TRAVEL_MEDICAL");
-    }
-
-    private boolean isMedicalRiskLimitLevelIsNullOrBlank(TravelCalculatePremiumRequest request) {
+    private boolean isMedicalRiskLimitLevelNotBlank(TravelCalculatePremiumRequest request) {
         return request.getMedicalRiskLimitLevel() != null && !request.getMedicalRiskLimitLevel().isBlank();
     }
 
-    private boolean risksContainsMedicalRiskLimitLevel(TravelCalculatePremiumRequest request){
+    private boolean existInDatabase(String medicalRiscLimitLevelIc) {
         return classifierValueRepository
-                .findByClassifierTitleAndIc("MEDICAL_RISK_LIMIT_LEVEL", request.getMedicalRiskLimitLevel()).isPresent();
+                .findByClassifierTitleAndIc("MEDICAL_RISK_LIMIT_LEVEL", medicalRiscLimitLevelIc).isPresent();
     }
+
 
 }

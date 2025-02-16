@@ -45,6 +45,7 @@ subprojects {
 		println "${projectDir}/build/"
 	}
 
+
 	dependencies {
 		// Основные зависимости Lombok
 		compileOnly 'org.projectlombok:lombok:1.18.32'
@@ -83,6 +84,5 @@ subprojects {
 		implementation 'org.hsqldb:hsqldb:2.6.1'
 
 	}
-
 }
 
