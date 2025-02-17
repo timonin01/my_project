@@ -4,8 +4,6 @@ buildscript {
 	}
 }
 
-
-
 subprojects {
 
 	apply plugin: 'java'
@@ -77,6 +75,8 @@ subprojects {
 		//liquibase
 		implementation ('org.liquibase:liquibase-core:4.31.0')
 
+		//thymeleaf
+		implementation('org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5')
 
 		implementation('org.springframework.boot:spring-boot-starter-data-jpa:3.2.5')
 		implementation('org.springframework.boot:spring-boot-starter-web:3.2.5')
