@@ -139,7 +139,7 @@ public class TravelCalculatePremiumControllerTest {
 
 
     public void comparingJSON(String path1,String path2) throws Exception{
-        MvcResult result =mockMvc.perform(post("/insurance/travel/api/")
+        MvcResult result =mockMvc.perform(post(BASE_URL)
                         .content(jsonFileReader.readJsonFromFile(path1))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())

@@ -41,11 +41,11 @@
 <td th:if="${response.errors != null}">
     <h3>Travel Insurance Premium Calculation ERRORS</h3>
     <tr th:each="error : ${response.errors}">
-        <td th:text="${error.errorCode}" />
-        <td th:text="${error.description}" />
-        <br>
-        <br>
-    </tr>
+<td th:text="${error.errorCode}" />
+<td th:text="${error.description}" />
+<br>
+<br>
+</tr>
 </td>
 
 <br>
@@ -60,10 +60,10 @@
 <td th:if="${response.risks != null}">
     <h3>Travel Insurance Premium Calculation RISKS</h3>
     <tr th:each="risk : ${response.risks}">
-        <td th:text="${risk.riskIc}" />
-        <td th:text="${risk.premium}" />
-        <br>
-    </tr>
+<td th:text="${risk.riskIc}" />
+<td th:text="${risk.premium}" />
+<br>
+</tr>
 </td>
 
 </body>
