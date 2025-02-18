@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.domain.AgeCoefficient;
 import org.javaguru.travel.insurance.core.repositories.AgeCoefficientRepository;
 import org.javaguru.travel.insurance.core.util.DateTimeUtil;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -25,20 +25,20 @@ public class AgeCoefficientCalculator {
     private final AgeCoefficientRepository ageCoefficientRepository;
     private final DateTimeUtil dateTimeUtil;
 
-    BigDecimal calculateAgeCoefficient(TravelCalculatePremiumRequest request) {
+    BigDecimal calculateAgeCoefficient(TravelCalculatePremiumRequestV1 request) {
         return medicalRiskLimitLevelEnabled
                 ? getCoefficient(request)
                 : getDefaultValue();
     }
 
-    private BigDecimal getCoefficient(TravelCalculatePremiumRequest request) {
+    private BigDecimal getCoefficient(TravelCalculatePremiumRequestV1 request) {
         int age = calculateAge(request);
         return ageCoefficientRepository.findCoefficient(age)
                 .map(AgeCoefficient::getCoefficient)
                 .orElseThrow(() -> new RuntimeException("Age coefficient not found for age = " + age));
     }
 
-    private Integer calculateAge(TravelCalculatePremiumRequest request) {
+    private Integer calculateAge(TravelCalculatePremiumRequestV1 request) {
         LocalDate personBirthDate = toLocalDate(request.getPersonBirthDate());
         LocalDate currentDate = toLocalDate(dateTimeUtil.getCurrentDateTime());
         return Period.between(personBirthDate, currentDate).getYears();

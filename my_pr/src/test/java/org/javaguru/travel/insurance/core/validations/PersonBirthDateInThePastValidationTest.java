@@ -1,15 +1,13 @@
 package org.javaguru.travel.insurance.core.validations;
 
 import org.javaguru.travel.insurance.core.util.DateTimeUtil;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,7 +28,7 @@ class PersonBirthDateInThePastValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenPersonBirthDateInPast(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getPersonBirthDate()).thenReturn(createDate("08.12.2006"));
         when(dateTimeUtil.getCurrentDateTime()).thenReturn(createDate("01.01.2026"));
         Optional<ValidationError> error = validation.validate(request);
@@ -39,7 +37,7 @@ class PersonBirthDateInThePastValidationTest {
 
     @Test
     public void shouldReturnErrorWhenPersonBirthDateInFuture(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getPersonBirthDate()).thenReturn(createDate("01.01.2029"));
         when(dateTimeUtil.getCurrentDateTime()).thenReturn(createDate("14.02.2025"));
         ValidationError validationError = mock(ValidationError.class);

@@ -1,6 +1,6 @@
 package org.javaguru.travel.insurance.core.validations;
 
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class AgreementDateFromValidationTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateFromIsNull(){
-        TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request= mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(null);
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_2"))
@@ -40,7 +40,7 @@ class AgreementDateFromValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenAgreementDateFromIsCorrect(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("05.02.2025"));
         Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isEmpty());

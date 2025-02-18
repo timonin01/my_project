@@ -1,10 +1,8 @@
 package org.javaguru.travel.insurance.core.underwriting.calculators.medical.medical;
 
-import jakarta.persistence.Table;
 import org.javaguru.travel.insurance.core.domain.CountryDefaultDayRate;
 import org.javaguru.travel.insurance.core.repositories.CountryDefaultDayRateRepository;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
-import org.junit.jupiter.api.BeforeAll;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,11 +24,11 @@ class CountryDefaultDayRateCalculatorTest {
 
     @InjectMocks CountryDefaultDayRateCalculator calculator;
 
-    private TravelCalculatePremiumRequest request;
+    private TravelCalculatePremiumRequestV1 request;
 
     @BeforeEach
     public void setUp(){
-        request = new TravelCalculatePremiumRequest();
+        request = new TravelCalculatePremiumRequestV1();
         request.setCountry("JAPAN");
     }
 

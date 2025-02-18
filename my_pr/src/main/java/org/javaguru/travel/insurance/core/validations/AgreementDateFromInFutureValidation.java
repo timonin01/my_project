@@ -3,7 +3,7 @@ package org.javaguru.travel.insurance.core.validations;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.util.DateTimeUtil;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ class AgreementDateFromInFutureValidation extends TravelRequestValidationImpl {
     private final ValidationErrorFactory validationErrorFactory;
 
     @Override
-    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequestV1 request) {
         Date dateFrom = request.getAgreementDateFrom();
         Date currentTime = dateTimeService.getCurrentDateTime();
         return (dateFrom != null && dateFrom.before(currentTime))

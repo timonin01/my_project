@@ -1,6 +1,6 @@
 package org.javaguru.travel.insurance.core.validations;
 
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,14 +18,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TravelCalculatePremiumRequestValidatorTest {
+public class TravelCalculatePremiumRequestV1ValidatorTest {
 
     @InjectMocks
     private TravelCalculatePremiumRequestValidatorImpl requestValidator;
 
     @Test
     public void shouldNotReturnErrors() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         TravelRequestValidation validation1 = mock(TravelRequestValidation.class);
         when(validation1.validate(request)).thenReturn(Optional.empty());
         TravelRequestValidation validation2 = mock(TravelRequestValidation.class);
@@ -40,7 +40,7 @@ public class TravelCalculatePremiumRequestValidatorTest {
 
     @Test
     public void shouldReturnErrors() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         TravelRequestValidation validation1 = mock(TravelRequestValidation.class);
         ValidationError validationError = mock(ValidationError.class);
         when(validation1.validate(request)).thenReturn(Optional.of(validationError));

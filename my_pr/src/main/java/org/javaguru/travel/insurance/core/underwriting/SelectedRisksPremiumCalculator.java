@@ -3,7 +3,7 @@ package org.javaguru.travel.insurance.core.underwriting;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.dto.RiskPremium;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ class SelectedRisksPremiumCalculator {
 
     private final List<TravelRiskPremiumCalculator> riskPremiumCalculators;
 
-    public List<RiskPremium> calculatePremiumForAllRisks(TravelCalculatePremiumRequest request) {
+    public List<RiskPremium> calculatePremiumForAllRisks(TravelCalculatePremiumRequestV1 request) {
         List<RiskPremium> riskPremiums = request.getSelectedRisks().stream()
                 .map(riskIc -> {
                     BigDecimal riskPremium = calculatePremiumForRisk(riskIc, request);
@@ -25,7 +25,7 @@ class SelectedRisksPremiumCalculator {
         return riskPremiums;
     }
 
-    private BigDecimal calculatePremiumForRisk(String riskIc, TravelCalculatePremiumRequest request) {
+    private BigDecimal calculatePremiumForRisk(String riskIc, TravelCalculatePremiumRequestV1 request) {
         return findRiskPremiumCalculator(riskIc).calculatePremium(request);
     }
 

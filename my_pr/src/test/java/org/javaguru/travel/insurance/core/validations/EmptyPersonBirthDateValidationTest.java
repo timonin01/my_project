@@ -1,7 +1,6 @@
 package org.javaguru.travel.insurance.core.validations;
 
-import org.javaguru.travel.insurance.core.util.DateTimeUtil;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +26,7 @@ class EmptyPersonBirthDateValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenPersonBirthDateIsNotNull(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getPersonBirthDate()).thenReturn(createDate("08.12.2006"));
         Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isEmpty());
@@ -35,7 +34,7 @@ class EmptyPersonBirthDateValidationTest {
 
     @Test
     public void shouldReturnErrorWhenPersonBirthDateIsNull(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getPersonBirthDate()).thenReturn(null);
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_11"))

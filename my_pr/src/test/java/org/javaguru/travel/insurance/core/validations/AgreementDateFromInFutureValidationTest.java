@@ -1,7 +1,7 @@
 package org.javaguru.travel.insurance.core.validations;
 
 import org.javaguru.travel.insurance.core.util.DateTimeUtil;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class AgreementDateFromInFutureValidationTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateToInPast(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("10.01.2023"));
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_1"))
@@ -47,7 +47,7 @@ class AgreementDateFromInFutureValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenAgreementDateToIsCorrect(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("05.02.2025"));
         Optional<ValidationError> error = validation.validate(request);
         assertTrue(error.isEmpty());

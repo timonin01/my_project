@@ -1,6 +1,6 @@
 package org.javaguru.travel.insurance.core.validations;
 
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class EmptySelectedRisksValidationTest {
 
     @Test
     public void shouldReturnErrorWhenSelectedRisksIsNull(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getSelectedRisks()).thenReturn(null);
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_6"))
@@ -37,7 +37,7 @@ class EmptySelectedRisksValidationTest {
 
     @Test
     public void shouldReturnErrorWhenSelectedRisksIsEmpty(){
-        TravelCalculatePremiumRequest request  = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request  = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getSelectedRisks()).thenReturn(List.of());
         ValidationError validationError = mock(ValidationError.class);
         when(validationErrorFactory.buildError("ERROR_CODE_6"))
@@ -49,7 +49,7 @@ class EmptySelectedRisksValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenSelectedRisksExist(){
-        TravelCalculatePremiumRequest request  = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request  = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL", "TRAVEL_CANCELLATION",
                 "TRAVEL_LOSS_BAGGAGE","TRAVEL_THIRD_PARTY_LIABILITY",
                 "TRAVEL_EVACUATION", "TRAVEL_SPORT_ACTIVITIES"));

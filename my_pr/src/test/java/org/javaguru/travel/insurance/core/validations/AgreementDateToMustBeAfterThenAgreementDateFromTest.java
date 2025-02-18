@@ -1,6 +1,6 @@
 package org.javaguru.travel.insurance.core.validations;
 
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateToBeforeThenDateFrom(){
-        TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request= mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("10.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("01.01.2026"));
         ValidationError validationError = mock(ValidationError.class);
@@ -42,7 +42,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateToEqualsDateFrom(){
-        TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request= mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("01.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("01.01.2026"));
         ValidationError validationError = mock(ValidationError.class);
@@ -55,7 +55,7 @@ class AgreementDateToMustBeAfterThenAgreementDateFromTest {
 
     @Test
     public void shouldNotReturnErrorWhenAgreementDateToAfterThenDateFrom(){
-        TravelCalculatePremiumRequest request= mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request= mock(TravelCalculatePremiumRequestV1.class);
         when(request.getAgreementDateFrom()).thenReturn(createDate("01.01.2026"));
         when(request.getAgreementDateTo()).thenReturn(createDate("10.01.2026"));
         Optional<ValidationError> error = validation.validate(request);

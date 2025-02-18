@@ -1,7 +1,7 @@
 package org.javaguru.travel.insurance.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumResponse;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumResponseV1;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class TravelCalculatePremiumResponseLogger {
     private final Logger logger  = LoggerFactory.getLogger(TravelCalculatePremiumResponseLogger.class);
 
-    public void log(TravelCalculatePremiumResponse response){
+    public void log(TravelCalculatePremiumResponseV1 response){
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonRequest = objectMapper.writeValueAsString(response);

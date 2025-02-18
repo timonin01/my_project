@@ -2,7 +2,7 @@ package org.javaguru.travel.insurance.core.validations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.javaguru.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.ValidationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ class PersonLastNameValidation extends TravelRequestValidationImpl {
     private final ValidationErrorFactory validationErrorFactory;
 
     @Override
-    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequestV1 request) {
         //logger.info("Validation PersonLastname");
         return (request.getPersonLastName() == null || request.getPersonLastName().isEmpty())
                 ? Optional.of(validationErrorFactory.buildError("ERROR_CODE_8"))
