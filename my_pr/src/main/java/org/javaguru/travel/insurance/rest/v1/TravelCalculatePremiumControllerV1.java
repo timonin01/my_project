@@ -9,6 +9,7 @@ import org.javaguru.travel.insurance.core.services.TravelCalculatePremiumService
 import org.javaguru.travel.insurance.dto.v1.DtoV1Converter;
 import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumResponseV1;
+import org.javaguru.travel.insurance.rest.common.TravelCalculatePremiumRequestExecutionTimeLogger;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/insurance/travel/api/v1")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class TravelCalculatePremiumController {
+public class TravelCalculatePremiumControllerV1 {
 
-	private final TravelCalculatePremiumRequestLogger requestLogger;
-	private final TravelCalculatePremiumResponseLogger responseLogger;
+	private final TravelCalculatePremiumRequestLoggerV1 requestLogger;
+	private final TravelCalculatePremiumResponseLoggerV1 responseLogger;
 	private final TravelCalculatePremiumRequestExecutionTimeLogger executionTimeLogger;
 	private final TravelCalculatePremiumService calculatePremiumService;
 	private final DtoV1Converter dtoV1Converter;

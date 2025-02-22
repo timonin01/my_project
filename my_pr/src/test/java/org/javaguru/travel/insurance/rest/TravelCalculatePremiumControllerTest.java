@@ -1,4 +1,4 @@
-package org.javaguru.travel.insurance.core.rest;
+package org.javaguru.travel.insurance.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

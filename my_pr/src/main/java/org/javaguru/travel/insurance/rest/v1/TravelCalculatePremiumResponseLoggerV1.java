@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TravelCalculatePremiumResponseLogger {
-    private final Logger logger  = LoggerFactory.getLogger(TravelCalculatePremiumResponseLogger.class);
+public class TravelCalculatePremiumResponseLoggerV1 {
+    private final Logger logger  = LoggerFactory.getLogger(TravelCalculatePremiumResponseLoggerV1.class);
 
     public void log(TravelCalculatePremiumResponseV1 response){
         try {

@@ -35,8 +35,8 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
     private TravelCalculatePremiumCoreResult buildResponse(AgreementDTO agreement) {
         riskPremiumsForAllPersonsCalculator.calculateRiskPremiumsForAllPersons(agreement);
 
-        BigDecimal totalAgreementPremium = null;
-        totalAgreementPremium = totalAgreementPremiumCalculator.calculateTotalAgreementPremium(agreement);
+        BigDecimal totalAgreementPremium = totalAgreementPremiumCalculator
+                .calculateTotalAgreementPremium(agreement);
 
         agreement.setAgreementPremium(totalAgreementPremium);
         TravelCalculatePremiumCoreResult coreResult = new TravelCalculatePremiumCoreResult();
