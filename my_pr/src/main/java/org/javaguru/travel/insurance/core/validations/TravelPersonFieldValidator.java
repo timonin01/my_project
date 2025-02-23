@@ -20,32 +20,30 @@ public class TravelPersonFieldValidator {
 
     private final List<TravelPersonFieldValidation> personFieldValidations;
 
-    public List<ValidationErrorDTO> validate(List<PersonDTO> personDTOS) {
-        List<ValidationErrorDTO> personErrors =
-                personDTOS.stream()
-                        .map(this::collectPersonErrors)
-                        .flatMap(List::stream)
-                        .collect(Collectors.toList());
-        return personErrors;
+    public List<ValidationErrorDTO> validate(AgreementDTO agreement) {
+        return agreement.getPersons().stream()
+                .map(person -> collectPersonErrors(agreement, person))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 
-    private List<ValidationErrorDTO> collectPersonErrors(PersonDTO person) {
-        List<ValidationErrorDTO> singleErrors = collectSinglePersonErrors(person);
-        List<ValidationErrorDTO> listErrors = collectListPersonErrors(person);
+    private List<ValidationErrorDTO> collectPersonErrors(AgreementDTO agreement,PersonDTO person) {
+        List<ValidationErrorDTO> singleErrors = collectSinglePersonErrors(agreement,person);
+        List<ValidationErrorDTO> listErrors = collectListPersonErrors(agreement,person);
         return concatenateLists(singleErrors, listErrors);
     }
 
-    private List<ValidationErrorDTO> collectSinglePersonErrors(PersonDTO person) {
+    private List<ValidationErrorDTO> collectSinglePersonErrors(AgreementDTO agreement, PersonDTO person) {
         return personFieldValidations.stream()
-                .map(validation -> validation.validate(person))
+                .map(validation -> validation.validate(agreement,person))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
-    private List<ValidationErrorDTO> collectListPersonErrors(PersonDTO person) {
+    private List<ValidationErrorDTO> collectListPersonErrors(AgreementDTO agreement,PersonDTO person) {
         return personFieldValidations.stream()
-                .map(validation -> validation.validateList(person))
+                .map(validation -> validation.validateList(agreement,person))
                 .filter(Objects::nonNull)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

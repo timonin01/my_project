@@ -1,4 +1,4 @@
-package org.javaguru.travel.insurance.rest;
+package org.javaguru.travel.insurance.common;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;

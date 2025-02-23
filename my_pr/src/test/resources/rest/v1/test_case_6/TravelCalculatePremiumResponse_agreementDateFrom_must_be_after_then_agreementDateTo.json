@@ -2,7 +2,7 @@
   "errors": [
     {
       "errorCode": "ERROR_CODE_5",
-      "description": "Field agreementDateFrom must be after then agreementDateFrom!"
+      "description": "Field agreementDateTo must be after then agreementDateFrom!"
     }
   ],
   "personFirstName": null,
@@ -11,7 +11,7 @@
   "agreementDateFrom": null,
   "agreementDateTo": null,
   "medicalRiskLimitLevel": null,
-  "country": null,
   "agreementPremium": null,
+  "country": null,
   "risks": null
 }
