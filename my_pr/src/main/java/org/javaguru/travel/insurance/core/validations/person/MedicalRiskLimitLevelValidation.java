@@ -7,9 +7,7 @@ import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
 import org.javaguru.travel.insurance.core.repositories.ClassifierValueRepository;
 import org.javaguru.travel.insurance.core.util.Placeholder;
-import org.javaguru.travel.insurance.core.validations.TravelPersonFieldValidator;
 import org.javaguru.travel.insurance.core.validations.ValidationErrorFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,10 +15,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class MedicalRiskLimitLevelValidation extends TravelPersonFieldValidationImpl {
-
-    @Value( "${medical.risk.limit.level.enabled:false}" )
-    private Boolean medicalRiskLimitLevelEnabled;
+class MedicalRiskLimitLevelValidation extends TravelPersonFieldValidationImpl {
 
     private final ClassifierValueRepository classifierValueRepository;
     private final ValidationErrorFactory errorFactory;
@@ -33,8 +28,8 @@ public class MedicalRiskLimitLevelValidation extends TravelPersonFieldValidation
                 : Optional.empty();
     }
 
-    private ValidationErrorDTO buildValidationError(String medicalRiskLimit) {
-        Placeholder placeholder = new Placeholder("NOT_SUPPORTED_MEDICAL_RISK_LIMIT_LEVEL", medicalRiskLimit);
+    private ValidationErrorDTO buildValidationError(String medicalRiskLimitLevel) {
+        Placeholder placeholder = new Placeholder("NOT_SUPPORTED_MEDICAL_RISK_LIMIT_LEVEL", medicalRiskLimitLevel);
         return errorFactory.buildError("ERROR_CODE_14", List.of(placeholder));
     }
 
@@ -46,6 +41,5 @@ public class MedicalRiskLimitLevelValidation extends TravelPersonFieldValidation
         return classifierValueRepository
                 .findByClassifierTitleAndIc("MEDICAL_RISK_LIMIT_LEVEL", medicalRiscLimitLevelIc).isPresent();
     }
-
 
 }
