@@ -1,9 +1,6 @@
 package org.javaguru.travel.insurance.core.validations.integration;
 
-import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
-import org.javaguru.travel.insurance.core.api.dto.AgreementDTOBuilder;
-import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
+import org.javaguru.travel.insurance.core.api.dto.*;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,11 +25,12 @@ public class AgreementDateFromValidationIntegrationTest {
 
     @Test
     public void shouldReturnErrorWhenDateFromIsNull() {
-        PersonDTO person = new PersonDTO();
-        person.setPersonFirstName("Vasja");
-        person.setPersonLastName("Pupkin");
-        person.setPersonBirthDate(createDate("01.01.2000"));
-        person.setMedicalRiskLimitLevel("LEVEL_10000");
+        PersonDTO person = PersonDTOBuilder.createPerson().
+                withPersonFirstName("Vasja").
+                withPersonLastName("Pupkin").
+                withPersonBirthDate(createDate("01.01.2000")).
+                withMedicalRiskLimitLevel("LEVEL_10000").
+                build();
 
         AgreementDTO agreement = AgreementDTOBuilder.createAgreement()
                 .withDateFrom(null)
@@ -51,11 +49,12 @@ public class AgreementDateFromValidationIntegrationTest {
 
     @Test
     public void shouldReturnErrorWhenDateFromIsInThePast() {
-        PersonDTO person = new PersonDTO();
-        person.setPersonFirstName("Vasja");
-        person.setPersonLastName("Pupkin");
-        person.setPersonBirthDate(createDate("01.01.2000"));
-        person.setMedicalRiskLimitLevel("LEVEL_10000");
+        PersonDTO person = PersonDTOBuilder.createPerson().
+                withPersonFirstName("Vasja").
+                withPersonLastName("Pupkin").
+                withPersonBirthDate(createDate("01.01.2000")).
+                withMedicalRiskLimitLevel("LEVEL_10000").
+                build();
 
         AgreementDTO agreement = AgreementDTOBuilder.createAgreement()
                 .withDateFrom(createDate("01.01.2020"))
