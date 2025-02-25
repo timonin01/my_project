@@ -19,13 +19,22 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
     private final TravelAgreementValidator agreementValidator;
     private final RiskPremiumsForAllPersonsCalculator riskPremiumsForAllPersonsCalculator;
     private final TotalAgreementPremiumCalculator totalAgreementPremiumCalculator;
+    private final PersonSaver personSaver;
 
     @Override
     public TravelCalculatePremiumCoreResult calculatePremium(TravelCalculatePremiumCoreCommand command) {
         List<ValidationErrorDTO> errors = agreementValidator.validate(command.getAgreement());
-        return errors.isEmpty()
-                ? buildResponse(command.getAgreement())
-                : buildResponse(errors);
+        if(errors.isEmpty()) {
+            savePersons(command.getAgreement());
+            return buildResponse(command.getAgreement());
+        }
+        else{
+            return buildResponse(errors);
+        }
+    }
+
+    private void savePersons(AgreementDTO agreement) {
+        agreement.getPersons().forEach(person -> personSaver.savePerson(person));
     }
 
     private TravelCalculatePremiumCoreResult buildResponse(List<ValidationErrorDTO> errors) {

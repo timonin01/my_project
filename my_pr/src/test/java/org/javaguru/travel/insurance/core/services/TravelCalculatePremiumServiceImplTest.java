@@ -4,10 +4,7 @@ import org.javaguru.travel.insurance.core.api.command.TravelCalculatePremiumCore
 import org.javaguru.travel.insurance.core.api.command.TravelCalculatePremiumCoreResult;
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.api.dto.RiskDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
-import org.javaguru.travel.insurance.core.underwriting.TravelPremiumCalculationResult;
-import org.javaguru.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,14 +17,17 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TravelCalculatePremiumServiceImplTest {
 
     @Mock private TravelAgreementValidator agreementValidator;
-    @Mock private RiskPremiumsForAllPersonsCalculator agreementPersonsPremiumCalculator;
-    @Mock private TotalAgreementPremiumCalculator agreementTotalPremiumCalculator;
+    @Mock private RiskPremiumsForAllPersonsCalculator riskPremiumsForAllPersonsCalculator;
+    @Mock private TotalAgreementPremiumCalculator totalAgreementPremiumCalculator;
+    @Mock private PersonSaver personSaver;
 
     @InjectMocks
     private TravelCalculatePremiumServiceImpl premiumService;
@@ -45,23 +45,28 @@ public class TravelCalculatePremiumServiceImplTest {
         assertEquals(result.getErrors().size(), 1);
         assertEquals(result.getErrors().get(0).getErrorCode(), "Error code");
         assertEquals(result.getErrors().get(0).getDescription(), "Error description");
-        verifyNoInteractions(agreementPersonsPremiumCalculator, agreementPersonsPremiumCalculator);
+        verifyNoInteractions(riskPremiumsForAllPersonsCalculator, totalAgreementPremiumCalculator, personSaver);
     }
 
     @Test
     public void shouldCalculatePersonsPremium() {
+        var person = new PersonDTO();
         var agreement = new AgreementDTO();
+        agreement.setPersons(List.of(person));
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
         premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
-        verify(agreementPersonsPremiumCalculator).calculateRiskPremiumsForAllPersons(agreement);
+        verify(riskPremiumsForAllPersonsCalculator).calculateRiskPremiumsForAllPersons(agreement);
     }
 
     @Test
     public void shouldCalculateAgreementTotalPremium() {
+        var person = new PersonDTO();
         var agreement = new AgreementDTO();
+        agreement.setPersons(List.of(person));
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
-        when(agreementTotalPremiumCalculator.calculateTotalAgreementPremium(agreement)).thenReturn(BigDecimal.ONE);
+        when(totalAgreementPremiumCalculator.calculateTotalAgreementPremium(agreement)).thenReturn(BigDecimal.ONE);
         TravelCalculatePremiumCoreResult result = premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
         assertEquals(result.getAgreement().getAgreementPremium(), BigDecimal.ONE);
     }
+
 }

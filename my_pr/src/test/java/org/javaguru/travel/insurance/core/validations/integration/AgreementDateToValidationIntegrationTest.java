@@ -29,6 +29,7 @@ public class AgreementDateToValidationIntegrationTest {
         PersonDTO person = PersonDTOBuilder.createPerson().
                 withPersonFirstName("Vasja").
                 withPersonLastName("Pupkin").
+                withPersonCode("123456-12345").
                 withPersonBirthDate(createDate("01.01.2000")).
                 withMedicalRiskLimitLevel("LEVEL_10000").
                 build();
@@ -53,6 +54,7 @@ public class AgreementDateToValidationIntegrationTest {
         PersonDTO person = PersonDTOBuilder.createPerson().
                 withPersonFirstName("Vasja").
                 withPersonLastName("Pupkin").
+                withPersonCode("123456-12345").
                 withPersonBirthDate(createDate("01.01.2000")).
                 withMedicalRiskLimitLevel("LEVEL_10000").
                 build();

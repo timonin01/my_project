@@ -138,6 +138,18 @@ public class TravelCalculatePremiumControllerTest {
                 "rest/v1/test_case_15/TravelCalculatePremiumResponse_country_empty.json");
     }
 
+    @DisplayName("Test case 16: personCode null")
+    public void personCodeNull()throws Exception{
+        comparingJSON("rest/v1/test_case_14/TravelCalculatePremiumRequest_all_fields_are_okay.json",
+                "rest/v1/test_case_14/TravelCalculatePremiumResponse_all_fields_are_okay.json");
+    }
+
+    @DisplayName("Test case 17: personCode blunk")
+    public void personCodeBlunk()throws Exception{
+        comparingJSON("rest/v1/test_case_14/TravelCalculatePremiumRequest_all_fields_are_okay.json",
+                "rest/v1/test_case_14/TravelCalculatePremiumResponse_all_fields_are_okay.json");
+    }
+
 
     public void comparingJSON(String path1,String path2) throws Exception{
         MvcResult result =mockMvc.perform(post(BASE_URL)

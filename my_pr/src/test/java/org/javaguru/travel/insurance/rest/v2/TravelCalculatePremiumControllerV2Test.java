@@ -173,6 +173,30 @@ class TravelCalculatePremiumControllerV2Test {
         comparingJSON("rest/v2/test_case_23/request.json","rest/v2/test_case_23/response.json");
     }
 
+    @Test
+    @DisplayName("personCode is null")
+    public void test_case_24() throws Exception{
+        comparingJSON("rest/v2/test_case_24/request.json","rest/v2/test_case_24/response.json");
+    }
+
+    @Test
+    @DisplayName("personCode is null twice")
+    public void test_case_25() throws Exception{
+        comparingJSON("rest/v2/test_case_25/request.json","rest/v2/test_case_25/response.json");
+    }
+
+    @Test
+    @DisplayName("personCode is blunk")
+    public void test_case_26() throws Exception{
+        comparingJSON("rest/v2/test_case_26/request.json","rest/v2/test_case_26/response.json");
+    }
+
+    @Test
+    @DisplayName("personCode is blunk twice")
+    public void test_case_27() throws Exception{
+        comparingJSON("rest/v2/test_case_27/request.json","rest/v2/test_case_27/response.json");
+    }
+
 
 
     public void comparingJSON(String path1,String path2) throws Exception{
