@@ -25,9 +25,9 @@ import static org.mockito.Mockito.when;
 public class TravelCalculatePremiumServiceImplTest {
 
     @Mock private TravelAgreementValidator agreementValidator;
-    @Mock private RiskPremiumsForAllPersonsCalculator riskPremiumsForAllPersonsCalculator;
-    @Mock private TotalAgreementPremiumCalculator totalAgreementPremiumCalculator;
-    @Mock private PersonSaver personSaver;
+    @Mock private RiskPremiumsForAllPersonsCalculator agreementPersonsPremiumCalculator;
+    @Mock private TotalAgreementPremiumCalculator agreementTotalPremiumCalculator;
+    @Mock private AgreementEntityFactory agreementEntityFactory;
 
     @InjectMocks
     private TravelCalculatePremiumServiceImpl premiumService;
@@ -45,7 +45,7 @@ public class TravelCalculatePremiumServiceImplTest {
         assertEquals(result.getErrors().size(), 1);
         assertEquals(result.getErrors().get(0).getErrorCode(), "Error code");
         assertEquals(result.getErrors().get(0).getDescription(), "Error description");
-        verifyNoInteractions(riskPremiumsForAllPersonsCalculator, totalAgreementPremiumCalculator, personSaver);
+        verifyNoInteractions(agreementPersonsPremiumCalculator, agreementPersonsPremiumCalculator, agreementEntityFactory);
     }
 
     @Test
@@ -55,7 +55,17 @@ public class TravelCalculatePremiumServiceImplTest {
         agreement.setPersons(List.of(person));
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
         premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
-        verify(riskPremiumsForAllPersonsCalculator).calculateRiskPremiumsForAllPersons(agreement);
+        verify(agreementPersonsPremiumCalculator).calculateRiskPremiumsForAllPersons(agreement);
+    }
+
+    @Test
+    public void shouldSaveAgreement() {
+        var person = new PersonDTO();
+        var agreement = new AgreementDTO();
+        agreement.setPersons(List.of(person));
+        when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
+        premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
+        verify(agreementEntityFactory).createAgreementEntity(agreement);
     }
 
     @Test
@@ -64,7 +74,7 @@ public class TravelCalculatePremiumServiceImplTest {
         var agreement = new AgreementDTO();
         agreement.setPersons(List.of(person));
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
-        when(totalAgreementPremiumCalculator.calculateTotalAgreementPremium(agreement)).thenReturn(BigDecimal.ONE);
+        when(agreementTotalPremiumCalculator.calculateTotalAgreementPremium(agreement)).thenReturn(BigDecimal.ONE);
         TravelCalculatePremiumCoreResult result = premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
         assertEquals(result.getAgreement().getAgreementPremium(), BigDecimal.ONE);
     }
