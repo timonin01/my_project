@@ -5,24 +5,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
-    <changeSet author = "tim" id = "22">
-        <createTable tableName="agreements">
+    <changeSet author = "tim" id = "23">
+        <createTable tableName="selected_risks">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="date_from" type="DATETIME">
+            <column name="agreement_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="date_to" type="DATETIME">
-                <constraints nullable="false"/>
-            </column>
-            <column name="country" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="premium" type="DECIMAL(10,2)">
+            <column name="risk_ic" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+
+    <changeSet author="javaguru" id="24">
+        <createIndex indexName="ix_selected_risks_agreement_id_risk_ic"
+                     tableName="selected_risks"
+                     unique="true">
+            <column name="agreement_id"/>
+            <column name="risk_ic"/>
+        </createIndex>
     </changeSet>
 
 </databaseChangeLog>
