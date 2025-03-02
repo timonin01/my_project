@@ -12,6 +12,7 @@ import org.javaguru.travel.insurance.core.repositories.entities.SelectedRisksEnt
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
@@ -46,6 +47,7 @@ public class AgreementEntityFactory {
         agreementEntity.setAgreementDateFrom(agreementDTO.getAgreementDateFrom());
         agreementEntity.setAgreementDateTo(agreementDTO.getAgreementDateTo());
         agreementEntity.setCountry(agreementDTO.getCountry());
+        agreementEntity.setUuid(UUID.randomUUID().toString());
 
         BigDecimal premium = agreementDTO.getAgreementPremium();
         if (premium == null) {

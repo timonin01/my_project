@@ -5,6 +5,7 @@ import org.javaguru.travel.insurance.core.api.command.TravelCalculatePremiumCore
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
+import org.javaguru.travel.insurance.core.domain.entities.AgreementEntity;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,6 +54,8 @@ public class TravelCalculatePremiumServiceImplTest {
         var person = new PersonDTO();
         var agreement = new AgreementDTO();
         agreement.setPersons(List.of(person));
+        var agreementEntity = new AgreementEntity();
+        when(agreementEntityFactory.createAgreementEntity(agreement)).thenReturn(agreementEntity);
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
         premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
         verify(agreementPersonsPremiumCalculator).calculateRiskPremiumsForAllPersons(agreement);
@@ -63,6 +66,8 @@ public class TravelCalculatePremiumServiceImplTest {
         var person = new PersonDTO();
         var agreement = new AgreementDTO();
         agreement.setPersons(List.of(person));
+        var agreementEntity = new AgreementEntity();
+        when(agreementEntityFactory.createAgreementEntity(agreement)).thenReturn(agreementEntity);
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
         premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));
         verify(agreementEntityFactory).createAgreementEntity(agreement);
@@ -73,6 +78,8 @@ public class TravelCalculatePremiumServiceImplTest {
         var person = new PersonDTO();
         var agreement = new AgreementDTO();
         agreement.setPersons(List.of(person));
+        var agreementEntity = new AgreementEntity();
+        when(agreementEntityFactory.createAgreementEntity(agreement)).thenReturn(agreementEntity);
         when(agreementValidator.validate(agreement)).thenReturn(Collections.emptyList());
         when(agreementTotalPremiumCalculator.calculateTotalAgreementPremium(agreement)).thenReturn(BigDecimal.ONE);
         TravelCalculatePremiumCoreResult result = premiumService.calculatePremium(new TravelCalculatePremiumCoreCommand(agreement));

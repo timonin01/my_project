@@ -5,8 +5,10 @@ import org.javaguru.travel.insurance.common.JsonFileReader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -161,8 +163,15 @@ public class TravelCalculatePremiumControllerTest {
         String request = result.getResponse().getContentAsString();
 
         String response = jsonFileReader.readJsonFromFile(path2);
+
+        //игнорирование UUID
+        CustomComparator customComparator = new CustomComparator(
+                JSONCompareMode.NON_EXTENSIBLE,
+                new Customization("uuid", (o1, o2) -> true) // Игнорируем uuid
+        );
+
         //порядок не важен
-        JSONAssert.assertEquals(response, request, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(response, request, customComparator);
     }
 
 

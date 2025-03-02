@@ -1,12 +1,12 @@
 {
   "errors": [
     {
-      "errorCode": "ERROR_CODE_3",
-      "description": "Field agreementDateTo must be in future!"
-    },
-    {
       "errorCode": "ERROR_CODE_5",
       "description": "Field agreementDateTo must be after then agreementDateFrom!"
+    },
+    {
+      "errorCode": "ERROR_CODE_3",
+      "description": "Field agreementDateTo must be in future!"
     }
   ]
 }

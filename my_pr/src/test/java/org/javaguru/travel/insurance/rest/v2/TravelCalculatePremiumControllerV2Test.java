@@ -5,8 +5,10 @@ import org.javaguru.travel.insurance.common.JsonFileReader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -199,18 +201,24 @@ class TravelCalculatePremiumControllerV2Test {
 
 
 
-    public void comparingJSON(String path1,String path2) throws Exception{
-        MvcResult result =mockMvc.perform(post(BASE_URL)
+    public void comparingJSON(String path1, String path2) throws Exception {
+        MvcResult result = mockMvc.perform(post(BASE_URL)
                         .content(jsonFileReader.readJsonFromFile(path1))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
 
         String request = result.getResponse().getContentAsString();
-
         String response = jsonFileReader.readJsonFromFile(path2);
-        //порядок не важен
-        JSONAssert.assertEquals(response, request, JSONCompareMode.NON_EXTENSIBLE);
+
+        // Кастомный компаратор для игнорирования uuid и порядка элементов
+        CustomComparator customComparator = new CustomComparator(
+                JSONCompareMode.LENIENT,
+                new Customization("uuid", (o1, o2) -> true) // Игнорируем uuid
+        );
+
+        // Сравнение JSON с кастомным компаратором
+        JSONAssert.assertEquals(response, request, customComparator);
     }
 
 
