@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
 import org.javaguru.travel.insurance.core.api.dto.RiskDTO;
-import org.javaguru.travel.insurance.core.domain.entities.*;
+import org.javaguru.travel.insurance.core.domain.entities.AgreementEntity;
+import org.javaguru.travel.insurance.core.domain.entities.AgreementPersonEntity;
+import org.javaguru.travel.insurance.core.domain.entities.AgreementPersonRisksEntity;
+import org.javaguru.travel.insurance.core.domain.entities.SelectedRisksEntity;
 import org.javaguru.travel.insurance.core.repositories.entities.AgreementEntityRepository;
 import org.javaguru.travel.insurance.core.repositories.entities.AgreementPersonEntityRepository;
 import org.javaguru.travel.insurance.core.repositories.entities.AgreementPersonRisksEntityRepository;
@@ -25,51 +28,54 @@ class AgreementDTOLoader {
     private final AgreementPersonRisksEntityRepository agreementPersonRiskEntityRepository;
 
     AgreementDTO load(String uuid) {
-        AgreementDTO agreement = new AgreementDTO();
-        AgreementEntity agreementEntity = agreementEntityRepository.findByUuid(uuid).get();
-        loadAgreementFields(agreement,agreementEntity);
-        loadPersons(agreement,agreementEntity);
-        loadSelectedRisks(agreement,agreementEntity);
-        return agreement;
+        AgreementDTO dto = new AgreementDTO();
+        AgreementEntity agreement = agreementEntityRepository.findByUuid(uuid).get();
+        loadAgreementFields(dto, agreement);
+        loadSelectedRisks(dto, agreement);
+        loadPersons(dto, agreement);
+        return dto;
     }
 
-    private void loadAgreementFields(AgreementDTO agreementDTO, AgreementEntity agreement) {
-        agreementDTO.setUuid(agreement.getUuid());
-        agreementDTO.setCountry(agreement.getCountry());
-        agreementDTO.setAgreementDateTo(agreement.getAgreementDateTo());
-        agreementDTO.setAgreementDateFrom(agreement.getAgreementDateFrom());
-        agreementDTO.setAgreementPremium(agreement.getAgreementPremium());
-    }
-
-    private void loadPersons(AgreementDTO agreementDTO, AgreementEntity agreement) {
+    private void loadPersons(AgreementDTO dto, AgreementEntity agreement) {
         List<AgreementPersonEntity> personEntities = agreementPersonEntityRepository.findByAgreement(agreement);
-        List<PersonDTO> personDTOS = personEntities.stream().map(agreementPerson->{
-            PersonDTO personDTO = new PersonDTO();
-            personDTO.setPersonFirstName(agreementPerson.getPerson().getFirstName());
-            personDTO.setPersonLastName(agreementPerson.getPerson().getLastName());
-            personDTO.setPersonBirthDate(agreementPerson.getPerson().getBirthDate());
-            personDTO.setPersonCode(agreementPerson.getPerson().getPersonCode());
-            personDTO.setMedicalRiskLimitLevel(agreementPerson.getMedicalRiskLimitLevel());
+        List<PersonDTO> persons = personEntities.stream()
+                .map(personEntity -> {
+                    PersonDTO personDTO = new PersonDTO();
+                    personDTO.setPersonFirstName(personEntity.getPerson().getFirstName());
+                    personDTO.setPersonLastName(personEntity.getPerson().getLastName());
+                    personDTO.setPersonCode(personEntity.getPerson().getPersonCode());
+                    personDTO.setPersonBirthDate(personEntity.getPerson().getBirthDate());
+                    personDTO.setMedicalRiskLimitLevel(personEntity.getMedicalRiskLimitLevel());
 
-            personDTO.setRisks(
-                    agreementPersonRiskEntityRepository.findByAgreementPerson(agreementPerson).stream().
-                            map(agreementPersonRisksEntity->{
-                                RiskDTO riskDTO= new RiskDTO();
-                                riskDTO.setPremium(agreementPersonRisksEntity.getPremium());
-                                riskDTO.setRiskIc(agreementPersonRisksEntity.getRiskIc());
-                                return riskDTO;
-                            }).collect(Collectors.toList())
-            );
-            return personDTO;
-        }).collect(Collectors.toList());
-        agreementDTO.setPersons(personDTOS);
+                    List<AgreementPersonRisksEntity> list =  agreementPersonRiskEntityRepository.findByAgreementPerson(personEntity);
+                    List<RiskDTO> risks = list.stream()
+                                    .map(agreementPersonRiskEntity -> {
+                                        RiskDTO riskDTO = new RiskDTO();
+                                        riskDTO.setRiskIc(agreementPersonRiskEntity.getRiskIc());
+                                        riskDTO.setPremium(agreementPersonRiskEntity.getPremium());
+                                        return riskDTO;
+                                    })
+                            .collect(Collectors.toList());
+                    personDTO.setRisks(risks);
+
+                    return personDTO;
+                })
+                .collect(Collectors.toList());
+        dto.setPersons(persons);
     }
 
-    private void loadSelectedRisks(AgreementDTO agreementDTO, AgreementEntity agreement) {
-        List<SelectedRisksEntity> risksEntities = selectedRiskEntityRepository.findByAgreement(agreement);
-        List<String> risks = risksEntities.stream().map(SelectedRisksEntity::getRiskIc)
-                .collect(Collectors.toList());
-        agreementDTO.setSelectedRisks(risks);
+    private void loadSelectedRisks(AgreementDTO dto, AgreementEntity agreement) {
+        dto.setSelectedRisks(selectedRiskEntityRepository.findByAgreement(agreement)
+                .stream().map(SelectedRisksEntity::getRiskIc)
+                .collect(Collectors.toList()));
+    }
+
+    private void loadAgreementFields(AgreementDTO dto, AgreementEntity agreement) {
+        dto.setUuid(agreement.getUuid());
+        dto.setAgreementDateFrom(agreement.getAgreementDateFrom());
+        dto.setAgreementDateTo(agreement.getAgreementDateTo());
+        dto.setCountry(agreement.getCountry());
+        dto.setAgreementPremium(agreement.getAgreementPremium());
     }
 
 }

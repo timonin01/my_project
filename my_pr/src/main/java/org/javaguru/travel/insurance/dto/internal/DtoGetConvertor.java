@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class DtoGetConvertor {
 
-    public TravelGetAgreementCoreCommand buildCoreComand(String uuid){
+    public TravelGetAgreementCoreCommand buildCoreCommand(String uuid){
         return new TravelGetAgreementCoreCommand(uuid);
     }
     public TravelGetAgreementResponse buildResponse(TravelGetAgreementCoreResult coreResult){
@@ -61,6 +61,7 @@ public class DtoGetConvertor {
         List<PersonResponseDTO> personResponseDTOS = agreement.getPersons().stream().
                 map(this::buildPersonFromResponse).
                 toList();
+        response.setPersons(personResponseDTOS);
     }
 
     private PersonResponseDTO buildPersonFromResponse(PersonDTO personDTO){

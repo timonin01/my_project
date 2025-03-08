@@ -4,36 +4,37 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.api.command.TravelGetAgreementCoreCommand;
 import org.javaguru.travel.insurance.core.api.command.TravelGetAgreementCoreResult;
-import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementUuidValidator;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
+@Transactional
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class TravelGetAgreementServiceImpl implements   TravelGetAgreementService{
+class TravelGetAgreementServiceImpl implements TravelGetAgreementService {
 
-    private final TravelAgreementUuidValidator validator;
-    private final AgreementDTOLoader loader;
+    private final TravelAgreementUuidValidator agreementUuidValidator;
+    private final AgreementDTOLoader agreementDTOLoader;
 
     @Override
     public TravelGetAgreementCoreResult getAgreement(TravelGetAgreementCoreCommand command) {
-        List<ValidationErrorDTO> error = validator.validate(command.getUuid());
-        return (error.isEmpty())
-                ?buildResponse(command.getUuid())
-                :buildResponse(error);
+        List<ValidationErrorDTO> errors = agreementUuidValidator.validate(command.getUuid());
+        return errors.isEmpty()
+                ? buildResponse(command.getUuid())
+                : buildResponse(errors);
     }
 
-    private TravelGetAgreementCoreResult buildResponse(List<ValidationErrorDTO> errorDTOS){
-        return new TravelGetAgreementCoreResult(errorDTOS);
+    private TravelGetAgreementCoreResult buildResponse(List<ValidationErrorDTO> errors) {
+        return new TravelGetAgreementCoreResult(errors);
     }
 
-    private TravelGetAgreementCoreResult buildResponse(String uuid){
-        AgreementDTO agreementDTO = loader.load(uuid);
+    private TravelGetAgreementCoreResult buildResponse(String agreementUuid) {
         TravelGetAgreementCoreResult coreResult = new TravelGetAgreementCoreResult();
-        coreResult.setAgreement(agreementDTO);
+        coreResult.setAgreement(agreementDTOLoader.load(agreementUuid));
         return coreResult;
     }
+
 }

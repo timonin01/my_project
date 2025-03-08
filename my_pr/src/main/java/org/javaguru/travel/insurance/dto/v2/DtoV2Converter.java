@@ -8,8 +8,6 @@ import org.javaguru.travel.insurance.core.api.dto.RiskDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
 import org.javaguru.travel.insurance.dto.RiskPremium;
 import org.javaguru.travel.insurance.dto.ValidationError;
-import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
-import org.javaguru.travel.insurance.dto.v1.TravelCalculatePremiumResponseV1;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -58,12 +56,13 @@ public class DtoV2Converter {
         return response;
     }
 
-    public PersonResponseDTO buildPersonFromResponse(PersonDTO personDTO){
+    private PersonResponseDTO buildPersonFromResponse(PersonDTO personDTO) {
         PersonResponseDTO person = new PersonResponseDTO();
         person.setPersonFirstName(personDTO.getPersonFirstName());
         person.setPersonLastName(personDTO.getPersonLastName());
         person.setPersonCode(personDTO.getPersonCode());
         person.setPersonBirthDate(personDTO.getPersonBirthDate());
+        person.setMedicalRiskLimitLevel(personDTO.getMedicalRiskLimitLevel());
 
         person.setPersonPremium(personDTO.getRisks().stream()
                 .map(RiskDTO::getPremium)
@@ -77,7 +76,7 @@ public class DtoV2Converter {
         return person;
     }
 
-    private PersonDTO buildPerson(PersonRequestDTO personRequestDTO) {
+    private PersonDTO buildPersonFromRequest(PersonRequestDTO personRequestDTO) {
         PersonDTO person = new PersonDTO();
         person.setPersonFirstName(personRequestDTO.getPersonFirstName());
         person.setPersonLastName(personRequestDTO.getPersonLastName());
@@ -94,13 +93,19 @@ public class DtoV2Converter {
         agreement.setCountry(request.getCountry());
         agreement.setSelectedRisks(request.getSelectedRisks());
 
-        List<PersonDTO> persons = request.getPersons().stream()
-                .map(this::buildPerson)
-                .collect(Collectors.toList());
-        agreement.setPersons(persons);
+        agreement.setPersons(buildPersonDTOFromRequest(request));
 
         return agreement;
     }
 
+    private List<PersonDTO> buildPersonDTOFromRequest(TravelCalculatePremiumRequestV2 request) {
+        if (request.getPersons() == null) {
+            return List.of();
+        } else {
+            return request.getPersons().stream()
+                    .map(this::buildPersonFromRequest)
+                    .collect(Collectors.toList());
+        }
+    }
 
 }

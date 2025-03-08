@@ -38,7 +38,7 @@ public class TravelGetAgreementRestController {
     private TravelGetAgreementResponse processRequest(String uuid) {
         requestLogger.log(uuid);
 
-        TravelGetAgreementCoreCommand coreCommand = dtoGetConvertor.buildCoreComand(uuid);
+        TravelGetAgreementCoreCommand coreCommand = dtoGetConvertor.buildCoreCommand(uuid);
         TravelGetAgreementCoreResult coreResult = service.getAgreement(coreCommand);
         TravelGetAgreementResponse response = dtoGetConvertor.buildResponse(coreResult);
 
