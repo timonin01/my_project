@@ -1,8 +1,8 @@
 package org.javaguru.travel.insurance.core.underwriting.calculators.medical;
 
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.domain.AgeCoefficient;
-import org.javaguru.travel.insurance.core.repositories.AgeCoefficientRepository;
+import org.javaguru.travel.insurance.core.domain.TMAgeCoefficient;
+import org.javaguru.travel.insurance.core.repositories.TMAgeCoefficientRepository;
 import org.javaguru.travel.insurance.core.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,12 +19,12 @@ class AgeCoefficientCalculator {
     private final Boolean medicalRiskAgeCoefficientEnabled;
 
     private final DateTimeUtil dateTimeUtil;
-    private final AgeCoefficientRepository ageCoefficientRepository;
+    private final TMAgeCoefficientRepository ageCoefficientRepository;
 
     AgeCoefficientCalculator(@Value( "${medical.risk.age.coefficient.enabled:false}" )
                              Boolean medicalRiskAgeCoefficientEnabled,
                              DateTimeUtil dateTimeUtil,
-                             AgeCoefficientRepository ageCoefficientRepository) {
+                             TMAgeCoefficientRepository ageCoefficientRepository) {
         this.medicalRiskAgeCoefficientEnabled = medicalRiskAgeCoefficientEnabled;
         this.dateTimeUtil = dateTimeUtil;
         this.ageCoefficientRepository = ageCoefficientRepository;
@@ -39,7 +39,7 @@ class AgeCoefficientCalculator {
     private BigDecimal getCoefficient(PersonDTO person) {
         int age = calculateAge(person);
         return ageCoefficientRepository.findCoefficient(age)
-                .map(AgeCoefficient::getCoefficient)
+                .map(TMAgeCoefficient::getCoefficient)
                 .orElseThrow(() -> new RuntimeException("Age coefficient not found for age = " + age));
     }
 

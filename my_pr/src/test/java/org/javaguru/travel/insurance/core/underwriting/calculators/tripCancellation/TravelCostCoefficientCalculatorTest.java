@@ -1,8 +1,8 @@
 package org.javaguru.travel.insurance.core.underwriting.calculators.tripCancellation;
 
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.domain.TravelCostCoefficient;
-import org.javaguru.travel.insurance.core.repositories.TravelCostCoefficientRepository;
+import org.javaguru.travel.insurance.core.domain.TCTravelCostCoefficient;
+import org.javaguru.travel.insurance.core.repositories.TCTravelCostCoefficientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 class TravelCostCoefficientCalculatorTest {
 
     @Mock
-    private TravelCostCoefficientRepository costCoefficientRepository;
+    private TCTravelCostCoefficientRepository costCoefficientRepository;
 
     @InjectMocks
     private TravelCostCoefficientCalculator calculator;
@@ -36,7 +36,7 @@ class TravelCostCoefficientCalculatorTest {
 
     @Test
     void shouldFindCoefficientWhenAgeCoefficientExists() {
-        TravelCostCoefficient travelCostCoefficient = mock(TravelCostCoefficient.class);
+        TCTravelCostCoefficient travelCostCoefficient = mock(TCTravelCostCoefficient.class);
         when(travelCostCoefficient.getCoefficient()).thenReturn(BigDecimal.TEN);
         when(costCoefficientRepository.findByCoefficient(BigDecimal.ONE)).thenReturn(Optional.of(travelCostCoefficient));
 

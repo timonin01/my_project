@@ -2,10 +2,9 @@ package org.javaguru.travel.insurance.core.underwriting.calculators.medical;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.domain.MedicalRiskLimitLevel;
-import org.javaguru.travel.insurance.core.repositories.MedicalRiskLimitLevelRepository;
+import org.javaguru.travel.insurance.core.domain.TMMedicalRiskLimitLevel;
+import org.javaguru.travel.insurance.core.repositories.TMMedicalRiskLimitLevelRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ public class MedicalRiskLimitLevelCalculator {
     @Value( "${medical.risk.limit.level.enabled:false}" )
     private Boolean medicalRiskLimitLevelEnabled;
 
-    private final MedicalRiskLimitLevelRepository medicalRiskLimitLevelRepository;
+    private final TMMedicalRiskLimitLevelRepository medicalRiskLimitLevelRepository;
 
     public BigDecimal calculateMedicalRiskLimitLevel(PersonDTO person){
         return medicalRiskLimitLevelEnabled
@@ -28,7 +27,7 @@ public class MedicalRiskLimitLevelCalculator {
 
     private BigDecimal getCoefficient(PersonDTO person) {
         return medicalRiskLimitLevelRepository.findByMedicalRiskLimitLevelIc(person.getMedicalRiskLimitLevel())
-                .map(MedicalRiskLimitLevel::getCoefficient)
+                .map(TMMedicalRiskLimitLevel::getCoefficient)
                 .orElseThrow(() -> new RuntimeException("Medical risk limit level not found by = " + person.getMedicalRiskLimitLevel()));
     }
 

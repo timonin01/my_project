@@ -1,6 +1,6 @@
 package org.javaguru.travel.insurance.core.repositories;
 
-import org.javaguru.travel.insurance.core.domain.CountryDefaultDayRate;
+import org.javaguru.travel.insurance.core.domain.TMCountryDefaultDayRate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class CountryDefaultDayRateRepositoryTest {
+class TMCountryDefaultDayRateRepositoryTest {
 
     @Autowired
-    private CountryDefaultDayRateRepository repository;
+    private TMCountryDefaultDayRateRepository repository;
 
     @Test
     @DisplayName("Test: Classifier table is present")
@@ -29,7 +29,7 @@ class CountryDefaultDayRateRepositoryTest {
     @Test
     @DisplayName("Test: Can find record by country")
     public void shouldReturnCountryDefaultDayRate(){
-        Optional<CountryDefaultDayRate> record = repository.findByCountryIc("JAPAN");
+        Optional<TMCountryDefaultDayRate> record = repository.findByCountryIc("JAPAN");
         assertTrue(record.isPresent());
         assertEquals(record.get().getCountryIc(), "JAPAN");
     }
@@ -37,7 +37,7 @@ class CountryDefaultDayRateRepositoryTest {
     @Test
     @DisplayName("Test: Can not  find record by wrong country")
     public void shouldNotReturnCountryDefaultDayRate(){
-        Optional<CountryDefaultDayRate> record = repository.findByCountryIc("JAPANS");
+        Optional<TMCountryDefaultDayRate> record = repository.findByCountryIc("JAPANS");
         assertTrue(record.isEmpty());
     }
 

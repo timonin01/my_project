@@ -9,12 +9,12 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "travel_cost_coefficient")
+@Table(name = "travel_cancellation_travel_cost_coefficient")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TravelCostCoefficient {
+public class TCTravelCostCoefficient {
 
     @Id
     @Column(name = "id")

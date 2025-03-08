@@ -9,21 +9,25 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "travel_medical_age_coefficient")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicalRiskLimitLevel {
+public class TMAgeCoefficient {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "medical_risk_limit_level_ic",nullable = false)
-    private String medicalRiskLimitLevelIc;
+    @Column(name = "age_from",nullable = false)
+    private Integer ageFrom;
 
-    @Column(name = "coefficient",precision = 10, scale = 2, nullable = false)
+    @Column(name = "age_to",nullable = false)
+    private Integer ageTo;
+
+    @Column(name = "coefficient", precision = 10, scale = 2, nullable = false)
     private BigDecimal coefficient;
 
 }

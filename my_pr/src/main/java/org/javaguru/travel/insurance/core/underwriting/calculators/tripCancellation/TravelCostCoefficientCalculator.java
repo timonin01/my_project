@@ -3,8 +3,8 @@ package org.javaguru.travel.insurance.core.underwriting.calculators.tripCancella
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.domain.TravelCostCoefficient;
-import org.javaguru.travel.insurance.core.repositories.TravelCostCoefficientRepository;
+import org.javaguru.travel.insurance.core.domain.TCTravelCostCoefficient;
+import org.javaguru.travel.insurance.core.repositories.TCTravelCostCoefficientRepository;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,11 +13,11 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class TravelCostCoefficientCalculator {
 
-    private final TravelCostCoefficientRepository costCoefficientRepository;
+    private final TCTravelCostCoefficientRepository costCoefficientRepository;
 
     public BigDecimal calculateCostCoefficient(PersonDTO personDTO){
         return costCoefficientRepository.findByCoefficient(personDTO.getTravelCost()).
-                map(TravelCostCoefficient::getCoefficient).
+                map(TCTravelCostCoefficient::getCoefficient).
                 orElseThrow(() -> new RuntimeException("Travel Cost coefficient not found for travel cost = " + personDTO.getTravelCost()));
     }
 

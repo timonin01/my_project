@@ -9,12 +9,12 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "country_default_day_rate")
+@Table(name = "travel_medical_country_default_day_rate")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CountryDefaultDayRate {
+public class TMCountryDefaultDayRate {
 
     @Id
     @Column(name = "id")

@@ -1,6 +1,6 @@
 package org.javaguru.travel.insurance.core.repositories;
 
-import org.javaguru.travel.insurance.core.domain.AgeCoefficient;
+import org.javaguru.travel.insurance.core.domain.TMAgeCoefficient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-class AgeCoefficientRepositoryTest {
+class TMAgeCoefficientRepositoryTest {
 
-    @Autowired private AgeCoefficientRepository ageCoefficientRepository;
+    @Autowired private TMAgeCoefficientRepository ageCoefficientRepository;
 
     @Test
     @DisplayName("Test: Classifier table is present")
@@ -29,7 +29,7 @@ class AgeCoefficientRepositoryTest {
     @Test
     @DisplayName("Test: should find coefficient where age = 3 ")
     public void shouldFindCoefficient(){
-        Optional<AgeCoefficient> coefficient= ageCoefficientRepository.findCoefficient(3);
+        Optional<TMAgeCoefficient> coefficient= ageCoefficientRepository.findCoefficient(3);
         BigDecimal bigDecimal =new BigDecimal(1.10);
         bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
         assertTrue(coefficient.isPresent());
@@ -39,7 +39,7 @@ class AgeCoefficientRepositoryTest {
     @Test
     @DisplayName("Test: should not find coefficient where age in incorrect ")
     public void shouldNotFindCoefficient(){
-        Optional<AgeCoefficient> coefficient= ageCoefficientRepository.findCoefficient(-1);
+        Optional<TMAgeCoefficient> coefficient= ageCoefficientRepository.findCoefficient(-1);
         assertTrue(coefficient.isEmpty());
     }
 
