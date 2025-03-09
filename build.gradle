@@ -32,6 +32,23 @@ subprojects {
 		useJUnitPlatform()
 	}
 
+	//для удаления логов при комите
+	task cleanLogs(type: Delete) {
+		// Указываем входные данные (директория logs)
+		inputs.dir "${projectDir}/logs"
+
+		doFirst {
+			delete fileTree(dir: "${projectDir}/logs", include: '**/*') // Удаляем всё внутри logs
+			delete "${projectDir}/logs"
+			println "Delete logs directory"
+			println "${projectDir}/logs"
+		}
+	}
+
+	clean {
+		dependsOn cleanLogs
+	}
+
 	clean.doFirst {
 		delete "${projectDir}/logs/"
 		println "${projectDir}/logs/"
