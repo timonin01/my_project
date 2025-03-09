@@ -20,7 +20,7 @@ class TravelMedicalRiskPremiumCalculatorTest {
 
     @Mock private DayCountCalculator dayCountCalculator;
     @Mock private CountryDefaultDayRateCalculator countryDefaultDayRateCalculator;
-    @Mock private AgeCoefficientCalculator ageCoefficientCalculator;
+    @Mock private TMAgeCoefficientCalculator ageCoefficientCalculator;
     @Mock private MedicalRiskLimitLevelCalculator riskLimitLevelCalculator;
 
     @InjectMocks

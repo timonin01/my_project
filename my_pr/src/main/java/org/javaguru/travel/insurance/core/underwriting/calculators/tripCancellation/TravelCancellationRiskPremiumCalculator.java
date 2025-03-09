@@ -12,15 +12,18 @@ import java.math.RoundingMode;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class TravelTripCancellationRiskPremiumCalculator implements TravelRiskPremiumCalculator {
+public class TravelCancellationRiskPremiumCalculator implements TravelRiskPremiumCalculator {
 
     private final TravelCostCoefficientCalculator costCoefficientCalculator;
+    private final TCAgeCoefficientCalculator ageCoefficientCalculator;
 
     @Override
     public BigDecimal calculatePremium(AgreementDTO agreement, PersonDTO person) {
         var costCoefficient = costCoefficientCalculator.calculateCostCoefficient(person);
-        return costCoefficient.
-                setScale(2, RoundingMode.HALF_UP);
+        var ageCoefficient = ageCoefficientCalculator.calculateAgeCoefficient(person);
+        return costCoefficient
+                .multiply(ageCoefficient)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override

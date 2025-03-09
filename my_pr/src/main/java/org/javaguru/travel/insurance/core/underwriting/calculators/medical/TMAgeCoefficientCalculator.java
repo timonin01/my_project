@@ -14,17 +14,17 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Component
-class AgeCoefficientCalculator {
+class TMAgeCoefficientCalculator {
 
     private final Boolean medicalRiskAgeCoefficientEnabled;
 
     private final DateTimeUtil dateTimeUtil;
     private final TMAgeCoefficientRepository ageCoefficientRepository;
 
-    AgeCoefficientCalculator(@Value( "${medical.risk.age.coefficient.enabled:false}" )
+    TMAgeCoefficientCalculator(@Value( "${medical.risk.age.coefficient.enabled:false}" )
                              Boolean medicalRiskAgeCoefficientEnabled,
-                             DateTimeUtil dateTimeUtil,
-                             TMAgeCoefficientRepository ageCoefficientRepository) {
+                               DateTimeUtil dateTimeUtil,
+                               TMAgeCoefficientRepository ageCoefficientRepository) {
         this.medicalRiskAgeCoefficientEnabled = medicalRiskAgeCoefficientEnabled;
         this.dateTimeUtil = dateTimeUtil;
         this.ageCoefficientRepository = ageCoefficientRepository;

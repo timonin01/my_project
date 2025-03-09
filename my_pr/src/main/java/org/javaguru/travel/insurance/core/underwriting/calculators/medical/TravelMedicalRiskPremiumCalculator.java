@@ -16,7 +16,7 @@ public class TravelMedicalRiskPremiumCalculator implements TravelRiskPremiumCalc
 
     private final CountryDefaultDayRateCalculator countryDefaultDayRateCalculator;
     private final DayCountCalculator dayCountCalculator;
-    private final AgeCoefficientCalculator ageCoefficientCalculator;
+    private final TMAgeCoefficientCalculator ageCoefficientCalculator;
     private final MedicalRiskLimitLevelCalculator medicalRiskLimitLevelCalculator;
 
 

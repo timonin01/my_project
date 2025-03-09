@@ -37,14 +37,14 @@ class AgeCoefficientCalculatorTest {
 
     @Test
     void shouldReturnOneWhenDisabled() {
-        var calculator = new AgeCoefficientCalculator(false, dateTimeUtil, ageCoefficientRepository);
+        var calculator = new TMAgeCoefficientCalculator(false, dateTimeUtil, ageCoefficientRepository);
         BigDecimal result = calculator.calculateAgeCoefficient(person);
         assertEquals(BigDecimal.ONE, result);
     }
 
     @Test
     void shouldFindCoefficientWhenAgeCoefficientExists() {
-        var calculator = new AgeCoefficientCalculator(true, dateTimeUtil, ageCoefficientRepository);
+        var calculator = new TMAgeCoefficientCalculator(true, dateTimeUtil, ageCoefficientRepository);
         LocalDate currentDate = LocalDate.of(2023, 3, 27);
         int age = 33;
         BigDecimal expectedCoefficient = BigDecimal.valueOf(1.2);
@@ -61,7 +61,7 @@ class AgeCoefficientCalculatorTest {
 
     @Test
     void shouldThrowExceptionWhenAgeCoefficientNotFound() {
-        var calculator = new AgeCoefficientCalculator(true, dateTimeUtil, ageCoefficientRepository);
+        var calculator = new TMAgeCoefficientCalculator(true, dateTimeUtil, ageCoefficientRepository);
         LocalDate currentDate = LocalDate.of(2023, 3, 27);
         int age = 33;
 
