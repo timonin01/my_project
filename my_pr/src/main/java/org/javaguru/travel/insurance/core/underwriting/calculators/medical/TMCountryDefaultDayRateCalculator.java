@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class CountryDefaultDayRateCalculator {
+public class TMCountryDefaultDayRateCalculator {
 
     private final TMCountryDefaultDayRateRepository countryDefaultDayRateRepository;
 

@@ -16,13 +16,17 @@ public class TravelCancellationRiskPremiumCalculator implements TravelRiskPremiu
 
     private final TravelCostCoefficientCalculator costCoefficientCalculator;
     private final TCAgeCoefficientCalculator ageCoefficientCalculator;
+    private final TCCountrySafetyRatingCoefficientCalculator countrySafetyRatingCoefficientCalculator;
 
     @Override
     public BigDecimal calculatePremium(AgreementDTO agreement, PersonDTO person) {
         var costCoefficient = costCoefficientCalculator.calculateCostCoefficient(person);
         var ageCoefficient = ageCoefficientCalculator.calculateAgeCoefficient(person);
+        var countryCoefficient = countrySafetyRatingCoefficientCalculator.calculateCountryCoefficient(agreement);
+
         return costCoefficient
                 .multiply(ageCoefficient)
+                .multiply(countryCoefficient)
                 .setScale(2, RoundingMode.HALF_UP);
     }
 

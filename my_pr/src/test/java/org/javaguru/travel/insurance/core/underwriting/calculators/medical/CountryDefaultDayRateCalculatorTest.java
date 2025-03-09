@@ -24,7 +24,7 @@ class CountryDefaultDayRateCalculatorTest {
     @Mock private TMCountryDefaultDayRateRepository countryDefaultDayRateRepository;
 
     @InjectMocks
-    private CountryDefaultDayRateCalculator calculator;
+    private TMCountryDefaultDayRateCalculator calculator;
 
     private AgreementDTO agreement;
 

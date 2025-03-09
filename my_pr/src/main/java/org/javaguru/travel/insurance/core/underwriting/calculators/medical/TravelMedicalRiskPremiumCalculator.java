@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class TravelMedicalRiskPremiumCalculator implements TravelRiskPremiumCalculator {
 
-    private final CountryDefaultDayRateCalculator countryDefaultDayRateCalculator;
+    private final TMCountryDefaultDayRateCalculator countryDefaultDayRateCalculator;
     private final DayCountCalculator dayCountCalculator;
     private final TMAgeCoefficientCalculator ageCoefficientCalculator;
     private final MedicalRiskLimitLevelCalculator medicalRiskLimitLevelCalculator;
