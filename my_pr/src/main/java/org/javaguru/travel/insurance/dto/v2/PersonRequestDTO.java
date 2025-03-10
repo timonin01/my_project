@@ -1,12 +1,15 @@
 package org.javaguru.travel.insurance.dto.v2;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.javaguru.travel.insurance.dto.util.BigDecimalSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -24,5 +27,7 @@ public class PersonRequestDTO {
     private Date personBirthDate;
 
     private String medicalRiskLimitLevel;
+
+    private BigDecimal travelCost;
 
 }

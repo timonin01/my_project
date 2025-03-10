@@ -44,8 +44,8 @@ class TravelCancellationRiskPremiumCalculatorTest {
         when(countrySafetyRatingCoefficientCalculator.calculateCountryCoefficient(agreement)).thenReturn(countryCoefficient);
 
         BigDecimal exceptedValue = costCoefficient
-                .multiply(ageCoefficient)
-                .multiply(countryCoefficient)
+                .add(ageCoefficient)
+                .add(countryCoefficient)
                 .setScale(2, RoundingMode.HALF_UP);
 
         BigDecimal result = calculator.calculatePremium(agreement,person);

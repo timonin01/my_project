@@ -25,8 +25,8 @@ public class TravelCancellationRiskPremiumCalculator implements TravelRiskPremiu
         var countryCoefficient = countrySafetyRatingCoefficientCalculator.calculateCountryCoefficient(agreement);
 
         return costCoefficient
-                .multiply(ageCoefficient)
-                .multiply(countryCoefficient)
+                .add(ageCoefficient)
+                .add(countryCoefficient)
                 .setScale(2, RoundingMode.HALF_UP);
     }
 

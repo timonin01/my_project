@@ -33,4 +33,7 @@ public class AgreementPersonEntity {
     @Column(name = "medical_risk_limit_level", nullable = false)
     private String medicalRiskLimitLevel;
 
+    @Column(name = "travel_cost")
+    private BigDecimal travelCost;
+
 }

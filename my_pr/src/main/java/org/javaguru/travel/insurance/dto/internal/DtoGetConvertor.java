@@ -71,6 +71,7 @@ public class DtoGetConvertor {
         person.setPersonCode(personDTO.getPersonCode());
         person.setPersonBirthDate(personDTO.getPersonBirthDate());
         person.setMedicalRiskLimitLevel(personDTO.getMedicalRiskLimitLevel());
+        person.setTravelCost(personDTO.getTravelCost());
 
         person.setPersonPremium(personDTO.getRisks().stream()
                 .map(RiskDTO::getPremium)

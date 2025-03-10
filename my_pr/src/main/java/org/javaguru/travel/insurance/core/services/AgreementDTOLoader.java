@@ -31,8 +31,8 @@ class AgreementDTOLoader {
         AgreementDTO dto = new AgreementDTO();
         AgreementEntity agreement = agreementEntityRepository.findByUuid(uuid).get();
         loadAgreementFields(dto, agreement);
-        loadSelectedRisks(dto, agreement);
         loadPersons(dto, agreement);
+        loadSelectedRisks(dto, agreement);
         return dto;
     }
 
@@ -46,6 +46,7 @@ class AgreementDTOLoader {
                     personDTO.setPersonCode(personEntity.getPerson().getPersonCode());
                     personDTO.setPersonBirthDate(personEntity.getPerson().getBirthDate());
                     personDTO.setMedicalRiskLimitLevel(personEntity.getMedicalRiskLimitLevel());
+                    personDTO.setTravelCost(personEntity.getTravelCost());
 
                     List<AgreementPersonRisksEntity> list =  agreementPersonRiskEntityRepository.findByAgreementPerson(personEntity);
                     List<RiskDTO> risks = list.stream()
