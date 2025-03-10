@@ -199,6 +199,12 @@ class TravelCalculatePremiumControllerV2Test {
         comparingJSON("rest/v2/test_case_27/request.json","rest/v2/test_case_27/response.json");
     }
 
+    @Test
+    @DisplayName("travelCost is null")
+    public void test_case_28() throws Exception{
+        comparingJSON("rest/v2/test_case_28/request.json","rest/v2/test_case_28/response.json");
+    }
+
 
 
     public void comparingJSON(String path1, String path2) throws Exception {

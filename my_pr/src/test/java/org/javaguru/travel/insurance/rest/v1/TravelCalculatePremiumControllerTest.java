@@ -109,24 +109,28 @@ public class TravelCalculatePremiumControllerTest {
                 "rest/v1/test_case_10/TravelCalculatePremiumResponse_selected_risks_is_wrong.json");
     }
 
+    @Test
     @DisplayName("Test case 11: personBirthdayDate is null")
     public void personBirthdayDateIsNull() throws Exception{
         comparingJSON("rest/v1/test_case_11/TravelCalculatePremiumRequest_personBirthdayDate_does_not_exist.json",
                 "rest/v1/test_case_11/TravelCalculatePremiumResponse_personBirthdayDate_does_not_exist.json");
     }
 
+    @Test
     @DisplayName("Test case 12: personBirthdayDate in future")
     public void personBirthdayDateInFuture() throws Exception{
         comparingJSON("rest/v1/test_case_12/TravelCalculatePremiumRequest_personBirthdayDate_in_future.json",
                 "rest/v1/test_case_12/TravelCalculatePremiumResponse_personBirthdayDate_in_future.json");
     }
 
+    @Test
     @DisplayName("Test case 13: allFields not_provided")
     public void travelMedicalAllFieldsNotProvided() throws Exception{
         comparingJSON("rest/v1/test_case_13/TravelCalculatePremiumRequest_travel_medical_allFields_not_provided.json",
                 "rest/v1/test_case_13/TravelCalculatePremiumResponse_travel_medical_allFields_not_provided.json");
     }
 
+    @Test
     @DisplayName("Test case 14: all are okay")
     public void allFieldsAreCorrect()throws Exception{
         comparingJSON("rest/v1/test_case_14/TravelCalculatePremiumRequest_all_fields_are_okay.json",
@@ -140,16 +144,25 @@ public class TravelCalculatePremiumControllerTest {
                 "rest/v1/test_case_15/TravelCalculatePremiumResponse_country_empty.json");
     }
 
+    @Test
     @DisplayName("Test case 16: personCode null")
     public void personCodeNull()throws Exception{
-        comparingJSON("rest/v1/test_case_14/TravelCalculatePremiumRequest_all_fields_are_okay.json",
-                "rest/v1/test_case_14/TravelCalculatePremiumResponse_all_fields_are_okay.json");
+        comparingJSON("rest/v1/test_case_16/TravelCalculatePremiumRequest_all_fields_are_okay.json",
+                "rest/v1/test_case_16/TravelCalculatePremiumResponse_all_fields_are_okay.json");
     }
 
+    @Test
     @DisplayName("Test case 17: personCode blunk")
     public void personCodeBlunk()throws Exception{
-        comparingJSON("rest/v1/test_case_14/TravelCalculatePremiumRequest_all_fields_are_okay.json",
-                "rest/v1/test_case_14/TravelCalculatePremiumResponse_all_fields_are_okay.json");
+        comparingJSON("rest/v1/test_case_17/TravelCalculatePremiumRequest_all_fields_are_okay.json",
+                "rest/v1/test_case_17/TravelCalculatePremiumResponse_all_fields_are_okay.json");
+    }
+
+    @Test
+    @DisplayName("Test case 18: travelCost null")
+    public void travelCostNull()throws Exception{
+        comparingJSON("rest/v1/test_case_18/request.json",
+                "rest/v1/test_case_18/response.json");
     }
 
 

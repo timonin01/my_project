@@ -30,7 +30,7 @@ public class AgreementPersonEntity {
     @JoinColumn(name = "person_id", nullable = false)
     private PersonEntity person;
 
-    @Column(name = "medical_risk_limit_level", nullable = false)
+    @Column(name = "medical_risk_limit_level")
     private String medicalRiskLimitLevel;
 
     @Column(name = "travel_cost")
