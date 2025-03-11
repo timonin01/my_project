@@ -11,22 +11,22 @@ public class RiskLevelV1TestCases extends CompareJSONV1 {
     @Test
     @DisplayName("ERROR_CODE_6: selected_risks is null")
     public void selectedRisksIsNull()throws Exception{
-        comparingJSON("rest/v1/risks/test_case_8/request.json",
-                "rest/v1/risks/test_case_8/response.json");
+        comparingJSON("rest/v1/risks/ERROR_CODE_6_Selected_risks_Is_Null/request.json",
+                "rest/v1/risks/ERROR_CODE_6_Selected_risks_Is_Null/response.json");
     }
 
     @Test
     @DisplayName("ERROR_CODE_6: selected_risks is empty")
     public void selectedRisksIsEmpty()throws Exception{
-        comparingJSON("rest/v1/risks/test_case_9/request.json",
-                "rest/v1/risks/test_case_9/response.json");
+        comparingJSON("rest/v1/risks/ERROR_CODE_6_Selected_risks_Is_Empty/request.json",
+                "rest/v1/risks/ERROR_CODE_6_Selected_risks_Is_Empty/response.json");
     }
 
     @Test
     @DisplayName("ERROR_CODE_9: selected_risks are wrong")
     public void selectedRisksAreWrong() throws Exception{
-        comparingJSON("rest/v1/risks/test_case_10/request.json",
-                "rest/v1/risks/test_case_10/response.json");
+        comparingJSON("rest/v1/risks/ERROR_CODE_9_Selected_risks_Are_Wrong/request.json",
+                "rest/v1/risks/ERROR_CODE_9_Selected_risks_Are_Wrong/response.json");
     }
 
 }

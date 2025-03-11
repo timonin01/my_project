@@ -9,8 +9,8 @@ public class TravelMedicalRiskV1TestCases extends CompareJSONV1 {
     @Test
     @DisplayName("all Fields not_provided except selected_risks")
     public void travelMedicalAllFieldsNotProvided() throws Exception{
-        comparingJSON("rest/v1/risk_travel_medical/test_case_13/request.json",
-                "rest/v1/risk_travel_medical/test_case_13/response.json");
+        comparingJSON("rest/v1/risk_travel_medical/All_Fields_Not_provided_Except_Selected_risks/request.json",
+                "rest/v1/risk_travel_medical/All_Fields_Not_provided_Except_Selected_risks/response.json");
     }
 
 }
