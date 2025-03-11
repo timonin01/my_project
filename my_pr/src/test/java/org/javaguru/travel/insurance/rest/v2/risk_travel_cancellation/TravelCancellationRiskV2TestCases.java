@@ -9,7 +9,7 @@ public class TravelCancellationRiskV2TestCases extends CompareJSONV2 {
     @Test
     @DisplayName("travelCost is null")
     public void test_case_28() throws Exception{
-        comparingJSON("rest/v2/test_case_28/request.json","rest/v2/test_case_28/response.json");
+        comparingJSON("rest/v2/risk_travel_cancellation/test_case_28/request.json", "rest/v2/risk_travel_cancellation/test_case_28/response.json");
     }
 
 }
