@@ -1,5 +1,6 @@
 package org.javaguru.travel.insurance.loadtesting;
 
+import com.google.common.base.Stopwatch;
 import org.javaguru.travel.insurance.common.JsonFileReader;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,7 @@ public class RestCallExample {
     }
 
     private static void executeV1Call(JsonFileReader jsonFileReader){
+        Stopwatch stopwatch = Stopwatch.createStarted();
         String requestFilePath = "rest/v1/agreement/All_Fields_Are_Okay/request.json";
         String requestJson = jsonFileReader.readJsonFromFile(requestFilePath);
 
@@ -30,9 +32,14 @@ public class RestCallExample {
         String responseJson = jsonFileReader.readJsonFromFile(responseFilePath);
 
         executeRestCallAndCompareResults(requestJson,responseJson,BASE_URL_V1);
+
+        stopwatch.stop();
+        long time = stopwatch.elapsed().toMillis();
+        System.out.println("Request v1 processing "+time);
     }
 
     private static void executeV2Call(JsonFileReader jsonFileReader){
+        Stopwatch stopwatch = Stopwatch.createStarted();
         String requestFilePath = "rest/v2/agreement/All_Fields_Okay/request.json";
         String requestJson = jsonFileReader.readJsonFromFile(requestFilePath);
 
@@ -40,6 +47,10 @@ public class RestCallExample {
         String responseJson = jsonFileReader.readJsonFromFile(responseFilePath);
 
         executeRestCallAndCompareResults(requestJson,responseJson,BASE_URL_V2);
+
+        stopwatch.stop();
+        long time = stopwatch.elapsed().toMillis();
+        System.out.println("Request v2 processing "+time);
     }
 
     private static void executeRestCallAndCompareResults(String jsonRequest,
