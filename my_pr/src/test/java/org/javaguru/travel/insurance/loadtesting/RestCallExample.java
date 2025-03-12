@@ -9,67 +9,41 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import static uk.org.webcompere.modelassert.json.JsonAssertions.assertJson;
 
 public class RestCallExample {
 
-    private static final String BASE_URL_V1 = "http://localhost:8080/insurance/travel/api/v1/";
-    private static final String BASE_URL_V2 = "http://localhost:8080/insurance/travel/api/v2/";
-
     public static void main(String[] args) {
-        JsonFileReader jsonFileReader = new JsonFileReader();
-        executeV1Call(jsonFileReader);
-        executeV2Call(jsonFileReader);
-    }
+        LoadTestingStatistic statisticV1 = new LoadTestingStatistic();
+        LoadTestingStatistic statisticV2 = new LoadTestingStatistic();
 
-    private static void executeV1Call(JsonFileReader jsonFileReader){
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        String requestFilePath = "rest/v1/agreement/All_Fields_Are_Okay/request.json";
-        String requestJson = jsonFileReader.readJsonFromFile(requestFilePath);
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 1; i <= 50; i++) {
+            Thread v1Call = new Thread(new V1Call(statisticV1));
+            Thread v2Call = new Thread(new V2Call(statisticV2));
+            v1Call.start();
+            v2Call.start();
+            threads.add(v1Call);
+            threads.add(v2Call);
+        }
 
-        String responseFilePath = "rest/v1/agreement/All_Fields_Are_Okay/response.json";
-        String responseJson = jsonFileReader.readJsonFromFile(responseFilePath);
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-        executeRestCallAndCompareResults(requestJson,responseJson,BASE_URL_V1);
+        System.out.println("Average for v1 "+ statisticV1.calculateAverage());
+        System.out.println("Min for v1 "+ statisticV1.findMinTime());
+        System.out.println("Max for v1 "+ statisticV1.findMaxTime());
 
-        stopwatch.stop();
-        long time = stopwatch.elapsed().toMillis();
-        System.out.println("Request v1 processing "+time);
-    }
-
-    private static void executeV2Call(JsonFileReader jsonFileReader){
-        Stopwatch stopwatch = Stopwatch.createStarted();
-        String requestFilePath = "rest/v2/agreement/All_Fields_Okay/request.json";
-        String requestJson = jsonFileReader.readJsonFromFile(requestFilePath);
-
-        String responseFilePath = "rest/v2/agreement/All_Fields_Okay/response.json";
-        String responseJson = jsonFileReader.readJsonFromFile(responseFilePath);
-
-        executeRestCallAndCompareResults(requestJson,responseJson,BASE_URL_V2);
-
-        stopwatch.stop();
-        long time = stopwatch.elapsed().toMillis();
-        System.out.println("Request v2 processing "+time);
-    }
-
-    private static void executeRestCallAndCompareResults(String jsonRequest,
-                                                         String jsonExpectedResponse,
-                                                         String url) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(jsonRequest, headers);
-
-        String responseBodyContent = restTemplate.postForObject(url, requestEntity, String.class);
-
-        assertJson(responseBodyContent)
-                .where()
-                .keysInAnyOrder()
-                .arrayInAnyOrder()
-                .at("/uuid").isNotEmpty()
-                .isEqualTo(jsonExpectedResponse);
+        System.out.println("Average for v2 "+ statisticV2.calculateAverage());
+        System.out.println("Min for v2 "+ statisticV2.findMinTime());
+        System.out.println("Max for v2 "+ statisticV2.findMaxTime());
     }
 }
