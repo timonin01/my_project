@@ -3,10 +3,10 @@ package org.javaguru.travel.insurance.loadtesting;
 import java.util.ArrayList;
 import java.util.List;
 
-class LoadTestingSystem {
+class LoadTestingSystemV1 {
 
     public static void main(String[] args) {
-        new LoadTestingSystem().executeForAMinute(5, 60000);
+        new LoadTestingSystemV1().executeForAMinute(5, 60000);
     }
 
     public void executeForAMinute(int parallelThreadCount, int requestCount) {
@@ -16,8 +16,8 @@ class LoadTestingSystem {
 
         List<Thread> threads = new ArrayList<>();
 
-        for (int i = 1; i <= requestCount; i++) {
-            for (int j = 1; j <= parallelThreadCount; j++) {
+        for (int i = 0; i < requestCount; i++) {
+            for (int j = 0; j < parallelThreadCount; j++) {
                 Thread v1Call = new Thread(new V1Call(statisticV1));
                 v1Call.start();
                 threads.add(v1Call);
