@@ -1,9 +1,7 @@
 package org.javaguru.travel.insurance.core.underwriting.integration.medical;
 
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
-import org.javaguru.travel.insurance.core.api.dto.AgreementDTOBuilder;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
-import org.javaguru.travel.insurance.core.api.dto.PersonDTOBuilder;
 import org.javaguru.travel.insurance.core.underwriting.TravelPremiumCalculationResult;
 import org.javaguru.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
 import org.junit.jupiter.api.Disabled;
@@ -36,19 +34,19 @@ public class AgeCoefficientIntegrationSwitchDisabledTest {
 
     @Test
     public void shouldNotReturnError(){
-        PersonDTO person = PersonDTOBuilder.createPerson().
-                withPersonFirstName("Vasja").
-                withPersonLastName("Pupkin").
-                withPersonBirthDate(createDate("01.01.2000")).
-                withMedicalRiskLimitLevel("LEVEL_10000").
-                build();
+        PersonDTO person = PersonDTO.builder()
+                .personFirstName("Vasja")
+                .personLastName("Pupkin")
+                .personBirthDate(createDate("01.01.2000"))
+                .medicalRiskLimitLevel("LEVEL_10000")
+                .build();
 
-        AgreementDTO agreement = AgreementDTOBuilder.createAgreement()
-                .withDateFrom(createDate("01.01.2030"))
-                .withDateTo(createDate("09.01.2030"))
-                .withCountry("SPAIN")
-                .withSelectedRisk("TRAVEL_MEDICAL")
-                .withPersons(List.of(person))
+        AgreementDTO agreement = AgreementDTO.builder()
+                .agreementDateFrom(createDate("01.01.2030"))
+                .agreementDateTo(createDate("09.01.2030"))
+                .country("SPAIN")
+                .selectedRisks(List.of("TRAVEL_MEDICAL"))
+                .persons(List.of(person))
                 .build();
 
         TravelPremiumCalculationResult result = premiumUnderwriting.calculatePremium(agreement,person);

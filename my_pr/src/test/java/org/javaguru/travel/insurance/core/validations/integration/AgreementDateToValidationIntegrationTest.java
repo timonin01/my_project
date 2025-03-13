@@ -4,7 +4,6 @@ import org.javaguru.travel.insurance.core.api.dto.*;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,20 +25,20 @@ public class AgreementDateToValidationIntegrationTest {
 
     @Test
     public void shouldReturnErrorWhenDateToIsNull() {
-        PersonDTO person = PersonDTOBuilder.createPerson().
-                withPersonFirstName("Vasja").
-                withPersonLastName("Pupkin").
-                withPersonCode("123456-12345").
-                withPersonBirthDate(createDate("01.01.2000")).
-                withMedicalRiskLimitLevel("LEVEL_10000").
+        PersonDTO person = PersonDTO.builder()
+                .personFirstName("Vasja")
+                .personLastName("Pupkin")
+                .personCode("123456-12345")
+                .personBirthDate(createDate("01.01.2000"))
+                .medicalRiskLimitLevel("LEVEL_10000").
                 build();
 
-        AgreementDTO agreement = AgreementDTOBuilder.createAgreement()
-                .withDateFrom(createDate("01.01.2030"))
-                .withDateTo(null)
-                .withCountry("SPAIN")
-                .withSelectedRisk("TRAVEL_MEDICAL")
-                .withPersons(List.of(person))
+        AgreementDTO agreement = AgreementDTO.builder()
+                .agreementDateFrom(createDate("01.01.2030"))
+                .agreementDateTo(null)
+                .country("SPAIN")
+                .selectedRisks(List.of("TRAVEL_MEDICAL"))
+                .persons(List.of(person))
                 .build();
 
         List<ValidationErrorDTO> errors = validator.validate(agreement);
@@ -51,20 +50,20 @@ public class AgreementDateToValidationIntegrationTest {
 
     @Test
     public void shouldReturnErrorWhenDateToInPast() {
-        PersonDTO person = PersonDTOBuilder.createPerson().
-                withPersonFirstName("Vasja").
-                withPersonLastName("Pupkin").
-                withPersonCode("123456-12345").
-                withPersonBirthDate(createDate("01.01.2000")).
-                withMedicalRiskLimitLevel("LEVEL_10000").
+        PersonDTO person = PersonDTO.builder()
+                .personFirstName("Vasja")
+                .personLastName("Pupkin")
+                .personCode("123456-12345")
+                .personBirthDate(createDate("01.01.2000"))
+                .medicalRiskLimitLevel("LEVEL_10000").
                 build();
 
-        AgreementDTO agreement = AgreementDTOBuilder.createAgreement()
-                .withDateFrom(createDate("01.01.2030"))
-                .withDateTo(createDate("01.01.2024"))
-                .withCountry("SPAIN")
-                .withSelectedRisk("TRAVEL_MEDICAL")
-                .withPersons(List.of(person))
+        AgreementDTO agreement = AgreementDTO.builder()
+                .agreementDateFrom(createDate("01.01.2030"))
+                .agreementDateTo(createDate("01.01.2024"))
+                .country("SPAIN")
+                .selectedRisks(List.of("TRAVEL_MEDICAL"))
+                .persons(List.of(person))
                 .build();
 
         List<ValidationErrorDTO> errors = validator.validate(agreement);
