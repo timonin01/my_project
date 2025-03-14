@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -29,16 +31,16 @@ public class AgreementXmlExporterJob {
 
     private static final Logger logger = LoggerFactory.getLogger(AgreementXmlExporterJob.class);
 
+    @Value("${agreement.xml.exporter.job.thread.count}")
+    private int threadCount;
+
     @Value( "${agreement.xml.exporter.job.enabled:false}" )
     private boolean jobEnabled;
-
-    @Value( "${file.export.path}" )
-    private String agreementExportPath;
 
     private final TravelGetAgreementUuidsService getAgreementUuidsService;
     private final TravelGetAgreementService getAgreementService;
 
-    private final XmlMapper xmlMapper = new XmlMapper();
+    private final AgreementXmlExporter agreementXmlExporter;
 
     @Scheduled(fixedRate = 5, timeUnit = TimeUnit.SECONDS)
     public void doJob() {
@@ -50,7 +52,7 @@ public class AgreementXmlExporterJob {
     private void executeJob(){
         logger.info("AgreementXmlExporterJob started");
         List<String> allAgreementUuids = getAllAgreementUuids();
-        allAgreementUuids.forEach(this::exportAgreement);
+        exportAgreement(allAgreementUuids);
         logger.info("AgreementXmlExporterJob finished");
     }
 
@@ -61,12 +63,32 @@ public class AgreementXmlExporterJob {
         return coreResult.getAgreementUuids();
     }
 
+    private void exportAgreement(List<String> uuids){
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+        for (String uuid : uuids){
+            executor.submit(()->exportAgreement(uuid));
+        }
+        // Завершаем ExecutorService и ждем завершения всех задач
+        executor.shutdown();
+        try {
+            // Ожидаем завершения всех задач в течение 1 часа
+            if (!executor.awaitTermination(1, TimeUnit.HOURS)) {
+                // Если задачи не завершились, принудительно завершаем
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            // Если текущий поток был прерван, принудительно завершаем ExecutorService
+            executor.shutdownNow();
+            Thread.currentThread().interrupt(); // Восстанавливаем статус прерывания
+        }
+    }
+
     private void exportAgreement(String uuid){
         logger.info("AgreementXmlExporterJob started for uuid = " + uuid);
         AgreementDTO agreement = getAgreement(uuid);
         try {
-            String agreementXml = convertAgreementToXml(agreement);
-            storeXmlToFile(uuid, agreementXml);
+            String agreementXml = agreementXmlExporter.convertAgreementToXml(agreement);
+            agreementXmlExporter.storeXmlToFile(uuid, agreementXml);
         }catch (Exception e) {
             logger.info("AgreementXmlExporterJob failed for agreement uuid = " + agreement.getUuid(), e);
         }
@@ -80,28 +102,5 @@ public class AgreementXmlExporterJob {
         return coreResult.getAgreement();
     }
 
-    private String convertAgreementToXml(AgreementDTO agreement) throws Exception {
-        // Сериализуем объект в XML
-        String xml = xmlMapper.writeValueAsString(agreement);
-        return xml;
-    }
-
-    private void storeXmlToFile(String uuid, String agreementXml){
-        try (FileWriter writer = new FileWriter(agreementExportPath)) {
-            File file = new File(agreementExportPath + "/agreement-" + uuid + ".xml");
-
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            FileWriter fw = new FileWriter(file.getAbsoluteFile());
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(agreementXml);
-            bw.close();
-            logger.info("XML has been successfully written to the file: " + agreementXml);
-        } catch (IOException e) {
-            logger.info("XML is not written to the file: " + uuid);
-        }
-    }
 
 }
