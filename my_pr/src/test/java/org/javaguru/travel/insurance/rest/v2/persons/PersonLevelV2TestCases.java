@@ -60,4 +60,16 @@ public class PersonLevelV2TestCases extends CompareJSONV2 {
         comparingJSON("rest/v2/persons/PersonCode_Is_Blunk_Twice/request.json", "rest/v2/persons/PersonCode_Is_Blunk_Twice/response.json");
     }
 
+    @Test
+    @DisplayName("personCode is incorrect")
+    public void personCodeIsIncorrect() throws Exception{
+        comparingJSON("rest/v2/persons/PersonCode_Is_Incorrect/request.json", "rest/v2/persons/PersonCode_Is_Incorrect/response.json");
+    }
+
+    @Test
+    @DisplayName("personCode is incorrect : twice")
+    public void personCodeIsIncorrectTwice() throws Exception{
+        comparingJSON("rest/v2/persons/PersonCode_Is_Incorrect_Twice/request.json", "rest/v2/persons/PersonCode_Is_Incorrect_Twice/response.json");
+    }
+
 }

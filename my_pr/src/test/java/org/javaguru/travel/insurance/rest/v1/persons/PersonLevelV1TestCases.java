@@ -46,8 +46,17 @@ public class PersonLevelV1TestCases extends CompareJSONV1 {
     @Test
     @DisplayName("ERROR_CODE_16: personCode blunk")
     public void personCodeBlunk()throws Exception{
-        comparingJSON("rest/v1/persons/ERROR_CODE_16_PersonCode_Blunk/request.json",
-                "rest/v1/persons/ERROR_CODE_16_PersonCode_Blunk/response.json");
+        comparingJSON("rest/v1/persons/ERROR_CODE_16_PersonCode_Blank/request.json",
+                "rest/v1/persons/ERROR_CODE_16_PersonCode_Blank/response.json");
     }
+
+    @Test
+    @DisplayName("ERROR_CODE_21: personCode incorrect")
+    public void personCodeincorrect()throws Exception{
+        comparingJSON("rest/v1/persons/ERROR_CODE_21_PersonCode_Incorrect/request.json",
+                "rest/v1/persons/ERROR_CODE_21_PersonCode_Incorrect/response.json");
+    }
+
+
 
 }
