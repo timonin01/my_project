@@ -16,10 +16,24 @@ public class PersonLevelV1TestCases extends CompareJSONV1 {
     }
 
     @Test
+    @DisplayName("ERROR_CODE_22: firstName incorrect")
+    public void firstNameincorrect()throws Exception{
+        comparingJSON("rest/v1/persons/ERROR_CODE_22_FirstName_Incorrect/request.json",
+                "rest/v1/persons/ERROR_CODE_22_FirstName_Incorrect/response.json");
+    }
+
+    @Test
     @DisplayName("ERROR_CODE_8: lastName does not exist")
     public void lastNameDoesNotExist()throws Exception{
         comparingJSON("rest/v1/persons/ERROR_CODE_8_LastName_Does_Not_Exist/request.json",
                 "rest/v1/persons/ERROR_CODE_8_LastName_Does_Not_Exist/response.json");
+    }
+
+    @Test
+    @DisplayName("ERROR_CODE_8: lastName incorrect")
+    public void lastNameDoesIncorrect()throws Exception{
+        comparingJSON("rest/v1/persons/ERROR_CODE_23_LastName_Incorrect/request.json",
+                "rest/v1/persons/ERROR_CODE_23_LastName_Incorrect/response.json");
     }
 
     @Test

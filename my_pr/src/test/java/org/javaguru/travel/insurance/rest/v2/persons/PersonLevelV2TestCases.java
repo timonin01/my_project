@@ -13,6 +13,34 @@ public class PersonLevelV2TestCases extends CompareJSONV2 {
     }
 
     @Test
+    @DisplayName("ERROR_CODE_22: firstName incorrect")
+    public void firstNameIncorrect()throws Exception{
+        comparingJSON("rest/v2/persons/ERROR_CODE_22_FirstName_Incorrect/request.json",
+                "rest/v2/persons/ERROR_CODE_22_FirstName_Incorrect/response.json");
+    }
+
+    @Test
+    @DisplayName("ERROR_CODE_22: firstName incorrect twice")
+    public void firstNameIncorrectTwice()throws Exception{
+        comparingJSON("rest/v2/persons/ERROR_CODE_22_FirstName_Incorrect_Twice/request.json",
+                "rest/v2/persons/ERROR_CODE_22_FirstName_Incorrect_Twice/response.json");
+    }
+
+    @Test
+    @DisplayName("ERROR_CODE_23: lastName incorrect")
+    public void lastNameIncorrect()throws Exception{
+        comparingJSON("rest/v2/persons/ERROR_CODE_23_LastName_Incorrect/request.json",
+                "rest/v2/persons/ERROR_CODE_23_LastName_Incorrect/response.json");
+    }
+
+    @Test
+    @DisplayName("ERROR_CODE_23: lastName incorrect twice")
+    public void lastNameIncorrectTwice()throws Exception{
+        comparingJSON("rest/v2/persons/ERROR_CODE_23_LastName_Incorrect_Twice/request.json",
+                "rest/v2/persons/ERROR_CODE_23_LastName_Incorrect_Twice/response.json");
+    }
+
+    @Test
     @DisplayName("personLastName is empty")
     public void test_case_15() throws Exception{
         comparingJSON("rest/v2/persons/PersonLastName_Is_Empty/request.json", "rest/v2/persons/PersonLastName_Is_Empty/response.json");

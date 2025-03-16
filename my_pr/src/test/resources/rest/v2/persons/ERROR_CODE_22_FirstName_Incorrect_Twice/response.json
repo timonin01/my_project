@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "errorCode": "ERROR_CODE_22",
+      "description": "Person first name [Andrey-Best1] allowed symbols contains latin chars, hyphen and spaces!"
+    },
+    {
+      "errorCode": "ERROR_CODE_22",
+      "description": "Person first name [Andrey-Best1] allowed symbols contains latin chars, hyphen and spaces!"
+    }
+  ]
+}
