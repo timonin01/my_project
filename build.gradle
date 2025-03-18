@@ -95,6 +95,10 @@ subprojects {
 		//liquibase
 		implementation ('org.liquibase:liquibase-core:4.31.0')
 
+		//jakarta
+		implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+		implementation 'org.glassfish:jakarta.el:4.0.2'
+
 		//thymeleaf
 		implementation('org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5')
 
