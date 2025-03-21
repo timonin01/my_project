@@ -38,7 +38,6 @@ public class AgreementXmlExporterJob {
     private final TravelGetAgreementService getAgreementService;
 
     private final AgreementXmlExporter agreementXmlExporter;
-    private final ValidationErrorFactory errorFactory;
 
     @Scheduled(fixedRate = 5, timeUnit = TimeUnit.SECONDS)
     public void doJob() {

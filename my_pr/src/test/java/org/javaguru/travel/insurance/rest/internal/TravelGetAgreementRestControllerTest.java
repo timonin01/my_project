@@ -2,6 +2,7 @@ package org.javaguru.travel.insurance.rest.internal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javaguru.travel.insurance.common.JsonFileReader;
+import org.javaguru.travel.insurance.core.domain.entities.AgreementEntity;
 import org.javaguru.travel.insurance.dto.v2.TravelCalculatePremiumResponseV2;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
