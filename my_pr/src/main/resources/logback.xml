@@ -42,10 +42,16 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>localhost:5000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE_APPENDER" />
         <appender-ref ref="REQUEST_RESPONSE_FILE_APPENDER" />
+        <appender-ref ref="stash" />
     </root>
 
 
@@ -55,5 +61,7 @@
     <logger name="org.my_project.travel.insurance.rest.TravelCalculatePremiumResponseLogger" level="INFO">
         <appender-ref ref="REQUEST_RESPONSE_FILE_APPENDER" />
     </logger>
+
+
 
 </configuration>

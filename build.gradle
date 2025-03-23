@@ -78,6 +78,8 @@ subprojects {
 
 		// Logback Classic (включает Core)
 		implementation 'ch.qos.logback:logback-classic:1.5.16'
+		//logstach
+		implementation 'net.logstash.logback:logstash-logback-encoder:6.6'
 		// SLF4J API
 		implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.1.0-alpha1'
 
