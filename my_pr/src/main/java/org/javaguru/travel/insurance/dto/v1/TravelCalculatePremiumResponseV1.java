@@ -43,6 +43,8 @@ public class TravelCalculatePremiumResponseV1 extends CoreResponse {
     @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal travelCost;
 
+    private String sportActivity;
+
     @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal agreementPremium;
 

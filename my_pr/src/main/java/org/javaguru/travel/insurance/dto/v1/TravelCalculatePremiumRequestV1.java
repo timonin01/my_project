@@ -38,6 +38,8 @@ public class TravelCalculatePremiumRequestV1 {
 
     private BigDecimal travelCost;
 
+    private String sportActivity;
+
     private String country;
 
     @JsonAlias("selected_risks")

@@ -47,6 +47,7 @@ class AgreementDTOLoader {
                     personDTO.setPersonBirthDate(personEntity.getPerson().getBirthDate());
                     personDTO.setMedicalRiskLimitLevel(personEntity.getMedicalRiskLimitLevel());
                     personDTO.setTravelCost(personEntity.getTravelCost());
+                    personDTO.setSportActivity(personEntity.getSportActivity());
 
                     List<AgreementPersonRisksEntity> list =  agreementPersonRiskEntityRepository.findByAgreementPerson(personEntity);
                     List<RiskDTO> risks = list.stream()

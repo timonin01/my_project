@@ -1,0 +1,8 @@
+{
+  "errors": [
+    {
+      "errorCode": "ERROR_CODE_26",
+      "description": "SportActivity value = Div not supported!"
+    }
+  ]
+}

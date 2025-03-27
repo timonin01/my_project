@@ -166,3 +166,13 @@ CREATE TABLE agreements_xml_export (
   already_exported BOOLEAN NOT NULL,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE type_sport_activities (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  sport_activity VARCHAR(200) NOT NULL,
+  coefficient NUMERIC(10,2) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+ALTER TABLE agreement_persons
+    ADD COLUMN sport_activity VARCHAR(200);

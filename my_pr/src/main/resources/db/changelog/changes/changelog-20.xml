@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+
+  <changeSet author="tim" id="49">
+    <createTable tableName="type_sport_activities">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="sport_activity" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="coefficient" type="NUMERIC(10,2)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet author="tim" id="50">
+    <addColumn tableName="agreement_persons">
+      <column name="sport_activity" type="VARCHAR(200)">
+        <constraints nullable="true"/>
+      </column>
+    </addColumn>
+  </changeSet>
+
+  <changeSet author="tim" id="51" context="test-data">
+    <comment>Insert initial sport activities data</comment>
+
+    <insert tableName="type_sport_activities">
+      <column name="sport_activity" value="SKIING"/>
+      <column name="coefficient" value="5.0"/>
+    </insert>
+
+    <insert tableName="type_sport_activities">
+      <column name="sport_activity" value="DIVING"/>
+      <column name="coefficient" value="3.5"/>
+    </insert>
+
+    <insert tableName="type_sport_activities">
+      <column name="sport_activity" value="SKYDIVING"/>
+      <column name="coefficient" value="4.0"/>
+    </insert>
+
+    <insert tableName="type_sport_activities">
+      <column name="sport_activity" value="SAFARI"/>
+      <column name="coefficient" value="5.5"/>
+    </insert>
+  </changeSet>
+
+
+</databaseChangeLog>

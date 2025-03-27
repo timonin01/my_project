@@ -6,7 +6,15 @@ plugins {
 }
 
 checkstyle {
-	configFile = 'config/checkstyle/checkstyle.xml' as File
+	configFile = file("config/checkstyle/checkstyle.xml")
+	toolVersion = '10.21.4'
+}
+
+checkstyleMain {
+	source ='src/main/java'
+}
+checkstyleTest {
+	source ='src/test/java'
 }
 
 
@@ -23,6 +31,7 @@ dependencies {
 
 	test {
 		useJUnitPlatform()
+		dependsOn checkstyleMain, checkstyleTest
 	}
 
 }

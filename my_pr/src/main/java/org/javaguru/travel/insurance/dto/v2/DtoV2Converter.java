@@ -64,6 +64,7 @@ public class DtoV2Converter {
         person.setPersonBirthDate(personDTO.getPersonBirthDate());
         person.setMedicalRiskLimitLevel(personDTO.getMedicalRiskLimitLevel());
         person.setTravelCost(personDTO.getTravelCost());
+        person.setSportActivity(personDTO.getSportActivity());
 
         person.setPersonPremium(personDTO.getRisks().stream()
                 .map(RiskDTO::getPremium)
@@ -85,6 +86,7 @@ public class DtoV2Converter {
         person.setPersonBirthDate(personRequestDTO.getPersonBirthDate());
         person.setMedicalRiskLimitLevel(personRequestDTO.getMedicalRiskLimitLevel());
         person.setTravelCost(personRequestDTO.getTravelCost());
+        person.setSportActivity(personRequestDTO.getSportActivity());
         return person;
     }
 

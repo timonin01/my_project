@@ -239,3 +239,17 @@ VALUES('SPAIN', 8.0);
 
 INSERT INTO travel_cancellation_country_safety_rating(country_ic, coefficient)
 VALUES('JAPAN', 9.0);
+
+
+INSERT INTO type_sport_activities(sport_activity,coefficient)
+VALUES('SKIING',5.0);
+
+INSERT INTO type_sport_activities(sport_activity,coefficient)
+VALUES('DIVING',3.5);
+
+INSERT INTO type_sport_activities(sport_activity,coefficient)
+VALUES('SKYDIVING',4.0);
+
+INSERT INTO type_sport_activities(sport_activity,coefficient)
+VALUES('SAFARI',5.5);
+

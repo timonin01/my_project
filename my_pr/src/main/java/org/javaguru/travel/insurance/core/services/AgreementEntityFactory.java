@@ -93,6 +93,7 @@ public class AgreementEntityFactory {
         agreementPersonEntity.setPerson(personEntity);
         agreementPersonEntity.setMedicalRiskLimitLevel(personDTO.getMedicalRiskLimitLevel());
         agreementPersonEntity.setTravelCost(personDTO.getTravelCost());
+        agreementPersonEntity.setSportActivity(personDTO.getSportActivity());
         return agreementPersonEntity;
     }
 

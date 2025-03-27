@@ -30,4 +30,6 @@ public class PersonRequestDTO {
 
     private BigDecimal travelCost;
 
+    private String sportActivity;
+
 }

@@ -40,6 +40,11 @@
                         <input type="text" id="persons[${index}].travelCost" name="persons[${index}].travelCost" />
                     </div>
                     <br>
+                    <div>
+                        <label for="persons[${index}].sportActivity">Sport Activity:</label>
+                        <input type="text" id="persons[${index}].sportActivity" name="persons[${index}].sportActivity" />
+                    </div>
+                    <br>
                 </div>`;
             personsContainer.insertAdjacentHTML('beforeend', personTemplate);
         }
@@ -111,6 +116,11 @@
                     <input type="text" th:field="*{persons[__${personStat.index}__].travelCost}" />
                 </div>
                 </br>
+                <div>
+                    <label for="sportActivity">Travel cost:</label>
+                    <input type="text" th:field="*{persons[__${personStat.index}__].sportActivity}" />
+                </div>
+                </br>
             </div>
         </div>
     </div>
@@ -130,6 +140,7 @@
         <p th:text="'Birth Date: ' + ${person.personBirthDate}"></p>
         <p th:text="'Medical Risk Limit Level: ' + ${person.medicalRiskLimitLevel}"></p>
         <p th:text="'Travel cost: ' + ${person.travelCost}"></p>
+        <p th:text="'Sport Activity: ' + ${person.sportActivity}"></p>
         <p th:text="'Person Premium: ' + ${person.personPremium}"></p>
         <p>Risks:</p>
         <ul>

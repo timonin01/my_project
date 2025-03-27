@@ -26,6 +26,8 @@ public class PersonDTO {
 
     private String medicalRiskLimitLevel;
 
+    private String sportActivity;
+
     private BigDecimal travelCost;
 
     private List<RiskDTO> risks;

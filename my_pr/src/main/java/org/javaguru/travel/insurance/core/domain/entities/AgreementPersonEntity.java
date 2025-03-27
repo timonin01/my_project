@@ -36,4 +36,7 @@ public class AgreementPersonEntity {
     @Column(name = "travel_cost")
     private BigDecimal travelCost;
 
+    @Column(name = "sport_activity")
+    private String sportActivity;
+
 }
