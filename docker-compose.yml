@@ -1,5 +1,25 @@
-version: '3.7'
 services:
+  db:
+    networks:
+      - timonin-network
+    container_name: mysql-container
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Lalka123
+      MYSQL_DATABASE: insurance-calculator-db
+    ports:
+      - "3000:3306"
+
+  insurance-calculator:
+    networks:
+      - timonin-network
+    container_name: insurance-calculator
+    image: insurance-calculator:1.0.2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
   elasticsearch:
     image: elasticsearch:7.17.0
     container_name: elasticsearch
@@ -35,5 +55,6 @@ services:
       - elasticsearch
 
 networks:
+  timonin-network:
   elastic:
     driver: bridge
