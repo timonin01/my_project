@@ -1,18 +1,18 @@
 services:
   db:
-    networks:
-      - timonin-network
+    networks: [timonin-network]
     container_name: mysql-container
-    image: mysql:latest
+    image: mysql:8.0
     environment:
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: Lalka123
       MYSQL_ROOT_PASSWORD: Lalka123
       MYSQL_DATABASE: insurance-calculator-db
     ports:
       - "3000:3306"
 
-  insurance-calculator:
-    networks:
-      - timonin-network
+  insurance-calculator-app:
+    networks: [timonin-network]
     container_name: insurance-calculator
     image: insurance-calculator:1.0.2
     ports:
@@ -56,5 +56,7 @@ services:
 
 networks:
   timonin-network:
+    name: timonin-network
   elastic:
+    name: elastic
     driver: bridge

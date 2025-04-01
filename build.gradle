@@ -111,6 +111,8 @@ subprojects {
 		implementation('org.springframework.boot:spring-boot-starter-web:3.2.5')
 		testImplementation('org.springframework.boot:spring-boot-starter-test:3.2.5')
 
+        runtimeOnly("mysql:mysql-connector-java")
+
 		testImplementation 'com.h2database:h2:2.1.214'
 		implementation('com.h2database:h2:2.2.224')
 		runtimeOnly 'com.h2database:h2:2.1.214'
