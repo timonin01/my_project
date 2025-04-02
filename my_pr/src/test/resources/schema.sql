@@ -163,7 +163,7 @@ ALTER COLUMN medical_risk_limit_level DROP NOT NULL;
 CREATE TABLE agreements_xml_export (
   id BIGINT NOT NULL AUTO_INCREMENT,
   agreement_uuid VARCHAR(200) NOT NULL,
-  already_exported BOOLEAN NOT NULL,
+  already_exported CHAR(1) NOT NULL,
   PRIMARY KEY (id)
 );
 

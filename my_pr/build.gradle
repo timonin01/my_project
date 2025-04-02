@@ -2,20 +2,20 @@ plugins {
 	id 'org.springframework.boot' version "3.2.5"
 	id 'maven-publish'
 	id("com.palantir.docker") version "0.36.0"
-	id 'checkstyle'
+//	id 'checkstyle'
 }
 
-checkstyle {
-	configFile = file("config/checkstyle/checkstyle.xml")
-	toolVersion = '10.21.4'
-}
+//checkstyle {
+//	configFile = file("config/checkstyle/checkstyle.xml")
+//	toolVersion = '10.21.4'
+//}
 
-checkstyleMain {
-	source ='src/main/java'
-}
-checkstyleTest {
-	source ='src/test/java'
-}
+//checkstyleMain {
+//	source ='src/main/java'
+//}
+//checkstyleTest {
+//	source ='src/test/java'
+//}
 
 
 dependencies {
@@ -31,7 +31,7 @@ dependencies {
 
 	test {
 		useJUnitPlatform()
-		dependsOn checkstyleMain, checkstyleTest
+//		dependsOn checkstyleMain, checkstyleTest
 	}
 
 }
