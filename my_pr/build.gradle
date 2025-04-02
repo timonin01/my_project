@@ -48,7 +48,12 @@ bootJar {
 		archiveVersion = '1.0.2'
 }
 
+dockerPrepare{
+    dependsOn bootJar
+}
+
 docker {
+    dependsOn bootJar
 	name "insurance-calculator:1.0.2"
 	files 'build/libs/insurance-calculator-1.0.2.jar'
 	buildArgs(['JAR_FILE': "insurance-calculator-1.0.2.jar"])
