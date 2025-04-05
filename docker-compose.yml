@@ -4,55 +4,67 @@ networks:
     driver: bridge
 
 services:
+  message-broker:
+    networks: [ timonin-network ]
+    container_name: rabbitmq-container
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"  # Порт для AMQP (клиенты RabbitMQ)
+      - "15672:15672"  # Порт для веб-интерфейса управления
+
   db:
-    networks: [timonin-network]
-    container_name: mysql-container
     image: mysql:8.0
+    container_name: mysql-container
+    networks:
+      - timonin-network
     environment:
       MYSQL_ROOT_PASSWORD: Lalka123
       MYSQL_DATABASE: insurance-calculator-db
     ports:
-      - "3000:3306"
+      - "3306:3306"
 
   insurance-calculator-app:
-    networks: [timonin-network]
-    container_name: insurance-calculator
     image: insurance-calculator:1.0.2
+    container_name: insurance-calculator
+    networks:
+      - timonin-network
     ports:
       - "8080:8080"
     depends_on:
+      - message-broker
       - db
 
   elasticsearch:
     image: elasticsearch:7.17.0
     container_name: elasticsearch
+    networks:
+      - elastic
     environment:
       - discovery.type=single-node
     ports:
       - "9200:9200"
-    networks:
-      - elastic
 
   kibana:
     image: kibana:7.17.0
     container_name: kibana
+    networks:
+      - elastic
     ports:
       - "5601:5601"
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-    networks:
-      - elastic
     depends_on:
       - elasticsearch
 
   logstash:
     image: logstash:7.17.0
     container_name: logstash
+    networks:
+      - elastic
+      - timonin-network
     ports:
       - "5000:5000"
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    networks:
-      - elastic
     depends_on:
       - elasticsearch
