@@ -6,6 +6,7 @@ import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.PersonDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
 import org.javaguru.travel.insurance.core.domain.entities.AgreementEntity;
+import org.javaguru.travel.insurance.core.messagebroker.ProposalGeneratorQueueSender;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +30,7 @@ public class TravelCalculatePremiumServiceImplTest {
     @Mock private RiskPremiumsForAllPersonsCalculator agreementPersonsPremiumCalculator;
     @Mock private TotalAgreementPremiumCalculator agreementTotalPremiumCalculator;
     @Mock private AgreementEntityFactory agreementEntityFactory;
+    @Mock private ProposalGeneratorQueueSender proposalGeneratorQueueSender;
 
     @InjectMocks
     private TravelCalculatePremiumServiceImpl premiumService;

@@ -4,8 +4,6 @@ import org.javaguru.travel.insurance.rest.v1.CompareJSONV1;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
 public class AgreementLevelV1TestCases extends CompareJSONV1 {
 
     @Test
