@@ -12,6 +12,15 @@ services:
       - "5672:5672"  # Порт для AMQP (клиенты RabbitMQ)
       - "15672:15672"  # Порт для веб-интерфейса управления
 
+  doc-generator-app:
+    networks: [ timonin-network ]
+    container_name: doc-generator-container
+    image: doc-generator:1.0.2
+    ports:
+      - "8081:8080"
+    depends_on:
+      - message-broker
+
   db:
     image: mysql:8.0
     container_name: mysql-container
