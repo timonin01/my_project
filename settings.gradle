@@ -1,3 +1,4 @@
 include 'my_pr'
-include 'doc-generator-app'
+include 'my_pr:insurance-calculator-app'
+include 'my_pr:doc-generator-app'
 

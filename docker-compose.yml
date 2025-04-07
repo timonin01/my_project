@@ -14,6 +14,10 @@ services:
 
   doc-generator-app:
     networks: [ timonin-network ]
+    command: ["./wait-for-it.sh", "message-broker:5672", "--timeout=60", "--", "java", "-jar", "doc-generator.jar"]
+    build:
+      context: ./my_pr/doc-generator-app
+      dockerfile: Dockerfile
     container_name: doc-generator-container
     image: doc-generator:1.0.2
     ports:
@@ -34,6 +38,9 @@ services:
 
   insurance-calculator-app:
     image: insurance-calculator:1.0.2
+    build:
+      context: ./my_pr/insurance-calculator-app
+      dockerfile: Dockerfile
     container_name: insurance-calculator
     networks:
       - timonin-network
