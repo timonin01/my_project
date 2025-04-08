@@ -14,14 +14,8 @@ public class RabbitMQConfig {
     public static final String QUEUE_PROPOSAL_GENERATION = "q.proposal-generation";
 
     @Bean
-    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
-        return new RabbitAdmin(connectionFactory);
+    public Queue createProposalPdfGenerationQueue() {
+        return new Queue(QUEUE_PROPOSAL_GENERATION);
     }
 
-    @Bean
-    public Queue createProposalPdfGenerationQueue(RabbitAdmin rabbitAdmin) {
-        Queue queue = new Queue(QUEUE_PROPOSAL_GENERATION);
-        rabbitAdmin.declareQueue(queue);
-        return queue;
-    }
 }

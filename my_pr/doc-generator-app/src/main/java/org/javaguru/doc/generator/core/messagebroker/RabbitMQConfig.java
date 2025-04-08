@@ -6,23 +6,16 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@EnableRabbit
 @Configuration
+@EnableRabbit
 public class RabbitMQConfig {
 
     public static final String QUEUE_PROPOSAL_GENERATION = "q.proposal-generation";
 
     @Bean
-    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
-        return new RabbitAdmin(connectionFactory);
+    public Queue createProposalPdfGenerationQueue() {
+        return new Queue(QUEUE_PROPOSAL_GENERATION);
     }
 
-    @Bean
-    public Queue createProposalPdfGenerationQueue(RabbitAdmin rabbitAdmin) {
-        Queue queue = new Queue(QUEUE_PROPOSAL_GENERATION);
-        rabbitAdmin.declareQueue(queue);
-        return queue;
-    }
 }
