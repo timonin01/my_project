@@ -1,38 +1,70 @@
 package org.javaguru.doc.generator.core.messagebroker;
 
+import org.javaguru.doc.generator.core.api.dto.AgreementDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.Collections;
 
 @Component
 public class ProposalGenerationQueueListener {
 
     private static final Logger logger = LoggerFactory.getLogger(ProposalGenerationQueueListener.class);
 
-    @Value( "${proposals.directory.path}" )
-    private String proposalsDirectoryPath;
+    private final Integer totalRetryCount;
 
+    private final JsonStringToAgreementDtoConverter agreementDtoConverter;
+    private final ProposalGenerator proposalGenerator;
+    private final RabbitTemplate rabbitTemplate;
+
+    ProposalGenerationQueueListener(@Value("${rabbitmq.total.retry.count:3}")
+                                    Integer totalRetryCount,
+                                    JsonStringToAgreementDtoConverter agreementDtoConverter,
+                                    ProposalGenerator proposalGenerator,
+                                    RabbitTemplate rabbitTemplate) {
+        this.totalRetryCount = totalRetryCount;
+        this.agreementDtoConverter = agreementDtoConverter;
+        this.proposalGenerator = proposalGenerator;
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_PROPOSAL_GENERATION)
-    public void receiveMessage(String message) throws IOException {
-        logger.info(message);
-
-        Path path = Path.of(proposalsDirectoryPath + "/proposal.txt");
-
+    public void receiveMessage(final Message message) throws Exception {
         try {
-            Files.write(path, Collections.singleton(message), StandardOpenOption.CREATE);
+            processMessage(message);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("FAIL to process message: ", e);
+            retryOrForwardToDeadLetterQueue(message);
         }
+    }
 
+    private void retryOrForwardToDeadLetterQueue(Message message) {
+        Integer retryCount = message.getMessageProperties().getHeader("x-retry-count");
+        logger.info("MESSAGE DELIVERY TAG "
+            + message.getMessageProperties().getDeliveryTag()
+            + " RETRY COUNT = " + retryCount);
+        if (retryCount == null) {
+            retryCount = 0;
+        }
+        retryCount++;
+        if (retryCount <= totalRetryCount) {
+            // Update retry count and republish for retry
+            message.getMessageProperties().setHeader("x-retry-count", retryCount);
+            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_PROPOSAL_GENERATION, message);
+        } else {
+            // Forward to DLQ
+            rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_PROPOSAL_GENERATION_DLQ, message);
+        }
+    }
+
+    private void processMessage(Message message) throws Exception {
+        String messageBody = new String(message.getBody());
+        logger.info(messageBody + "andrey");
+        AgreementDTO agreementDTO = agreementDtoConverter.convert(messageBody);
+        proposalGenerator.generateProposalAndStoreToFile(agreementDTO);
     }
 
 }

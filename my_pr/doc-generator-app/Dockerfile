@@ -6,6 +6,8 @@ FROM eclipse-temurin:21
 COPY wait-for-it.sh wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
+ENV SPRING_PROFILES_ACTIVE=rabbitmq-container
+
 COPY build/libs/doc-generator-1.0.2.jar doc-generator.jar
 
 CMD ["./wait-for-it.sh", "message-broker:5672", "--", "java", "-Dspring.profiles.active=rabbitmq-container", "-jar", "doc-generator.jar"]
