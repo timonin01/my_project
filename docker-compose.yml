@@ -44,6 +44,8 @@ services:
       context: ./my_pr/insurance-calculator-app
       dockerfile: Dockerfile
     container_name: insurance-calculator
+    volumes:
+      - ./my_pr/insurance-calculator/src/main/resources/templates:/app/templates
     networks:
       - timonin-network
     ports:

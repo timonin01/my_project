@@ -117,7 +117,7 @@
                 </div>
                 </br>
                 <div>
-                    <label for="sportActivity">Travel cost:</label>
+                    <label for="sportActivity">Sport Activity:</label>
                     <input type="text" th:field="*{persons[__${personStat.index}__].sportActivity}" />
                 </div>
                 </br>
@@ -138,7 +138,9 @@
         <h3 th:text="${person.personFirstName} + ' ' + ${person.personLastName}"></h3>
         <p th:text="'Person Code: ' + ${person.personCode}"></p>
         <p th:text="'Birth Date: ' + ${person.personBirthDate}"></p>
-        <p th:text="'Medical Risk Limit Level: ' + ${person.medicalRiskLimitLevel}"></p>
+        <p th:text="'Medical Risk Limit Level: ' +
+    (${person.medicalRiskLimitLevel} == null || ${person.medicalRiskLimitLevel.isEmpty()} ?
+    'null' : ${person.medicalRiskLimitLevel})"></p>
         <p th:text="'Travel cost: ' + ${person.travelCost}"></p>
         <p th:text="'Sport Activity: ' + ${person.sportActivity}"></p>
         <p th:text="'Person Premium: ' + ${person.personPremium}"></p>

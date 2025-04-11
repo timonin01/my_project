@@ -34,7 +34,6 @@ public class PersonResponseDTO {
     @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal travelCost;
 
-    @JsonSerialize(using = BigDecimalSerializer.class)
     private String sportActivity;
 
     @JsonSerialize(using = BigDecimalSerializer.class)

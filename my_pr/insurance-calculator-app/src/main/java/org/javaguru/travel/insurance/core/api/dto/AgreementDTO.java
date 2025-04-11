@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @XmlRootElement
+@ToString
 public class AgreementDTO {
 
     private String uuid;
