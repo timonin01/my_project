@@ -7,8 +7,7 @@ import org.javaguru.travel.insurance.core.api.command.TravelCalculatePremiumCore
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 import org.javaguru.travel.insurance.core.api.dto.ValidationErrorDTO;
 import org.javaguru.travel.insurance.core.domain.entities.AgreementEntity;
-import org.javaguru.travel.insurance.core.messagebroker.ProposalGeneratorQueueSender;
-import org.javaguru.travel.insurance.core.services.RiskPremiumsForAllPersonsCalculator;
+import org.javaguru.travel.insurance.core.messagebroker.proposalack.ProposalGeneratorQueueSender;
 import org.javaguru.travel.insurance.core.validations.TravelAgreementValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

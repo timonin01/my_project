@@ -1,9 +1,10 @@
-package  org.javaguru.travel.insurance.core.messagebroker;
+package org.javaguru.travel.insurance.core.messagebroker.proposalack;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
+import org.javaguru.travel.insurance.core.messagebroker.RabbitMQConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;

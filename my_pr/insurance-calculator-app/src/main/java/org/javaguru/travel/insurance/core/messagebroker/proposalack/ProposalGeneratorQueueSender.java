@@ -1,4 +1,4 @@
-package  org.javaguru.travel.insurance.core.messagebroker;
+package org.javaguru.travel.insurance.core.messagebroker.proposalack;
 
 import org.javaguru.travel.insurance.core.api.dto.AgreementDTO;
 

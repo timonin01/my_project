@@ -114,7 +114,7 @@ CREATE TABLE agreement_person_risks (
 CREATE UNIQUE INDEX ix_agreement_person_risks_agreement_person_id_risk_ic
 ON agreement_person_risks(agreement_person_id, risk_ic);
 
-ALTER TABLE agreements ADD uuid VARCHAR(255) NOT NULL;
+ALTER TABLE agreements ADD uuid VARCHAR(255) NOT NULL UNIQUE;
 
 CREATE TABLE IF NOT EXISTS travel_cost_coefficient (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -176,3 +176,12 @@ CREATE TABLE type_sport_activities (
 
 ALTER TABLE agreement_persons
     ADD COLUMN sport_activity VARCHAR(200);
+
+CREATE TABLE agreement_proposals (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  agreement_uuid VARCHAR(255) NOT NULL,
+  already_generated CHAR(1) NOT NULL,
+  proposal_file_path VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id),
+  foreign key (agreement_uuid) references agreements(uuid)
+);
