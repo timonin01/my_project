@@ -34,9 +34,20 @@ services:
       - timonin-network
     environment:
       MYSQL_ROOT_PASSWORD: Lalka123
-      MYSQL_DATABASE: insurance-calculator-db
+    volumes:
+      - ./my_pr/mysql-database-init:/docker-entrypoint-initdb.d
     ports:
-      - "3306:3306"
+      - "3000:3306"
+
+  black-list-app:
+    networks:
+      - timonin-network
+    container_name: black-list-container
+    image: black-list:1.0.2
+    ports:
+      - "8090:8080"
+    depends_on:
+      - db
 
   insurance-calculator-app:
     image: insurance-calculator:1.0.2
@@ -44,7 +55,6 @@ services:
       context: ./my_pr/insurance-calculator-app
       dockerfile: Dockerfile
     container_name: insurance-calculator
-
     networks:
       - timonin-network
     ports:
