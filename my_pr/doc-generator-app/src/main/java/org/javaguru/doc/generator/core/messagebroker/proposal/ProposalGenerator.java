@@ -61,6 +61,10 @@ class ProposalGenerator {
                 if (person.getTravelCost() != null) {
                     addHeaderAndWrapperText("Person travel cost : ", person.getTravelCost().toString(), contentStream, offsetContext);
                 }
+
+                if (person.getSportActivity() != null) {
+                    addHeaderAndWrapperText("Person sport activity : ", person.getSportActivity().toString(), contentStream, offsetContext);
+                }
             }
 
             String premiumText = agreementDTO.getAgreementPremium() != null
