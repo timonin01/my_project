@@ -20,10 +20,10 @@ public class BlackListedPersonEntity {
     private Long id;
 
     @Column(name = "person_first_name", nullable = false)
-    private String firstName;
+    private String personFirstName;
 
     @Column(name = "person_last_name", nullable = false)
-    private String lastName;
+    private String personLastName;
 
     @Column(name = "person_code", nullable = false)
     private String personCode;

@@ -1,4 +1,4 @@
-package services;
+package org.javaguru.blacklist.services;
 
 import org.javaguru.blacklist.core.api.command.BlackListedPersonCoreCommand;
 import org.javaguru.blacklist.core.api.command.BlackListedPersonCoreResult;
@@ -47,8 +47,8 @@ class BlackListedPersonServiceImplTest {
     @Test
     void calculatePremium_personIsBlacklisted() {
         BlackListedPersonDTO personDTO = new BlackListedPersonDTO();
-        personDTO.setFirstName("John");
-        personDTO.setLastName("Doe");
+        personDTO.setPersonFirstName("John");
+        personDTO.setPersonLastName("Doe");
         personDTO.setPersonCode("123");
 
         BlackListedPersonCoreCommand command = new BlackListedPersonCoreCommand(personDTO);
@@ -63,8 +63,8 @@ class BlackListedPersonServiceImplTest {
     @Test
     void calculatePremium_personIsNotBlacklisted() {
         BlackListedPersonDTO personDTO = new BlackListedPersonDTO();
-        personDTO.setFirstName("Jane");
-        personDTO.setLastName("Doe");
+        personDTO.setPersonFirstName("Jane");
+        personDTO.setPersonLastName("Doe");
         personDTO.setPersonCode("456");
 
         BlackListedPersonCoreCommand command = new BlackListedPersonCoreCommand(personDTO);

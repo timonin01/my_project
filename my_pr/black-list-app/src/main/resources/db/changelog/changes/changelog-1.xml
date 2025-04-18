@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
-    <changeSet author = "javaguru" id = "1">
+    <changeSet author = "tim" id = "1">
         <createTable tableName="black_listed_persons">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -22,7 +22,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="javaguru" id="2">
+    <changeSet author="tim" id="2">
         <createIndex indexName="ix_classifiers_title"
                      tableName="black_listed_persons"
                      unique="true">
@@ -31,5 +31,13 @@
             <column name="person_code"/>
         </createIndex>
     </changeSet>
+
+  <changeSet author="tim" id="3">
+    <insert tableName="black_listed_persons">
+      <column name="person_first_name" value="Semen"/>
+      <column name="person_last_name" value="Andreev"/>
+      <column name="person_code" value="123456-12344"/>
+    </insert>
+  </changeSet>
 
 </databaseChangeLog>

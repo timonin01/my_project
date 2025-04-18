@@ -10,12 +10,12 @@ import java.util.Optional;
 public interface BlackListedPersonRepository extends JpaRepository<BlackListedPersonEntity,Long> {
 
     @Query("SELECT pe from BlackListedPersonEntity pe " +
-        "where pe.firstName = :firstName " +
-        "      and pe.lastName = :lastName " +
+        "where pe.personFirstName = :personFirstName " +
+        "      and pe.personLastName = :personLastName " +
         "      and pe.personCode = :personCode")
     Optional<BlackListedPersonEntity> findBy(
-        @Param("firstName") String firstName,
-        @Param("lastName") String lastName,
+        @Param("personFirstName") String personFirstName,
+        @Param("personLastName") String personLastName,
         @Param("personCode") String personCode
     );
 

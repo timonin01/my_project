@@ -26,8 +26,8 @@ public class BlackListedPersonServiceImpl implements BlackListedPersonService{
         if (errors.isEmpty()) {
             BlackListedPersonDTO personDTO = command.getPersonDTO();
             boolean isBlacklisted = repository.findBy(
-                personDTO.getFirstName(),
-                personDTO.getLastName(),
+                personDTO.getPersonFirstName(),
+                personDTO.getPersonLastName(),
                 personDTO.getPersonCode()
             ).isPresent();
             personDTO.setBlackListed(isBlacklisted);

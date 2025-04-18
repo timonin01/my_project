@@ -1,4 +1,4 @@
-package org.javaguru.blacklist.core.api.dto;
+package org.javaguru.blacklist.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,14 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BlackListedPersonDTO {
+public class BlackListedPersonCheckRequest {
 
     private String personFirstName;
 
     private String personLastName;
 
     private String personCode;
-
-    private Boolean blackListed;
 
 }
