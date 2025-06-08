@@ -11,8 +11,8 @@ public interface BlackListedPersonRepository extends JpaRepository<BlackListedPe
 
     @Query("SELECT pe from BlackListedPersonEntity pe " +
         "where pe.personFirstName = :personFirstName " +
-        "      and pe.personLastName = :personLastName " +
-        "      and pe.personCode = :personCode")
+        " and pe.personLastName = :personLastName " +
+        " and pe.personCode = :personCode")
     Optional<BlackListedPersonEntity> findBy(
         @Param("personFirstName") String personFirstName,
         @Param("personLastName") String personLastName,

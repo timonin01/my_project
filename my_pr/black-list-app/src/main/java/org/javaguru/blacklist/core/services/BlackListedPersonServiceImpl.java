@@ -7,8 +7,8 @@ import org.javaguru.blacklist.core.api.command.BlackListedPersonCoreResult;
 import org.javaguru.blacklist.core.api.dto.BlackListedPersonDTO;
 import org.javaguru.blacklist.core.api.dto.ValidationErrorDTO;
 import org.javaguru.blacklist.core.repositories.BlackListedPersonRepository;
+import org.javaguru.blacklist.core.validations.BlackListedPersonValidation;
 import org.javaguru.blacklist.core.validations.BlackListedPersonValidator;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

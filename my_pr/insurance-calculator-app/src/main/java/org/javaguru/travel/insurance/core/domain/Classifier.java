@@ -1,4 +1,4 @@
-package  org.javaguru.travel.insurance.core.domain;
+package org.javaguru.travel.insurance.core.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

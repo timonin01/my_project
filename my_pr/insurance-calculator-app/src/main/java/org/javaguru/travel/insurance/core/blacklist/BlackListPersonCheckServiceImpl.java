@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,7 +50,9 @@ public class BlackListPersonCheckServiceImpl implements BlackListPersonCheckServ
         HttpEntity<BlackListedPersonCheckRequest> requestEntity = new HttpEntity<>(request, headers);
 
         // Make the POST request and expect a BlackListedPersonCheckResponse object in response
-        BlackListedPersonCheckResponse response = restTemplate.postForObject(personBlacklistedCheckUrl, request, BlackListedPersonCheckResponse.class);
+        ResponseEntity<BlackListedPersonCheckResponse> responseEntity = restTemplate.postForEntity(personBlacklistedCheckUrl, requestEntity, BlackListedPersonCheckResponse.class);
+
+        BlackListedPersonCheckResponse response = responseEntity.getBody();
 
         logger.info("Blacklisted check for person with code " + personDTO.getPersonCode() + " return " + response.getBlackListed());
 
